@@ -197,6 +197,11 @@ def detect_ep(o, h, l, c, v, end: int, cfg: dict) -> dict | None:
             continue
         if age and float(np.nanmin(l[g + 1:end + 1])) < l[g]:
             continue
+        # ... and price must still sit in the upper half of the range since the gap,
+        # otherwise the move has faded and there is nothing to buy
+        post_high = float(np.nanmax(h[g:end + 1]))
+        if age and c[end] < l[g] + 0.5 * (post_high - l[g]):
+            continue
         rng = h / l - 1
         adr_before = float(np.nanmean(rng[g - 20:g]))
         prior_3m = float(c[g - 1] / c[g - 64] - 1)

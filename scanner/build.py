@@ -128,8 +128,11 @@ def analyse(bars: dict[str, pd.DataFrame], meta: pd.DataFrame, cfg: dict) -> dic
              f"Had already run {_pct(ep['prior_3m'])} in the three months before: less fresh."),
             "Cleared its six-month high." if ep["clears_6m_high"] else "Still below its six-month high.",
         ]
-        row["call"] = ("Check the catalyst before anything else: earnings beat with raised "
-                       "guidance is the kind that keeps going.")
+        below = ep["pivot"] / ep["close"] - 1
+        row["call"] = ("Gap day. The entry was the opening range high; from here it needs a "
+                       "tight hold near the high." if ep["age"] == 0 else
+                       f"Holding {_pct(below, 1)} below its high since the gap. "
+                       "Buyable on a break of that high.")
         eps.append(row)
     ep_names = {r["ticker"] for r in eps}
 
@@ -239,16 +242,19 @@ def compare_with_previous(payload: dict, bars: dict[str, pd.DataFrame]) -> None:
 def save(payload: dict) -> None:
     C.DATA.mkdir(exist_ok=True)
 
-    def strip(x):
+    def plain(x):   # numpy types and NaN are not valid JSON
         if isinstance(x, dict):
-            return {k: strip(v) for k, v in x.items() if not k.startswith("_")}
+            return {k: plain(v) for k, v in x.items()}
         if isinstance(x, list):
-            return [strip(v) for v in x]
+            return [plain(v) for v in x]
         if isinstance(x, (np.floating, np.integer, np.bool_)):
-            return x.item()
+            x = x.item()
+        if isinstance(x, float) and x != x:
+            return None
         return x
 
-    (C.DATA / "latest.json").write_text(json.dumps(strip(payload), indent=1))
+    # Chart bars are kept in the file, so the page can be rebuilt from it without a download
+    (C.DATA / "latest.json").write_text(json.dumps(plain(payload), separators=(",", ":")))
     if payload.get("demo"):
         return
     rows = []
@@ -310,7 +316,18 @@ def run(demo: bool = False) -> dict:
     return payload
 
 
+def rerender() -> None:
+    """Rebuild the page from the last saved scan (no download)."""
+    from . import render
+    payload = json.loads((C.DATA / "latest.json").read_text())
+    C.SITE.mkdir(exist_ok=True)
+    (C.SITE / "index.html").write_text(render.page(payload), encoding="utf-8")
+    _log(f"page rebuilt from the {payload['asof']} scan")
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--demo", action="store_true", help="use invented data (no network)")
-    run(ap.parse_args().demo)
+    ap.add_argument("--render", action="store_true", help="rebuild the page from data/latest.json")
+    args = ap.parse_args()
+    rerender() if args.render else run(args.demo)

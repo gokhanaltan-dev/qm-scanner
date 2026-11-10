@@ -55,6 +55,8 @@ def join_names(names: list[str]) -> str:
 # ---------------------------------------------------------------------------
 def candles(ch: dict, trigger: float | None = None, w: int = 640, h: int = 250,
             label: str = "") -> Markup:
+    nan = float("nan")
+    ch = {k: [nan if x is None else x for x in vals] for k, vals in ch.items()}
     o, hi, lo, c, v = ch["open"], ch["high"], ch["low"], ch["close"], ch["volume"]
     n = len(c)
     ok = [i for i in range(n) if not any(math.isnan(x) for x in (o[i], hi[i], lo[i], c[i]))]

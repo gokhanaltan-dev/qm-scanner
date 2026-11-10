@@ -67,6 +67,12 @@ def test_episodic_pivot_today_and_holding():
     l = l.copy()
     l[END] = l[END - 2] * 0.97
     assert setups.detect_ep(o, h, l, c, v, END, CFG) is None
+    # ... and neither does one that has faded into the lower half of its range since
+    o, h, l, c, v = demo.episodic(RS, age=2, gap=0.13)
+    h, c = h.copy(), c.copy()
+    h[END - 1] = c[END - 2] * 1.30
+    c[END] = l[END - 2] * 1.02
+    assert setups.detect_ep(o, h, l, c, v, END, CFG) is None
     # a small gap on normal volume is not an episodic pivot
     n = demo.N
     dull = demo._ohlcv(demo._walk(RS, n, 40, 0.0, 0.01), np.full(n, 0.03), np.full(n, 1e6), RS,
@@ -207,3 +213,18 @@ def test_saved_stock_list_is_used_when_every_source_fails(tmp_path, monkeypatch)
         monkeypatch.setattr(universe, fn, boom)
     df, src = universe.load(cache, 5, 10e6)
     assert src == "saved list" and len(df) == 2100
+
+
+def test_page_can_be_rebuilt_from_the_saved_scan(tmp_path, monkeypatch):
+    monkeypatch.setattr(C, "DATA", tmp_path / "data")
+    monkeypatch.setattr(C, "SITE", tmp_path / "site")
+    bars, meta = demo.make()
+    bars["Close"].iloc[:280, bars["Close"].columns.get_loc("EPIC1")] = np.nan   # a recent listing
+    p = build.analyse(bars, meta, CFG)
+    p["demo"], p["health"], p["followup"] = True, {"stock_list": "test"}, None
+    first = render.page(p)
+    build.save(p)
+    import json
+    json.loads((tmp_path / "data" / "latest.json").read_text(), parse_constant=lambda c: 1 / 0)  # strict JSON
+    build.rerender()
+    assert (tmp_path / "site" / "index.html").read_text() == first
