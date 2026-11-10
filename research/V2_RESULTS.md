@@ -54,7 +54,7 @@ What this says:
 - The session after a setup arms, and for up to 10 sessions: buy-stop at the pivot.
 - Skip that day if the open is above min(pivot x 1.03, pivot + 0.75 ATR).
 - No volume or close condition.
-- If stop orders are not available: buy the next open after a confirmed close, unless it opens more than 0.5 ATR above that close. Expect roughly two-thirds of the expectancy.
+- If stop orders are not available: buy the next open after a confirmed close, unless it opens more than 0.5 ATR above that close. In these tests that earned between half and four-fifths of the buy-stop's expectancy.
 
 A tighter stop (no more than 1.5 ATR below entry) was also tested. It raises mean R (+0.40) because each R is smaller, but return per trade falls (+2.1%), win rate drops to 30% and the range is wide. Kept as a secondary variant, not adopted.
 
@@ -121,7 +121,7 @@ VBTS and gross-settlement status were not checked for these, because none is a s
 - Results are in lira through very high inflation.
 - Real stop-order fills on Borsa İstanbul. The 0.05 ATR slippage is an assumption.
 - Past VBTS and gross-settlement measures are not modelled.
-- Sixteen pattern-and-entry combinations were compared on 2016 to 2021 before choosing. Some of the development result is selection.
+- About thirty pattern, entry and stop combinations were compared on 2016 to 2021 before choosing. Some of the development result is selection.
 
 ## Next
 
