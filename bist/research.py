@@ -48,7 +48,10 @@ def _touches(H, sh, P, W, tol, k=2):
 
 
 def gate(a, f, cfg):
-    return f["trend_ok"] & a["member"] & (np.nan_to_num(a["rs_pct"], nan=-1) >= cfg["relative_strength"]["min_percentile"])
+    g = f["trend_ok"] & a["member"] & (np.nan_to_num(a["rs_pct"], nan=-1) >= cfg["relative_strength"]["min_percentile"])
+    if "regime_ok" in a:                      # optional market filter, known at each close
+        g = g & a["regime_ok"]
+    return g
 
 
 # ----------------------------------------------------------------------------- patterns

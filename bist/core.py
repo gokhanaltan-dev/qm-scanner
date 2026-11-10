@@ -90,6 +90,7 @@ def build_market(data_dir: str, cfg: dict, as_of: str | None = None) -> Market:
     isy["RAWC"] = isy["HG_KAPANIS"]
     isy["ADJ"] = isy["HGDG_KAPANIS"] / isy["HG_KAPANIS"]
     isy["NORANGE"] = isy["HG_MAX"] <= isy["HG_MIN"]
+    isy["MCAP"] = pd.to_numeric(isy["PD"], errors="coerce") if "PD" in isy.columns else np.nan
 
     # Opening price: Yahoo's open/close ratio applied to the adjusted close. The ratio is immune to
     # split or dividend adjustments. The Yahoo bar is trusted only if its high/close and low/close
@@ -110,7 +111,7 @@ def build_market(data_dir: str, cfg: dict, as_of: str | None = None) -> Market:
     q["open_verified_share"] = float(good.mean())
 
     panels = {}
-    for f in ["O", "H", "L", "C", "V", "TO", "RAWC", "ADJ", "OPEN_OK", "NORANGE"]:
+    for f in ["O", "H", "L", "C", "V", "TO", "RAWC", "ADJ", "OPEN_OK", "NORANGE", "MCAP"]:
         panels[f] = m.pivot(index="date", columns="ticker", values=f).reindex(cal.index)
     meta = uni[uni["type"] == "stock"].set_index("ticker")[["name", "sector", "industry"]]
     meta["sector"] = meta["sector"].fillna("Unknown")
