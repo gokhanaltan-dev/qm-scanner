@@ -1,0 +1,159 @@
+{
+ "session": "2026-11-10",
+ "gate_pass": [
+  {
+   "ticker": "AHGAZ",
+   "name": "Ahlatci Dogal Gaz Dagitim Enerji ve Yatirim AS",
+   "sector": "Utilities",
+   "close": 45.46,
+   "rs_pct": 99.0,
+   "liq_rank": 75,
+   "atr": 1.71,
+   "atr_pct": 3.8,
+   "high55": 49.06,
+   "below_high55_pct": 7.3,
+   "below_high55_atr": 2.1,
+   "ret63": 0.42,
+   "patterns_today": [
+    "vcp"
+   ],
+   "pattern_armed_last10": {
+    "asc_triangle": 0,
+    "flat_base": 0,
+    "vcp": 0,
+    "bull_flag": 0
+   },
+   "locked_bars_20": 0,
+   "stop_v1": 44.27,
+   "vcp_pivot": 49.06,
+   "vcp_dist_atr": 2.11
+  },
+  {
+   "ticker": "CELHA",
+   "name": "Celik Halat ve Tel Sanayii A.S.",
+   "sector": "Non-Energy Minerals",
+   "close": 29.62,
+   "rs_pct": 100.0,
+   "liq_rank": 170,
+   "atr": 1.99,
+   "atr_pct": 6.7,
+   "high55": 36.06,
+   "below_high55_pct": 17.9,
+   "below_high55_atr": 3.2,
+   "ret63": 0.27,
+   "patterns_today": [],
+   "pattern_armed_last10": {
+    "asc_triangle": 0,
+    "flat_base": 0,
+    "vcp": 0,
+    "bull_flag": 0
+   },
+   "locked_bars_20": 0,
+   "stop_v1": 22.54
+  },
+  {
+   "ticker": "ENERY",
+   "name": "Enerya Enerji A.S.",
+   "sector": "Utilities",
+   "close": 14.15,
+   "rs_pct": 100.0,
+   "liq_rank": 36,
+   "atr": 0.57,
+   "atr_pct": 4.1,
+   "high55": 14.75,
+   "below_high55_pct": 4.1,
+   "below_high55_atr": 1.0,
+   "ret63": 0.662,
+   "patterns_today": [],
+   "pattern_armed_last10": {
+    "asc_triangle": 0,
+    "flat_base": 0,
+    "vcp": 0,
+    "bull_flag": 0
+   },
+   "locked_bars_20": 0,
+   "stop_v1": 12.6
+  },
+  {
+   "ticker": "ENJSA",
+   "name": "Enerjisa Enerji A.S.",
+   "sector": "Utilities",
+   "close": 119.0,
+   "rs_pct": 91.0,
+   "liq_rank": 49,
+   "atr": 4.48,
+   "atr_pct": 3.8,
+   "high55": 124.0,
+   "below_high55_pct": 4.0,
+   "below_high55_atr": 1.1,
+   "ret63": 0.112,
+   "patterns_today": [],
+   "pattern_armed_last10": {
+    "asc_triangle": 0,
+    "flat_base": 0,
+    "vcp": 0,
+    "bull_flag": 0
+   },
+   "locked_bars_20": 0,
+   "stop_v1": 104.38
+  },
+  {
+   "ticker": "HRKET",
+   "name": "Hareket Proje Tasimaciligi ve Yuk Muhendisligi AS",
+   "sector": "Transportation",
+   "close": 7.9,
+   "rs_pct": 98.0,
+   "liq_rank": 76,
+   "atr": 0.71,
+   "atr_pct": 9.0,
+   "high55": 10.43,
+   "below_high55_pct": 24.3,
+   "below_high55_atr": 3.6,
+   "ret63": 0.27,
+   "patterns_today": [],
+   "pattern_armed_last10": {
+    "asc_triangle": 0,
+    "flat_base": 0,
+    "vcp": 0,
+    "bull_flag": 0
+   },
+   "locked_bars_20": 0,
+   "stop_v1": 5.52
+  },
+  {
+   "ticker": "RYGYO",
+   "name": "Reysas Gayrimenkul Yatirim Ortakligi A.S.",
+   "sector": "Finance",
+   "close": 48.9,
+   "rs_pct": 98.0,
+   "liq_rank": 126,
+   "atr": 2.77,
+   "atr_pct": 5.7,
+   "high55": 54.8,
+   "below_high55_pct": 10.8,
+   "below_high55_atr": 2.1,
+   "ret63": 0.193,
+   "patterns_today": [],
+   "pattern_armed_last10": {
+    "asc_triangle": 0,
+    "flat_base": 0,
+    "vcp": 0,
+    "bull_flag": 0
+   },
+   "locked_bars_20": 0,
+   "stop_v1": 46.85
+  }
+ ],
+ "pattern_counts_universe": {
+  "asc_triangle": 0,
+  "flat_base": 0,
+  "vcp": 1,
+  "bull_flag": 1
+ },
+ "pattern_counts_with_gate": {
+  "asc_triangle": 0,
+  "flat_base": 0,
+  "vcp": 1,
+  "bull_flag": 0
+ }
+}

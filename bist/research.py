@@ -239,7 +239,7 @@ def stop_level(f, i, px, mode, cfg):
     raise ValueError(mode)
 
 
-def run_setups(a, f, pat, cfg, entry, stop_mode):
+def run_setups(a, f, pat, cfg, entry, stop_mode, count_from=0):
     """Freeze-at-arming state machine shared by every pattern, with a pluggable entry."""
     ok, P_arr, low_arr = pat
     b, cf = cfg["base"], cfg["confirmation"]
@@ -254,19 +254,24 @@ def run_setups(a, f, pat, cfg, entry, stop_mode):
     setup, busy = None, -1
 
     def skip(why):
-        res["skips"][why] = res["skips"].get(why, 0) + 1
+        if i >= count_from:
+            res["skips"][why] = res["skips"].get(why, 0) + 1
+
+    def bump(key):
+        if i >= count_from:
+            res[key] += 1
 
     for i in range(252, n):
         if setup is not None:
             P, low = setup
             if np.isfinite(low) and L[i] < low:
-                res["invalidated"] += 1; setup = None; continue
+                bump("invalidated"); setup = None; continue
             capx = np.inf
             if entry.get("cap_atr") is not None:
                 capx = min(P * (1 + entry["cap_pct"]), P + entry["cap_atr"] * atr[i - 1])
             if entry["type"] == "stop":
                 if H[i] > P:
-                    res["triggered"] += 1; setup = None
+                    bump("triggered"); setup = None
                     if not okopen[i] or not np.isfinite(O[i]):
                         skip("open not verified")
                     elif H[i] <= L[i]:
@@ -289,7 +294,7 @@ def run_setups(a, f, pat, cfg, entry, stop_mode):
                         and (C[i] - L[i]) / rng >= cf["min_close_location"]
                         and (not entry["volume"] or V[i] >= cf["volume_multiple"] * f["volavg"][i - 1]))
                 if conf:
-                    res["triggered"] += 1; setup = None
+                    bump("triggered"); setup = None
                     e = i + 1
                     if e >= n:
                         skip("no next session yet"); continue
@@ -311,15 +316,15 @@ def run_setups(a, f, pat, cfg, entry, stop_mode):
                             busy = t["exit_i"] if not t["open"] else n
                     continue
             if not g[i]:
-                res["invalidated"] += 1; setup = None; continue
+                bump("invalidated"); setup = None; continue
             if i - setup_i >= b["expiry_sessions"]:
-                res["expired"] += 1; setup = None; continue
+                bump("expired"); setup = None; continue
             continue
         if i <= busy:
             continue
         if arm[i]:
             setup, setup_i = (float(P_arr[i]), float(low_arr[i]) if np.isfinite(low_arr[i]) else np.nan), i
-            res["armed"] += 1
+            bump("armed")
     return res
 
 
@@ -335,10 +340,11 @@ def run_grid(mk, xs, cfg, cells, date_from=None):
         if not gate(a, f, cfg).any():
             continue
         d = pd.DatetimeIndex(a["dates"])
+        i0 = int(d.searchsorted(pd.Timestamp(date_from))) if date_from is not None else 0
         pat = {p: PATTERNS[p](a, f, cfg) for p in pats_needed}
         sector = mk.meta["sector"].get(tk, "Unknown")
         for c in cells:
-            r = run_setups(a, f, pat[c[0]], cfg, ENTRIES[c[1]], c[2])
+            r = run_setups(a, f, pat[c[0]], cfg, ENTRIES[c[1]], c[2], i0)
             o = out[c]
             for k in ("armed", "expired", "invalidated", "triggered"):
                 o[k] += r[k]
