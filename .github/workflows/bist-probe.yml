@@ -1,0 +1,27 @@
+name: BIST probe
+on:
+  push:
+    branches: [bist-research]
+    paths: ["bist/probe.py", ".github/workflows/bist-probe.yml"]
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.13", cache: pip}
+      - run: pip install -q -r requirements.txt
+      - run: python -m bist.probe
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd probe_out
+          git init -q -b bist-probe
+          git config user.name "bist-bot"
+          git config user.email "bist-bot@users.noreply.github.com"
+          git add . && git commit -q -m "probe $(date -u +%FT%TZ)"
+          git push -q --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" bist-probe
