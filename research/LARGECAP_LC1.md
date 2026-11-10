@@ -75,7 +75,7 @@ Net of 25 basis points per side. Idle cash earns nothing. Lira returns.
 | Weekly relative-strength rotation, L100 top 10 | 20.0% a year, worst fall -41% | Worse than equal-weight L100 on both counts |
 | Rotation, L30 top 5 | 1.3% a year, worst fall -56% | Failed outright; equal-weight L30 made 23% |
 | Rotation, banks top 3 | 17.7% a year, worst fall -59% | Drawdown |
-| Rotation with an XU100 200-session filter | Lower return in all three groups | Filter cost more than it saved |
+| Rotation with an XU100 200-session filter | Lower return in L100 and banks, no real change in L30 | Filter cost more than it saved |
 | Pullback to EMA20 in an uptrend, L100 | +0.06R, 25% winners | No edge; in banks only 10% of pullback trades won |
 | Bank-only breakouts | +0.25R on 90 signals, 7% invested | Too few trades to run on their own |
 | Leader near its 55-session high, no pattern | +0.28R, 12.0% a year, worst fall -17% | Kept as the comparator; made 57.8% a year in 2022 to 2023 against LC-1's 53.6% |
