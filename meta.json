@@ -1,0 +1,17 @@
+{
+ "generated": "2026-11-10 11:46 UTC",
+ "first": "2023-10-25",
+ "last": "2026-11-09",
+ "sessions": 763,
+ "stocks": 5614,
+ "rows": 45790,
+ "stock_list": "nasdaq screener",
+ "requested": 5648,
+ "received": 5614,
+ "missing": 34,
+ "rules": {
+  "partial_day": 3,
+  "max_hold": 60,
+  "warmup": 130
+ }
+}
