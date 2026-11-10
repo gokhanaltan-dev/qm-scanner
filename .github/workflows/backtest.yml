@@ -1,0 +1,47 @@
+name: Backtest
+
+# Runs on request: edit backtest/request.txt (or press "Run workflow").
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "backtest/request.txt"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: backtest
+  cancel-in-progress: true
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Replay the scanner over history
+        run: python -m backtest.run --days 1300 --out bt_out
+
+      # Results go to their own branch, replaced each run, so the main branch stays small
+      - name: Publish results to the backtest-results branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd bt_out
+          git init -q -b backtest-results
+          git config user.name "qm-scanner-bot"
+          git config user.email "qm-scanner-bot@users.noreply.github.com"
+          git add .
+          git commit -q -m "Backtest results $(date -u +%F)"
+          git push -q --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" backtest-results
