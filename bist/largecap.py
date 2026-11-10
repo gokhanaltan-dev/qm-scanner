@@ -83,7 +83,7 @@ def ledger(mk, xs, g, cfg, pattern, entry="stop_at_pivot", stop="v1", group="L10
             rows.append({"ticker": tk, "sector": mk.meta["sector"].get(tk, "Unknown"), "signal": d[i],
                          "entry_date": d[t["entry_i"]], "exit_date": d[t["exit_i"]], "pivot": t["P"],
                          "entry": t["entry"], "stop": t["stop"], "risk": t["risk"], "exit": t["exit"],
-                         "exit_reason": t["reason"], "hold": t["hold"], "open": t["open"],
+                         "exit_reason": t["reason"].replace("EMA20", exit_line.upper()), "hold": t["hold"], "open": t["open"],
                          "false_breakout": t["false_breakout"], "r_gross": t["r_gross"],
                          "rs_pct": a["rs_pct"][i - 1], "med20_try": a["med20"][i - 1],
                          "in_L30": bool(g["L30"][tk].values[a["pos"][i - 1]]), "is_bank": tk in BANKS})

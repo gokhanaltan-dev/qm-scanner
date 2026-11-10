@@ -1,0 +1,7 @@
+strategy,cagr_%,total_%,max_dd_%,cagr_usd_%,invested_%,signals,open_at_end,taken,win,mean_R,ci90,ret/trade_%,hold,R_50bp,skips
+XU100 buy and hold,97.9,288.0,-22.3,33.2,,,,,,,,,,,
+Equal weight L100 (no costs),100.3,297.0,-27.7,34.8,,,,,,,,,,,
+Equal weight L30 (no costs),100.8,299.0,-25.2,35.2,,,,,,,,,,,
+Equal weight BANKS (no costs),129.0,418.0,-43.1,54.2,,,,,,,,,,,
+"LC-1 pattern book, SMA50 exit, market filter",53.6,135.0,-7.0,3.4,39.0,96.0,0.0,64.0,0.583,1.517,"[0.728, 2.261]",21.9,42.5,1.48,"{""sector limit"": 3, ""portfolio full"": 29}"
+"Comparator: leader near high, EMA20 exit, market filter",57.8,147.0,-10.9,6.2,37.0,259.0,0.0,142.0,0.517,0.851,"[0.465, 1.202]",15.8,25.5,0.823,"{""sector limit"": 7, ""portfolio full"": 110}"
