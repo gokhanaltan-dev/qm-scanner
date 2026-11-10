@@ -1,0 +1,10 @@
+index,rule,cagr_%,max_dd_%,mar,invested_%,trades,worst_year_%,neg_years,win_%,avg_trade_%,avg_sessions,cagr_25bp_%
+XU100,buy and hold,97.9,-22.3,4.4,100,0,32,0,,,,
+XU030,buy and hold,96.0,-20.5,4.67,100,0,31,0,,,,
+XBANK,buy and hold,132.9,-39.1,3.4,100,0,70,0,,,,
+XU100,A close > SMA50,73.8,-23.6,3.13,75,16,14,0,38.0,9.7,24.0,69.7
+XU100,"E 20-session high in, 10-session low out",53.5,-12.7,4.2,46,11,23,0,45.0,9.1,21.0,51.0
+XU030,A close > SMA50,68.4,-20.8,3.29,77,17,10,0,35.0,8.6,23.0,64.2
+XU030,"E 20-session high in, 10-session low out",47.3,-14.5,3.26,48,12,12,0,42.0,7.4,20.0,44.6
+XBANK,A close > SMA50,55.4,-47.1,1.17,77,14,-7,1,43.0,8.1,26.0,52.1
+XBANK,"D 55-session high in, 20-session low out",35.0,-44.7,0.78,40,5,27,0,60.0,15.4,36.0,33.9
