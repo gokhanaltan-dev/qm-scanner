@@ -217,6 +217,9 @@ def detect_ep(o, h, l, c, v, end: int, cfg: dict) -> dict | None:
             "gap_high": float(h[g]), "prior_3m": prior_3m, "clears_6m_high": bool(c[g] > high_6m),
             "adr_before": adr_before, "adr": float(np.nanmean(rng[end - 19:end + 1])),
             "pivot": pivot, "close": float(c[end]), "green_day": bool(c[g] > o[g]),
+            # the stock before the gap: used to screen out thin, wild names
+            "pre_close": float(c[g - 1]),
+            "pre_dollar_vol": float(np.nanmean(c[g - 50:g] * v[g - 50:g])),
             "dist": (pivot / float(c[end]) - 1) / float(np.nanmean(rng[end - 19:end + 1])),
             "recent_low": float(np.nanmin(l[max(g, end - 1):end + 1])),
         }

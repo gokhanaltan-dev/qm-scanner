@@ -43,26 +43,38 @@ def _log(msg: str) -> None:
 # ---------------------------------------------------------------------------
 # Trade simulation for one stock
 # ---------------------------------------------------------------------------
-def simulate(o, h, l, c, s10, t: int, entry: float, stop: float, intraday: bool) -> dict | None:
-    """Follow one trade. `t` is the entry session; `intraday` means the entry happened
-    during session t (a trigger), otherwise at its close."""
+def walk(o, h, l, c, ma, t: int, entry: float, stop: float, intraday: bool, *,
+         partial: str | None = "day3", target: float | None = None,
+         max_hold: int = MAX_HOLD) -> dict:
+    """One trade under one set of exit rules. Result in R (multiples of entry - stop).
+
+    partial  "day3": sell half on the first profitable close from day 3, stop to entry
+             "2R":   sell half at +2R, stop to entry
+    target   sell everything at this many R
+    ma       sell what is left on the first close under this moving average
+    Same-day ties between the stop and a target go to the stop.
+    """
     T = len(c)
     risk = entry - stop
-    if not np.isfinite(risk) or risk <= 0 or not np.isfinite(entry):
-        return None
-    out = {"entry": entry, "stop": stop, "risk_pct": risk / entry}
-
-    exit_r = half_r = None
-    exit_day = None
+    exit_r = half_r = exit_day = None
     stop_now = stop
     ambiguous = False
-    if intraday and l[t] <= stop:
-        if c[t] < entry:                 # broke out and reversed through the stop
-            exit_r, exit_day = -1.0, t
-        else:                            # low most likely came before the breakout
-            ambiguous = True
+    goal = entry + target * risk if target else None
+    two_r = entry + 2 * risk
+
+    if intraday:
+        if l[t] <= stop:
+            if c[t] < entry:                 # broke out and reversed through the stop
+                exit_r, exit_day = -1.0, t
+            else:                            # the low most likely came before the breakout
+                ambiguous = True
+        if exit_r is None:
+            if goal is not None and h[t] >= goal:
+                exit_r, exit_day = float(target), t
+            elif partial == "2R" and h[t] >= two_r:
+                half_r, stop_now = 2.0, entry
     day = t + 1
-    last = min(T - 1, t + MAX_HOLD)
+    last = min(T - 1, t + max_hold)
     while exit_r is None and day <= last:
         if np.isfinite(c[day]):
             if o[day] <= stop_now:
@@ -70,24 +82,62 @@ def simulate(o, h, l, c, s10, t: int, entry: float, stop: float, intraday: bool)
             elif l[day] <= stop_now:
                 exit_r, exit_day = (stop_now - entry) / risk, day
             else:
-                if half_r is None and day - t >= PARTIAL_DAY and c[day] > entry:
-                    half_r = (c[day] - entry) / risk
-                    stop_now = max(stop_now, entry)
-                if np.isfinite(s10[day]) and c[day] < s10[day]:
-                    exit_r, exit_day = (c[day] - entry) / risk, day
+                if goal is not None and h[day] >= goal:
+                    exit_r, exit_day = (max(goal, o[day]) - entry) / risk, day
+                else:
+                    if half_r is None:
+                        if partial == "day3" and day - t >= PARTIAL_DAY and c[day] > entry:
+                            half_r, stop_now = (c[day] - entry) / risk, max(stop_now, entry)
+                        elif partial == "2R" and h[day] >= two_r:
+                            half_r, stop_now = (max(two_r, o[day]) - entry) / risk, max(stop_now, entry)
+                    if ma is not None and np.isfinite(ma[day]) and c[day] < ma[day]:
+                        exit_r, exit_day = (c[day] - entry) / risk, day
         day += 1
     complete = exit_r is not None
     if exit_r is None:
-        if t + MAX_HOLD <= T - 1:        # held the maximum time
-            exit_r, exit_day, complete = (c[t + MAX_HOLD] - entry) / risk, t + MAX_HOLD, True
-        else:                            # history ends before the trade does
+        if t + max_hold <= T - 1:            # held the maximum time
+            exit_r, exit_day, complete = (c[t + max_hold] - entry) / risk, t + max_hold, True
+        else:                                # history ends before the trade does
             k = T - 1
             while k > t and not np.isfinite(c[k]):
                 k -= 1
             exit_r, exit_day = (c[k] - entry) / risk, k
     r = exit_r if half_r is None else 0.5 * half_r + 0.5 * exit_r
-    out.update(r=r, r_pess=-1.0 if ambiguous else r, ambiguous=ambiguous, complete=complete,
-               hold=exit_day - t, took_half=half_r is not None)
+    return {"r": r, "hold": exit_day - t, "complete": complete, "ambiguous": ambiguous,
+            "took_half": half_r is not None}
+
+
+def simulate(o, h, l, c, s10, t: int, entry: float, stop: float, intraday: bool,
+             s20=None) -> dict | None:
+    """Follow one trade. `t` is the entry session; `intraday` means the entry happened
+    during session t (a trigger), otherwise at its close. The sheet's own rules give
+    `r`; the other columns are the same trade under different exit rules."""
+    T = len(c)
+    risk = entry - stop
+    if not np.isfinite(risk) or risk <= 0 or not np.isfinite(entry):
+        return None
+    out = {"entry": entry, "stop": stop, "risk_pct": risk / entry}
+    main = walk(o, h, l, c, s10, t, entry, stop, intraday, partial="day3")
+    out.update(main, r_pess=-1.0 if main["ambiguous"] else main["r"])
+
+    variants = {
+        "r_ma10": dict(ma=s10, partial=None),
+        "r_p2": dict(ma=s10, partial="2R"),
+        "r_t2": dict(ma=None, partial=None, target=2.0, max_hold=20),
+        "r_t3": dict(ma=None, partial=None, target=3.0, max_hold=30),
+    }
+    if s20 is not None:
+        variants["r_ma20"] = dict(ma=s20, partial=None)
+        variants["r_h20"] = dict(ma=s20, partial="day3")
+    for name, kw in variants.items():
+        ma = kw.pop("ma")
+        w = walk(o, h, l, c, ma, t, entry, stop, intraday, **kw)
+        out[name] = w["r"] if w["complete"] else np.nan
+        out[name.replace("r_", "hold_")] = w["hold"]
+    # the same trade with half the stop distance (so twice the size for the same risk)
+    w = walk(o, h, l, c, s10, t, entry, entry - 0.5 * risk, intraday, partial="day3")
+    out["r_tight"] = w["r"] if w["complete"] else np.nan
+    out["amb_tight"] = w["ambiguous"]
 
     # Did it reach +2R before the stop, within 20 sessions? Same-day ties go to the stop.
     target = entry + 2 * risk
@@ -223,7 +273,7 @@ def panels(bars: dict[str, pd.DataFrame], meta: pd.DataFrame, cfg: dict) -> dict
     return {
         "cols": cols, "index": c.index, "daily": daily, "industry": ind, "sector": sec,
         "O": F(o.to_numpy()), "H": F(h.to_numpy()), "L": F(l.to_numpy()), "C": F(c.to_numpy()),
-        "V": F(v.to_numpy()), "S10": F(sma10.to_numpy()),
+        "V": F(v.to_numpy()), "S10": F(sma10.to_numpy()), "S20": F(sma20.to_numpy()),
         "leader": L, "liquid": Q, "rs": rs.to_numpy(),
         "rs1": rs_parts[0].to_numpy(), "rs3": rs_parts[1].to_numpy(), "rs6": rs_parts[2].to_numpy(),
         "dvol": dvol.to_numpy(), "adr": adr.to_numpy(), "p6m": p6m.to_numpy(),
@@ -246,7 +296,7 @@ FACTORS = ("pull_rs", "rsline", "ext50", "ext200", "streak50", "ud_vol", "off_hi
 def replay(bars: dict[str, pd.DataFrame], meta: pd.DataFrame, cfg: dict,
            start: int = WARMUP) -> tuple[pd.DataFrame, pd.DataFrame]:
     P = panels(bars, meta, cfg)
-    O, H, L, Cl, V, S10 = P["O"], P["H"], P["L"], P["C"], P["V"], P["S10"]
+    O, H, L, Cl, V, S10, S20 = P["O"], P["H"], P["L"], P["C"], P["V"], P["S10"], P["S20"]
     T, N = Cl.shape
     cols, dates = P["cols"], P["index"]
     e = cfg["episodic_pivot"]
@@ -286,7 +336,8 @@ def replay(bars: dict[str, pd.DataFrame], meta: pd.DataFrame, cfg: dict,
         entry = max(level, o[d + 1])
         ref = np.nanmin(l[d - 2:d + 1])
         dist = min(max(entry - ref, 0.4 * adr * entry), 1.0 * adr * entry)
-        sim = simulate(o, h, l, c, S10[:, j], d + 1, entry, entry - dist, intraday=True)
+        sim = simulate(o, h, l, c, S10[:, j], d + 1, entry, entry - dist, intraday=True,
+                       s20=S20[:, j])
         if sim:
             row.update(sim)
             row["traded"] = True
@@ -311,7 +362,7 @@ def replay(bars: dict[str, pd.DataFrame], meta: pd.DataFrame, cfg: dict,
                    "score": sc["score"], **{f"s_{k}": x for k, x in sc["parts"].items()},
                    "pivot": ep["pivot"], "adr": ep["adr"]}
             for k in ("age", "gap", "vol_mult", "close_pos", "prior_3m", "clears_6m_high",
-                      "adr_before", "dist", "gap_day_gain"):
+                      "adr_before", "dist", "gap_day_gain", "pre_close", "pre_dollar_vol"):
                 row[f"e_{k}"] = ep[k]
             pending_trade(d, j, ep["pivot"], ep["adr"], row)
             rows.append(row)
@@ -343,7 +394,8 @@ def replay(bars: dict[str, pd.DataFrame], meta: pd.DataFrame, cfg: dict,
                 stop = hit["low_of_day"]
                 row["wide"] = (hit["close"] - stop) > hit["adr"] * hit["close"]
                 if busy["fired"].get(j, -1) < d:
-                    sim = simulate(*arr[:4], S10[:, j], d, hit["close"], stop, intraday=False)
+                    sim = simulate(*arr[:4], S10[:, j], d, hit["close"], stop, intraday=False,
+                                   s20=S20[:, j])
                     if sim:
                         row.update(sim)
                         row["traded"] = True

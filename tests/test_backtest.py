@@ -87,3 +87,24 @@ def test_replay_finds_the_built_in_setups_and_never_looks_ahead():
     a = rows[rows["d"] <= early["d"].max()][known].reset_index(drop=True)
     b = early[known].reset_index(drop=True)
     pd.testing.assert_frame_equal(a, b)
+
+
+def test_exit_variants_on_one_trade():
+    # entry 10.2, stop 9.7 (risk 0.5). Runs to 12.4 by day 3, then fades.
+    rows = [(10, 10.6, 10, 10.5, 9, 9)]
+    rows += [(10.5, 11.3, 10.4, 11.2, 9.5, 9.2), (11.2, 11.6, 11.0, 11.4, 9.9, 9.4)]   # +2R is 11.2
+    rows += [(11.4, 12.4, 11.3, 12.2, 10.3, 9.6), (12.2, 12.3, 11.4, 11.5, 11.6, 9.9)]
+    rows += [(11.5, 11.6, 9.8, 9.9, 11.5, 10.1)]
+    a = np.array(rows, dtype=float)
+    o, h, l, c, s10, s20 = (a[:, k] for k in range(6))
+    r = bt.simulate(o, h, l, c, s10, 0, 10.2, 9.7, True, s20=s20)
+    assert r["r_t2"] == pytest.approx(2.0) and r["hold_t2"] == 1           # target touched on day 1
+    assert r["r_ma10"] == pytest.approx((11.5 - 10.2) / 0.5)                # first close under the 10-day
+    assert r["r_p2"] == pytest.approx(0.5 * 2.0 + 0.5 * (11.5 - 10.2) / 0.5)
+    assert r["r_ma20"] == pytest.approx((9.9 - 10.2) / 0.5)                 # 20-day trail gives it all back
+    assert r["r"] == pytest.approx(0.5 * (12.2 - 10.2) / 0.5 + 0.5 * (11.5 - 10.2) / 0.5)
+    # half the stop distance: stopped at 9.95 on... never touched before the fade, so same path, twice the R
+    assert r["r_tight"] == pytest.approx(2 * r["r"])
+    # a target that is never reached ends at the time limit or the stop
+    w = bt.walk(o, h, l, c, None, 0, 10.2, 9.7, True, partial=None, target=6.0, max_hold=3)
+    assert w["r"] == pytest.approx((12.2 - 10.2) / 0.5) and w["hold"] == 3 and w["complete"]

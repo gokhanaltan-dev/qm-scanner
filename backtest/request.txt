@@ -1,1 +1,1 @@
-run 1: first full replay, 2026-11-10
+run 2: exit-rule variants and pre-gap measures, 2026-11-10
