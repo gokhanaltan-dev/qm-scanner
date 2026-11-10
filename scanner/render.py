@@ -298,7 +298,7 @@ footer{margin:32px 0 40px;color:var(--muted);font-size:.86rem}
 {% if open_lines %}
 <section>
   <h2>After the open</h2>
-  <p class="lede">Checked at {{ open_check.time_ny }} New York, {{ open_check.minutes_in }} minutes into {{ open_date }}'s session. By then a normal day has traded roughly 15 to 20% of its volume. Prices can lag by up to 15 minutes.</p>
+  <p class="lede">Checked at {{ open_check.time_ny }} New York, {{ open_check.minutes_in }} minutes into {{ open_date }}'s session. By then a normal day has traded roughly {{ usual_volume }}% of its volume. Prices can lag by up to 15 minutes.</p>
   <div class="panel">
     {% for r in open_lines.moved %}
     <div class="oc">
@@ -545,6 +545,16 @@ def pc(x) -> str:
     return f"{x:+.0f}%".replace("-", "\u2212")
 
 
+def usual_volume(minutes_in: int) -> int:
+    """Rough share of a normal day's volume traded this many minutes after the open
+    (volume is heaviest at the open and the close)."""
+    pts = [(0, 0), (30, 13), (60, 21), (90, 27), (120, 33), (195, 45), (390, 100)]
+    for (m0, v0), (m1, v1) in zip(pts, pts[1:]):
+        if minutes_in <= m1:
+            return round((v0 + (v1 - v0) * (minutes_in - m0) / (m1 - m0)) / 5) * 5
+    return 100
+
+
 def open_lines(chk: dict | None, account: dict) -> dict | None:
     """Plain sentences for the after-open check."""
     if not chk or not chk.get("rows"):
@@ -619,6 +629,7 @@ def page(p: dict) -> str:
         **{k: v for k, v in p.items() if not k.startswith("_")},
         card=card, asof_long=nice_date(p["asof"]), asof_short=short_date(p["asof"]),
         open_lines=open_lines(p.get("open_check"), p["account"]),
+        usual_volume=usual_volume(p["open_check"]["minutes_in"]) if p.get("open_check") else 0,
         open_date=nice_date(p["open_check"]["date"]).split(" ")[0] if p.get("open_check") else "",
         index_chart=candles(p["_index_chart"], None, h=230, label="Nasdaq 100 daily chart"),
         index_names=INDEXES, top_groups=groups[:6], bottom_groups=groups[-3:],

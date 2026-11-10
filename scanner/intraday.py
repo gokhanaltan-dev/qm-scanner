@@ -2,7 +2,7 @@
 
     python -m scanner.intraday
 
-Runs about 40 minutes into the session. For every stock on the ready and episodic
+Runs in the first two hours of the session. For every stock on the ready and episodic
 pivot lists it reads today's 5-minute bars and reports whether price has traded
 through the trigger, where it is now, the low of the day (the real stop), the size
 that stop allows, and how much of a normal day's volume has traded so far.
@@ -24,7 +24,9 @@ from . import config as C
 from . import setups
 
 NY = ZoneInfo("America/New_York")
-WINDOW = (9 * 60 + 50, 10 * 60 + 55)      # only run between 09:50 and 10:55 New York time
+# Only run between 09:50 and 11:30 New York time. The window is wide because GitHub
+# often starts scheduled jobs 30 to 45 minutes late.
+WINDOW = (9 * 60 + 50, 11 * 60 + 30)
 
 
 def _log(msg: str) -> None:

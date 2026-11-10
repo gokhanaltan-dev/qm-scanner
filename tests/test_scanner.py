@@ -306,16 +306,21 @@ def test_after_open_check_window():
     ny = ZoneInfo("America/New_York")
     assert intraday.due(datetime(2026, 11, 10, 10, 10, tzinfo=ny), "2026-11-09") is None
     assert "window" in intraday.due(datetime(2026, 11, 10, 9, 10, tzinfo=ny), "2026-11-09")
-    assert "window" in intraday.due(datetime(2026, 11, 10, 11, 10, tzinfo=ny), "2026-11-09")
+    assert intraday.due(datetime(2026, 11, 10, 11, 10, tzinfo=ny), "2026-11-09") is None
+    assert "window" in intraday.due(datetime(2026, 11, 10, 11, 40, tzinfo=ny), "2026-11-09")
     assert intraday.due(datetime(2026, 11, 14, 10, 10, tzinfo=ny), "2026-11-13") == "weekend"
     assert "already" in intraday.due(datetime(2026, 11, 10, 10, 10, tzinfo=ny), "2026-11-10")
     assert "old" in intraday.due(datetime(2026, 11, 20, 10, 10, tzinfo=ny), "2026-11-09")
-    # 15:10 UTC is 10:10 in New York in winter, 14:10 UTC is 10:10 in summer
+    # The two scheduled times, 13:50 and 14:50 UTC, with GitHub starting up to 45 minutes late.
+    # Winter: only the 14:50 one lands in the window. Summer: the 13:50 one does.
     utc = ZoneInfo("UTC")
-    assert intraday.due(datetime(2026, 11, 10, 15, 10, tzinfo=utc), "2026-11-09") is None
-    assert intraday.due(datetime(2026, 11, 10, 14, 10, tzinfo=utc), "2026-11-09") is not None
-    assert intraday.due(datetime(2026, 7, 14, 14, 10, tzinfo=utc), "2026-07-13") is None
-    assert intraday.due(datetime(2026, 7, 14, 15, 10, tzinfo=utc), "2026-07-13") is not None
+    for late in (0, 20, 45):
+        w1 = datetime(2026, 11, 10, 13, 50, tzinfo=utc) + pd.Timedelta(minutes=late)
+        w2 = datetime(2026, 11, 10, 14, 50, tzinfo=utc) + pd.Timedelta(minutes=late)
+        assert intraday.due(w1, "2026-11-09") is not None and intraday.due(w2, "2026-11-09") is None
+        s1 = datetime(2026, 7, 14, 13, 50, tzinfo=utc) + pd.Timedelta(minutes=late)
+        assert intraday.due(s1, "2026-07-13") is None
+    assert render.usual_volume(40) == 15 and render.usual_volume(80) == 25 and render.usual_volume(390) == 100
 
 
 def test_after_open_check_end_to_end(tmp_path, monkeypatch):
@@ -363,7 +368,7 @@ def test_after_open_check_end_to_end(tmp_path, monkeypatch):
     build.attach_open_check(p2)
     assert "open_check" not in p2 and "After the open" not in render.page(p2)
     # outside the window nothing is written
-    assert intraday.run(datetime(2026, 11, 10, 12, 0, tzinfo=ZoneInfo("America/New_York"))) is None
+    assert intraday.run(datetime(2026, 11, 10, 12, 30, tzinfo=ZoneInfo("America/New_York"))) is None
 
 
 def test_thin_or_faded_gaps_are_left_out():

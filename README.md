@@ -5,7 +5,7 @@ decides whether the market is worth trading, finds the leaders that are setting 
 rates each one out of 100 and gives a trigger, a stop and a position size.
 
 The result is one phone-friendly page, rebuilt every weekday at 22:30 UTC, with a second
-check about 40 minutes after the US open that shows which triggers have fired.
+check in the first hour or so after the US open that shows which triggers have fired.
 
 ## What it looks for
 
@@ -95,7 +95,8 @@ To run it again, edit `backtest/request.txt` and push. Results land on the
 
 ## After the open
 
-`.github/workflows/open-check.yml` runs about 40 minutes into the US session (15:10 UK).
+`.github/workflows/open-check.yml` runs in the first hour or so of the US session, around
+15:30 UK. GitHub starts scheduled jobs late, so the exact time varies; the page shows it.
 For each stock on the ready and episodic pivot lists it reads the day's 5-minute bars and
 shows whether price has traded through the trigger, the low of the day (the real stop),
 the size that stop allows, and the share of a normal day's volume traded so far. The
