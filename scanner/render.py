@@ -218,6 +218,13 @@ tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
 .plan dt{font-size:.82rem;color:var(--muted)}
 .plan dd{margin:0;font:600 1.45rem/1.15 "Barlow Condensed","Arial Narrow",sans-serif}
 .plan small{display:block;font:400 .82rem/1.3 Barlow,sans-serif;color:var(--muted)}
+.cat{margin:-6px 0 12px;font-size:.95rem}
+.oc + .oc{border-top:1px solid var(--rule);margin-top:12px;padding-top:12px}
+.oc-h{margin:0;font:600 1.35rem/1.2 "Barlow Condensed","Arial Narrow",sans-serif}
+.oc-h a{text-decoration:none}
+.oc-b{margin:4px 0 0}
+.state{font:500 .95rem Barlow,sans-serif;margin-left:8px}
+.state.triggered{color:var(--up)} .state.failed,.state.back_under{color:var(--down)}
 .warn{margin:12px 0 0;padding:9px 12px;border-left:3px solid var(--trigger);background:var(--track);font-size:.93rem}
 .bar{display:flex;gap:3px;margin:14px 0 0}
 .bar span{height:8px;background:var(--track);border-radius:1px;overflow:hidden}
@@ -284,6 +291,24 @@ footer{margin:32px 0 40px;color:var(--muted);font-size:.86rem}
   </div>
 </section>
 
+{% if open_lines %}
+<section>
+  <h2>After the open</h2>
+  <p class="lede">Checked at {{ open_check.time_ny }} New York, {{ open_check.minutes_in }} minutes into {{ open_date }}'s session. By then a normal day has traded roughly 15 to 20% of its volume. Prices can lag by up to 15 minutes.</p>
+  <div class="panel">
+    {% for r in open_lines.moved %}
+    <div class="oc">
+      <p class="oc-h"><a href="{{ tv(r.ticker) }}">{{ r.ticker }}</a> <span class="state {{ r.state }}">{{ r.label }}</span></p>
+      <p class="oc-b">{{ r.body }}</p>
+    </div>
+    {% else %}
+    <p class="empty">Nothing has traded through its trigger yet.</p>
+    {% endfor %}
+    {% if open_lines.waiting %}<p class="more">Still waiting: {{ open_lines.waiting }}.</p>{% endif %}
+  </div>
+</section>
+{% endif %}
+
 {% if followup %}
 <section>
   <div class="panel">
@@ -311,7 +336,7 @@ footer{margin:32px 0 40px;color:var(--muted);font-size:.86rem}
 
 <section>
   <h2>Episodic pivots</h2>
-  <p class="lede">Big gaps on a surge of volume that closed strong and are still holding. The scan cannot read the news: check what caused the gap.</p>
+  <p class="lede">Big gaps on a surge of volume that closed strong and are still near their high. Where the gap came on earnings, the result is shown.</p>
   {% if episodic %}{% for s in episodic %}{{ card(s, 'ep') }}{% endfor %}
   {% else %}<div class="panel"><p class="empty">No qualifying gaps in the last few sessions.</p></div>{% endif %}
 </section>
@@ -411,6 +436,7 @@ CARD = r"""
   </header>
   <p class="headline">{{ s.headline }}</p>
   <p class="call">{{ s.call }}</p>
+  {% if s.catalyst_text %}<p class="cat">{{ s.catalyst_text }}</p>{% endif %}
   <div class="chart">{{ chart }}</div>
   <ul class="key"><li><i class="k10"></i>10-day</li><li><i class="k20"></i>20-day</li><li><i class="kt"></i>Trigger {{ price(s.pivot) }}</li></ul>
   <dl class="plan">
@@ -450,6 +476,47 @@ def _earnings_note(s: dict, asof: str) -> str | None:
             "through that: trade it small or wait for the report.")
 
 
+def open_lines(chk: dict | None, account: dict) -> dict | None:
+    """Plain sentences for the after-open check."""
+    if not chk or not chk.get("rows"):
+        return None
+    moved, waiting = [], []
+    for r in chk["rows"]:
+        vol = (f" {r['vol_pct']}% of a normal day's volume so far."
+               if r.get("vol_pct") is not None else "")
+        if r["state"] == "waiting":
+            gap = -r["vs_trigger"]
+            waiting.append(f"{r['ticker']} ({pct(gap, 1, sign=False)} below {price(r['trigger'])})")
+            continue
+        if r["state"] == "triggered":
+            label = f"Triggered at {r['time']}"
+            body = (f"Now {price(r['now'])}, {pct(r['vs_trigger'], 1, sign=False)} above the "
+                    f"trigger of {price(r['trigger'])}. ")
+            if r["too_wide"]:
+                body += (f"The low of the day is {price(r['stop'])}, {r['risk_pct']}% below the "
+                         "entry: wider than one daily range, so skip it.")
+            elif r["shares"] > 0:
+                body += (f"Stop at the low of the day, {price(r['stop'])} ({r['risk_pct']}% risk): "
+                         f"{r['shares']} shares, {r['position_pct']}% of the account.")
+            elif chk.get("regime") == "red" and r["setup"] != "ep":
+                body += f"Stop would be the low of the day, {price(r['stop'])}. No size on a red light."
+            else:
+                body += (f"Stop would be {price(r['stop'])}, but one share already risks more "
+                         "than the limit.")
+            if r.get("extended", 0) > 1 and not r["too_wide"]:
+                body += f" Already {r['extended']:.1f} daily ranges above the entry: late."
+        elif r["state"] == "back_under":
+            label = f"Triggered at {r['time']}, now back under"
+            body = (f"Now {price(r['now'])}, below the trigger of {price(r['trigger'])}. "
+                    f"Low of the day {price(r['low'])}.")
+        else:
+            label = "Failed"
+            body = (f"Triggered at {r['time']} and has since broken the low it was stopped "
+                    f"against, {price(r['stop'])}. Now {price(r['now'])}.")
+        moved.append({"ticker": r["ticker"], "state": r["state"], "label": label, "body": body + vol})
+    return {"moved": moved, "waiting": ", ".join(waiting)}
+
+
 def page(p: dict) -> str:
     env = Environment(autoescape=True, trim_blocks=True, lstrip_blocks=True)
     helpers = dict(price=price, pct=pct, money=money, company=company, short_date=short_date, join_names=join_names,
@@ -472,6 +539,8 @@ def page(p: dict) -> str:
     return env.from_string(TEMPLATE).render(
         **{k: v for k, v in p.items() if not k.startswith("_")},
         card=card, asof_long=nice_date(p["asof"]), asof_short=short_date(p["asof"]),
+        open_lines=open_lines(p.get("open_check"), p["account"]),
+        open_date=nice_date(p["open_check"]["date"]).split(" ")[0] if p.get("open_check") else "",
         index_chart=candles(p["_index_chart"], None, h=230, label="Nasdaq 100 daily chart"),
         index_names=INDEXES, top_groups=groups[:6], bottom_groups=groups[-3:],
         breakout_parts=BREAKOUT_PARTS,

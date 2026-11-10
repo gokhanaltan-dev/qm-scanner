@@ -113,6 +113,7 @@ def analyse(bars: dict[str, pd.DataFrame], meta: pd.DataFrame, cfg: dict) -> dic
         row = {**common(t), "setup": "ep", "status": "today" if ep["age"] == 0 else "holding",
                **sc, "grade": setups.grade(sc["score"]), "pivot": ep["pivot"],
                "plan": setups.plan(entry, ep["recent_low"], ep["adr"], cfg, max(sf, 0.5)),
+               "gap_date": bars["Close"].index[end - ep["age"]].strftime("%Y-%m-%d"),
                "facts": {k: ep[k] for k in ("age", "gap", "vol_mult", "close_pos", "prior_3m",
                                             "clears_6m_high", "gap_low", "dist")}}
         when = "today" if ep["age"] == 0 else f"{ep['age']} session{'s' if ep['age'] > 1 else ''} ago"
@@ -254,7 +255,8 @@ def save(payload: dict) -> None:
         return x
 
     # Chart bars are kept in the file, so the page can be rebuilt from it without a download
-    (C.DATA / "latest.json").write_text(json.dumps(plain(payload), separators=(",", ":")))
+    keep = {k: v for k, v in payload.items() if k != "open_check"}
+    (C.DATA / "latest.json").write_text(json.dumps(plain(keep), separators=(",", ":")))
     if payload.get("demo"):
         return
     rows = []
@@ -270,6 +272,50 @@ def save(payload: dict) -> None:
         old = pd.read_csv(log)
         new = pd.concat([old[old["date"] != payload["asof"]], new], ignore_index=True)
     new.to_csv(log, index=False)
+
+
+def attach_earnings(payload: dict) -> None:
+    """Next report date for every stock shown, and the result behind each gap."""
+    from datetime import date
+
+    from . import earnings
+    asof = date.fromisoformat(payload["asof"])
+    main = [r for k in ("ready", "fired", "episodic") for r in payload[k]]
+    try:
+        cal = earnings.load(asof)
+        source = "nasdaq calendar"
+        if cal["health"]["earnings_days_read"] == 0:      # calendar down: ask Yahoo per stock
+            y = earnings.from_yahoo([r["ticker"] for r in main], asof)
+            cal["upcoming"], cal["recent"] = y["upcoming"], y["recent"]
+            source = "yahoo" if (y["upcoming"] or y["recent"]) else "none"
+    except Exception as err:                              # never let this stop the scan
+        _log(f"earnings lookup failed ({err})")
+        cal, source = {"upcoming": {}, "recent": {}, "health": {}}, "none"
+    for r in main + payload["building"]:
+        r["earnings"] = cal["upcoming"].get(r["ticker"])
+    found = 0
+    for r in payload["episodic"]:
+        cat = earnings.catalyst(cal["recent"], r["ticker"], r["gap_date"])
+        r["catalyst"] = cat
+        found += cat is not None
+        r["catalyst_text"] = (earnings.describe(cat) if cat else
+                              "No earnings report on the gap day: check the news for the cause."
+                              if source != "none" else
+                              "Earnings data was not available: check what caused the gap.")
+    payload["health"].update(cal["health"], earnings_source=source, gaps_on_earnings=found)
+
+
+def attach_open_check(payload: dict) -> None:
+    """Show the after-open check while it still belongs to this sheet."""
+    path = C.DATA / "open_check.json"
+    payload.pop("open_check", None)
+    if path.exists():
+        try:
+            chk = json.loads(path.read_text())
+        except Exception:
+            return
+        if chk.get("for_asof") == payload["asof"]:
+            payload["open_check"] = chk
 
 
 def run(demo: bool = False) -> dict:
@@ -297,14 +343,10 @@ def run(demo: bool = False) -> dict:
     payload["health"] = {"stock_list": source, **health}
 
     if not demo:
-        from . import fetch
-        shown = [r["ticker"] for k in ("ready", "fired", "episodic") for r in payload[k]]
-        dates = fetch.earnings_dates(shown)
-        for k in ("ready", "fired", "episodic"):
-            for r in payload[k]:
-                r["earnings"] = dates.get(r["ticker"])
+        attach_earnings(payload)
 
     compare_with_previous(payload, bars)
+    attach_open_check(payload)
 
     from . import render
     C.SITE.mkdir(exist_ok=True)
@@ -320,6 +362,7 @@ def rerender() -> None:
     """Rebuild the page from the last saved scan (no download)."""
     from . import render
     payload = json.loads((C.DATA / "latest.json").read_text())
+    attach_open_check(payload)
     C.SITE.mkdir(exist_ok=True)
     (C.SITE / "index.html").write_text(render.page(payload), encoding="utf-8")
     _log(f"page rebuilt from the {payload['asof']} scan")

@@ -1,0 +1,66 @@
+name: After-open check
+
+on:
+  schedule:
+    # About 40 minutes after the US open. Two times are listed because New York moves
+    # between UTC-5 and UTC-4; the script only acts on the one that lands 09:50 to 10:55 there.
+    - cron: "10 14 * * 1-5"
+    - cron: "10 15 * * 1-5"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: publish-page
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Check last night's triggers
+        id: check
+        run: python -m scanner.intraday
+
+      - name: Save the check
+        if: steps.check.outputs.updated == 'true'
+        run: |
+          git config user.name "qm-scanner-bot"
+          git config user.email "qm-scanner-bot@users.noreply.github.com"
+          git add data/open_check.json
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "After-open check $(date -u +%F)"
+            git pull --rebase --autostash
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+        if: steps.check.outputs.updated == 'true'
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.check.outputs.updated == 'true'
+        with:
+          path: site
+
+      - id: deployment
+        if: steps.check.outputs.updated == 'true'
+        uses: actions/deploy-pages@v4

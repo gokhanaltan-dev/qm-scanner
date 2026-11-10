@@ -228,3 +228,137 @@ def test_page_can_be_rebuilt_from_the_saved_scan(tmp_path, monkeypatch):
     json.loads((tmp_path / "data" / "latest.json").read_text(), parse_constant=lambda c: 1 / 0)  # strict JSON
     build.rerender()
     assert (tmp_path / "site" / "index.html").read_text() == first
+
+
+# ---------------------------------------------------------------------------
+# Earnings calendar
+# ---------------------------------------------------------------------------
+def test_earnings_calendar_parsing_and_gap_matching():
+    from datetime import date
+    from scanner import earnings
+    past = {"data": {"rows": [
+        {"symbol": "ABC", "eps": "$0.52", "epsForecast": "$0.41", "surprise": "26.83", "time": "time-after-hours"},
+        {"symbol": "BRK.B", "eps": "($0.10)", "epsForecast": "$0.05", "time": "time-pre-market"},
+        {"symbol": "NOEPS", "eps": "N/A", "epsForecast": "", "time": "time-not-supplied"},
+        {"symbol": ""}]}}
+    rows = earnings.parse_day(past, date(2026, 11, 5))
+    assert [r["symbol"] for r in rows] == ["ABC", "BRK-B", "NOEPS"]
+    assert rows[0]["surprise"] == pytest.approx(26.83) and rows[0]["time"] == "after the close"
+    assert rows[1]["eps"] == -0.10 and rows[1]["surprise"] == pytest.approx(-300)
+    assert earnings.parse_day({"data": None}, date(2026, 11, 5)) == []
+    assert earnings.parse_day({}, date(2026, 11, 5)) == []
+
+    recent = {r["symbol"]: r for r in rows}
+    # reported Thursday after the close -> the gap is Friday
+    assert earnings.catalyst(recent, "ABC", "2026-11-06")["eps"] == 0.52
+    assert earnings.catalyst(recent, "ABC", "2026-11-05") is not None
+    assert earnings.catalyst(recent, "ABC", "2026-11-09") is None      # Monday: too late
+    assert earnings.catalyst(recent, "ZZZ", "2026-11-06") is None
+    text = earnings.describe(recent["ABC"])
+    assert "$0.52" in text and "beat" in text and "+27%" in text
+    assert "missed" in earnings.describe(recent["BRK-B"])
+    assert "not in the calendar" in earnings.describe(recent["NOEPS"])
+    # Friday's previous weekday is Thursday; Monday's is Friday
+    assert earnings.business_days(date(2026, 11, 9), 1, -1) == [date(2026, 11, 6)]
+    assert earnings.business_days(date(2026, 11, 6), 2, 1) == [date(2026, 11, 9), date(2026, 11, 10)]
+
+
+def test_earnings_load_survives_a_dead_source(monkeypatch):
+    from datetime import date
+    from scanner import earnings
+    calls = []
+
+    def boom(day, session=None):
+        calls.append(day)
+        raise RuntimeError("blocked")
+    monkeypatch.setattr(earnings, "fetch_day", boom)
+    monkeypatch.setattr(earnings.time, "sleep", lambda s: None)
+    out = earnings.load(date(2026, 11, 9))
+    assert out["upcoming"] == {} and out["health"]["earnings_days_read"] == 0
+    assert len(calls) == 3                                      # gives up quickly
+
+    def fake(day, session=None):
+        return [{"symbol": "ABC", "date": day.isoformat(), "eps": None, "forecast": None,
+                 "surprise": None, "time": ""}]
+    monkeypatch.setattr(earnings, "fetch_day", fake)
+    out = earnings.load(date(2026, 11, 9), back=2, ahead=3)
+    assert out["upcoming"]["ABC"] == "2026-11-10"               # the nearest future date
+    assert out["recent"]["ABC"]["date"] == "2026-11-09"         # the most recent past one
+
+
+# ---------------------------------------------------------------------------
+# After-open check
+# ---------------------------------------------------------------------------
+def _five_minute(prices, start="2026-11-10 09:30", volume=20000):
+    """prices: (open, high, low, close) per 5-minute bar, New York time."""
+    idx = pd.date_range(start, periods=len(prices), freq="5min", tz="America/New_York")
+    df = pd.DataFrame(prices, columns=["Open", "High", "Low", "Close"], index=idx)
+    df["Volume"] = volume
+    return df
+
+
+def test_after_open_check_window():
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    from scanner import intraday
+    ny = ZoneInfo("America/New_York")
+    assert intraday.due(datetime(2026, 11, 10, 10, 10, tzinfo=ny), "2026-11-09") is None
+    assert "window" in intraday.due(datetime(2026, 11, 10, 9, 10, tzinfo=ny), "2026-11-09")
+    assert "window" in intraday.due(datetime(2026, 11, 10, 11, 10, tzinfo=ny), "2026-11-09")
+    assert intraday.due(datetime(2026, 11, 14, 10, 10, tzinfo=ny), "2026-11-13") == "weekend"
+    assert "already" in intraday.due(datetime(2026, 11, 10, 10, 10, tzinfo=ny), "2026-11-10")
+    assert "old" in intraday.due(datetime(2026, 11, 20, 10, 10, tzinfo=ny), "2026-11-09")
+    # 15:10 UTC is 10:10 in New York in winter, 14:10 UTC is 10:10 in summer
+    utc = ZoneInfo("UTC")
+    assert intraday.due(datetime(2026, 11, 10, 15, 10, tzinfo=utc), "2026-11-09") is None
+    assert intraday.due(datetime(2026, 11, 10, 14, 10, tzinfo=utc), "2026-11-09") is not None
+    assert intraday.due(datetime(2026, 7, 14, 14, 10, tzinfo=utc), "2026-07-13") is None
+    assert intraday.due(datetime(2026, 7, 14, 15, 10, tzinfo=utc), "2026-07-13") is not None
+
+
+def test_after_open_check_end_to_end(tmp_path, monkeypatch):
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    from scanner import intraday
+    monkeypatch.setattr(C, "DATA", tmp_path / "data")
+    monkeypatch.setattr(C, "SITE", tmp_path / "site")
+    bars, meta = demo.make(end=pd.Timestamp("2026-11-09"))
+    p = build.analyse(bars, meta, CFG)
+    p["demo"], p["health"], p["followup"] = True, {"stock_list": "test"}, None
+    build.save(p)
+    by = {r["ticker"]: r for k in ("ready", "episodic") for r in p[k]}
+    f1, f2, f3 = by["FLAG1"]["pivot"], by["FLAG2"]["pivot"], by["FLAG3"]["pivot"]
+    fake = {
+        # dips first, then goes through the trigger and holds: the stop is the early low
+        "FLAG1": _five_minute([(f1 * .97, f1 * .975, f1 * .96, f1 * .97), (f1 * .97, f1 * 1.01, f1 * .97, f1 * 1.008),
+                               (f1 * 1.008, f1 * 1.03, f1 * 1.0, f1 * 1.02)]),
+        # goes through the trigger and falls back under it
+        "FLAG2": _five_minute([(f2 * .995, f2 * 1.01, f2 * .99, f2 * 1.005), (f2 * 1.005, f2 * 1.006, f2 * .992, f2 * .994)]),
+        # never gets there
+        "FLAG3": _five_minute([(f3 * .96, f3 * .97, f3 * .95, f3 * .965)] * 3),
+    }
+    monkeypatch.setattr(intraday, "fetch_5m", lambda tickers: {t: fake[t] for t in tickers if t in fake})
+    now = datetime(2026, 11, 10, 10, 12, tzinfo=ZoneInfo("America/New_York"))
+    out = intraday.run(now)
+    rows = {r["ticker"]: r for r in out["rows"]}
+    assert out["for_asof"] == "2026-11-09" and out["time_ny"] == "09:45" and out["minutes_in"] == 15
+    a = rows["FLAG1"]
+    assert a["state"] == "triggered" and a["time"] == "09:35"
+    assert a["entry"] == pytest.approx(f1 * 1.001, abs=0.01) and a["stop"] == pytest.approx(f1 * .96, abs=0.01)
+    assert a["shares"] > 0 and not a["too_wide"]
+    assert rows["FLAG2"]["state"] == "back_under" and rows["FLAG3"]["state"] == "waiting"
+    assert [r["ticker"] for r in out["rows"]][:2] == ["FLAG1", "FLAG2"]       # movers first
+    assert set(out["missing"]) == {"EPIC1", "EPIC2"}
+
+    build.rerender()
+    html = (tmp_path / "site" / "index.html").read_text()
+    assert "After the open" in html and "Triggered at 09:35" in html and "Still waiting: FLAG3" in html
+    assert "now back under" in html
+    # a new evening scan replaces the sheet and the morning check goes with it
+    later, _ = demo.make(end=pd.Timestamp("2026-11-10"))
+    p2 = build.analyse(later, meta, CFG)
+    p2["demo"], p2["health"], p2["followup"] = True, {"stock_list": "test"}, None
+    build.attach_open_check(p2)
+    assert "open_check" not in p2 and "After the open" not in render.page(p2)
+    # outside the window nothing is written
+    assert intraday.run(datetime(2026, 11, 10, 12, 0, tzinfo=ZoneInfo("America/New_York"))) is None

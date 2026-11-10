@@ -84,24 +84,3 @@ def align(bars: dict[str, pd.DataFrame], benchmark: str = "QQQ") -> dict[str, pd
         _log("US market still open: ignoring today's unfinished bar")
         sessions = sessions[:-1]
     return {f: df.reindex(sessions) for f, df in bars.items()}
-
-
-def earnings_dates(tickers: list[str]) -> dict[str, str]:
-    """Next earnings date per ticker, best effort. Missing answers are simply left out."""
-    out = {}
-    try:
-        import yfinance as yf
-    except Exception:
-        return out
-    today = datetime.now(timezone.utc).date()
-    for t in tickers:
-        try:
-            cal = yf.Ticker(t).calendar or {}
-            dates = cal.get("Earnings Date") or []
-            nxt = sorted(d for d in dates if d >= today)
-            if nxt:
-                out[t] = nxt[0].isoformat()
-        except Exception:
-            continue
-        time.sleep(0.2)
-    return out
