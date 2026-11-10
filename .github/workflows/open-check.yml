@@ -26,7 +26,11 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Always start from the newest commit: runs queue behind each other, and an
+      # earlier one may have saved data since this one was triggered.
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
@@ -50,7 +54,7 @@ jobs:
             echo "Nothing to commit"
           else
             git commit -m "After-open check $(date -u +%F)"
-            git pull --rebase --autostash
+            git pull --rebase --autostash -X theirs
             git push
           fi
 
