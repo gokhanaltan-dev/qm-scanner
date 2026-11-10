@@ -1,6 +1,5 @@
 date,ticker,setup,status,score,grade,regime,close,trigger,stop
 2026-11-09,GDYN,breakout,ready,71,B,red,13.3,14.02,13.17
-2026-11-09,AEHL,ep,holding,89,A+,red,12.0,19.39,13.24
 2026-11-09,CRCT,ep,holding,81,A,red,8.79,9.7,9.13
 2026-11-09,IBTA,ep,holding,77,A,red,59.91,66.39,62.21
 2026-11-09,FROG,ep,holding,71,B,red,108.18,108.59,99.79
@@ -9,7 +8,8 @@ date,ticker,setup,status,score,grade,regime,close,trigger,stop
 2026-11-09,VRDN,ep,holding,68,B,red,30.19,30.38,28.66
 2026-11-09,LASR,ep,holding,66,B,red,43.21,44.21,41.36
 2026-11-09,U,ep,holding,66,B,red,51.43,54.26,51.11
-2026-11-09,ADMA,ep,holding,63,B,red,12.79,13.77,13.11
+2026-11-09,TMDX,ep,holding,63,B,red,93.79,95.3,89.56
+2026-11-09,MGNI,ep,holding,61,C,red,29.04,29.25,27.84
 2026-11-09,BETR,breakout,building,71,B,red,20.15,23.63,19.93
 2026-11-09,GMAB,breakout,building,66,B,red,55.8,59.97,56.71
 2026-11-09,HTFL,breakout,building,63,B,red,56.66,60.56,56.99
