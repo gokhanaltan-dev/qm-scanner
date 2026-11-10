@@ -1,0 +1,433 @@
+{
+ "yahoo_daily": {
+  "ok": true,
+  "info": {
+   "THYAO.IS": {
+    "rows": 6811,
+    "first": "2000-05-10 00:00:00+03:00",
+    "last": "2026-11-10 00:00:00+03:00",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume",
+     "Dividends",
+     "Stock Splits"
+    ],
+    "splits": 4,
+    "divs": 4
+   },
+   "XU100.IS": {
+    "rows": 7333,
+    "first": "1997-07-01 00:00:00+03:00",
+    "last": "2026-11-10 00:00:00+03:00",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume",
+     "Dividends",
+     "Stock Splits"
+    ],
+    "splits": 0,
+    "divs": 0
+   },
+   "ASELS.IS": {
+    "rows": 6811,
+    "first": "2000-05-10 00:00:00+03:00",
+    "last": "2026-11-10 00:00:00+03:00",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume",
+     "Dividends",
+     "Stock Splits"
+    ],
+    "splits": 7,
+    "divs": 32
+   },
+   "SASA.IS": {
+    "rows": 6812,
+    "first": "2000-05-10 00:00:00+03:00",
+    "last": "2026-11-10 00:00:00+03:00",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume",
+     "Dividends",
+     "Stock Splits"
+    ],
+    "splits": 12,
+    "divs": 2
+   },
+   "XBANK.IS": {
+    "rows": 7445,
+    "first": "1997-01-02 00:00:00+02:00",
+    "last": "2026-11-10 00:00:00+03:00",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume",
+     "Dividends",
+     "Stock Splits"
+    ],
+    "splits": 0,
+    "divs": 0
+   },
+   "XUSIN.IS": {
+    "rows": 8440,
+    "first": "1993-01-04 00:00:00+02:00",
+    "last": "2026-11-10 00:00:00+03:00",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume",
+     "Dividends",
+     "Stock Splits"
+    ],
+    "splits": 0,
+    "divs": 0
+   },
+   "XUTEK.IS": {
+    "rows": 0,
+    "first": "nan",
+    "last": "nan",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume"
+    ],
+    "splits": 0,
+    "divs": 0
+   },
+   "XU030.IS": {
+    "rows": 7445,
+    "first": "1997-01-02 00:00:00+02:00",
+    "last": "2026-11-10 00:00:00+03:00",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume",
+     "Dividends",
+     "Stock Splits"
+    ],
+    "splits": 0,
+    "divs": 0
+   },
+   "KONTR.IS": {
+    "rows": 1518,
+    "first": "2020-10-19 00:00:00+03:00",
+    "last": "2026-11-10 00:00:00+03:00",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume",
+     "Dividends",
+     "Stock Splits"
+    ],
+    "splits": 2,
+    "divs": 5
+   },
+   "USDTRY=X": {
+    "rows": 5682,
+    "first": "2005-01-03 00:00:00+00:00",
+    "last": "2026-11-10 00:00:00+00:00",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume",
+     "Dividends",
+     "Stock Splits"
+    ],
+    "splits": 0,
+    "divs": 0
+   },
+   "GBPTRY=X": {
+    "rows": 5686,
+    "first": "2002-07-29 00:00:00+01:00",
+    "last": "2026-11-10 00:00:00+00:00",
+    "cols": [
+     "Open",
+     "High",
+     "Low",
+     "Close",
+     "Adj Close",
+     "Volume",
+     "Dividends",
+     "Stock Splits"
+    ],
+    "splits": 0,
+    "divs": 0
+   }
+  },
+  "secs": 6.5
+ },
+ "yahoo_batch": {
+  "ok": true,
+  "info": {
+   "shape": [
+    21,
+    30
+   ],
+   "last": "2026-11-10 00:00:00"
+  },
+  "secs": 0.5
+ },
+ "isy_hissetekil": {
+  "ok": true,
+  "info": {
+   "status": 200,
+   "n": 2720,
+   "first": {
+    "HGDG_HS_KODU": "THYAO",
+    "HGDG_TARIH": "04-01-2016",
+    "HGDG_KAPANIS": 6.975,
+    "HGDG_AOF": 7.0101213,
+    "HGDG_MIN": 6.9554152,
+    "HGDG_MAX": 7.0824103,
+    "HGDG_HACIM": 335885231.0,
+    "END_ENDEKS_KODU": "01",
+    "END_TARIH": 1451854800000,
+    "END_SEANS": 2,
+    "END_DEGER": 705.1835000000001,
+    "DD_DOVIZ_KODU": "USD",
+    "DD_DT_KODU": "01",
+    "DD_TARIH": 1451854800000,
+    "DD_DEGER": 2.9475,
+    "DOLAR_BAZLI_FIYAT": 2.3664,
+    "ENDEKS_BAZLI_FIYAT": 0.0099,
+    "DOLAR_HACIM": 113955973.1976,
+    "SERMAYE": 1380000000.0,
+    "HG_KAPANIS": 7.14,
+    "HG_AOF": 7.176,
+    "HG_MIN": 7.12,
+    "HG_MAX": 7.25,
+    "PD": 9853199815.75012,
+    "PD_USD": 3342900700.84822,
+    "HAO_PD": 4926599907.87506,
+    "HAO_PD_USD": 1671450350.42411,
+    "HG_HACIM": 335885231.0,
+    "DOLAR_BAZLI_MIN": 2.3598,
+    "DOLAR_BAZLI_MAX": 2.4029,
+    "DOLAR_BAZLI_AOF": 2.3783
+   },
+   "last": {
+    "HGDG_HS_KODU": "THYAO",
+    "HGDG_TARIH": "10-11-2026",
+    "HGDG_KAPANIS": 313.75,
+    "HGDG_AOF": 314.836,
+    "HGDG_MIN": 311.0,
+    "HGDG_MAX": 318.25,
+    "HGDG_HACIM": 15450938060.0,
+    "END_ENDEKS_KODU": "01",
+    "END_TARIH": 1794258000000,
+    "END_SEANS": 2,
+    "END_DEGER": 11661.86,
+    "DD_DOVIZ_KODU": "USD",
+    "DD_DT_KODU": "01",
+    "DD_TARIH": 1794258000000,
+    "DD_DEGER": 50.1981,
+    "DOLAR_BAZLI_FIYAT": 6.2502,
+    "ENDEKS_BAZLI_FIYAT": 0.0269,
+    "DOLAR_HACIM": 307799260.5298,
+    "SERMAYE": 1380000000.0,
+    "HG_KAPANIS": 313.75,
+    "HG_AOF": 314.836,
+    "HG_MIN": 311.0,
+    "HG_MAX": 318.25,
+    "PD": 432975000000.0,
+    "PD_USD": 8625326456.57903,
+    "HAO_PD": 212417535000.0,
+    "HAO_PD_USD": 4231585159.597672,
+    "HG_HACIM": 15450938060.0,
+    "DOLAR_BAZLI_MIN": 6.1955,
+    "DOLAR_BAZLI_MAX": 6.3399,
+    "DOLAR_BAZLI_AOF": 6.2719
+   }
+  },
+  "secs": 3.5
+ },
+ "isy_sermaye": {
+  "ok": true,
+  "info": {
+   "THYAO": {
+    "status": 200,
+    "len": 12837,
+    "head": "{\"d\":\"[{\\\"HISSE_KODU\\\":\\\"THYAO\\\",\\\"HisseTanim\\\":\\\"Türk Hava Yolları\\\",\\\"SEKTOR_KODU\\\":\\\"0017\\\",\\\"BHG_GRUP_KODU\\\":\\\"09\\\",\\\"PRICE_TL\\\":313.75,\\\"ONERI\\\":\\\"AL\\\",\\\"HEDEF_PD_YTL1\\\":676198.34,\\\"HEDEF_FIYAT\\\":489.99879710144927,\\\"GETIRI_POT\\\":0.56174915410820492,\\\"TARIH\\\":1793750400000,\\\"SHHE_TIP_KODU\\\":\\\"0"
+   },
+   "SASA": {
+    "status": 200,
+    "len": 32377,
+    "head": "{\"d\":\"[{\\\"HISSE_KODU\\\":\\\"SASA\\\",\\\"HisseTanim\\\":\\\"Sasa Polyester Sanayi A.Ş.\\\",\\\"SEKTOR_KODU\\\":\\\"0013\\\",\\\"BHG_GRUP_KODU\\\":\\\"09\\\",\\\"PRICE_TL\\\":1.59,\\\"ONERI\\\":null,\\\"HEDEF_PD_YTL1\\\":0.0,\\\"HEDEF_FIYAT\\\":0.0,\\\"GETIRI_POT\\\":0.0,\\\"TARIH\\\":-62135596800000,\\\"SHHE_TIP_KODU\\\":\\\"07\\\",\\\"SHHE_HS_KODU\\\":\\\"SASA\\\",\\"
+   },
+   "KONTR": {
+    "status": 200,
+    "len": 11255,
+    "head": "{\"d\":\"[{\\\"HISSE_KODU\\\":\\\"KONTR\\\",\\\"HisseTanim\\\":\\\"Kontrolmatik Teknoloji\\\",\\\"SEKTOR_KODU\\\":\\\"0012\\\",\\\"BHG_GRUP_KODU\\\":\\\"09\\\",\\\"PRICE_TL\\\":2.41,\\\"ONERI\\\":null,\\\"HEDEF_PD_YTL1\\\":0.0,\\\"HEDEF_FIYAT\\\":0.0,\\\"GETIRI_POT\\\":0.0,\\\"TARIH\\\":-62135596800000,\\\"SHHE_TIP_KODU\\\":\\\"01\\\",\\\"SHHE_HS_KODU\\\":\\\"KONTR\\\",\\\"S"
+   }
+  },
+  "secs": 3.2
+ },
+ "isy_index": {
+  "ok": true,
+  "info": {
+   "status": 200,
+   "len": 69773,
+   "head": "{\"data\":[[1451858400000,705.1835],[1451944800000,706.881],[1452031200000,711.9794],[1452117600000,714.9593],[1452204000000,706.132],[1452463200000,710.4898],[1452549600000,717.4041],[1452636000000,725"
+  },
+  "secs": 1.5
+ },
+ "isy_stocklist": {
+  "ok": true,
+  "info": {
+   "status": 200,
+   "len": 1665518
+  },
+  "secs": 2.5
+ },
+ "tv_scan": {
+  "ok": true,
+  "info": {
+   "status": 200,
+   "total": 649,
+   "types": {
+    "stock/common/['common']": 625,
+    "fund/etf/['etf']": 20,
+    "fund/closedend/['closedend']": 4
+   },
+   "sample": [
+    {
+     "s": "BIST:THYAO",
+     "d": [
+      "THYAO",
+      "Turk Hava Yollari A.O.",
+      "stock",
+      "common",
+      [
+       "common"
+      ],
+      "Transportation",
+      "Airlines",
+      313.75,
+      48494691,
+      15215209301.25,
+      40077246.99999998,
+      427800000000,
+      "BIST"
+     ]
+    },
+    {
+     "s": "BIST:KCHOL",
+     "d": [
+      "KCHOL",
+      "Koc Holding A.S.",
+      "stock",
+      "common",
+      [
+       "common"
+      ],
+      "Energy Minerals",
+      "Oil Refining/Marketing",
+      206,
+      51737682,
+      10657962492,
+      26899357.75,
+      538624731635,
+      "BIST"
+     ]
+    },
+    {
+     "s": "BIST:TUPRS",
+     "d": [
+      "TUPRS",
+      "Tupras Turkiye Petrol Rafinerileri A.S.",
+      "stock",
+      "common",
+      [
+       "common"
+      ],
+      "Energy Minerals",
+      "Oil Refining/Marketing",
+      331.25,
+      30155635,
+      9989054093.75,
+      23225609.383333333,
+      640177856140,
+      "BIST"
+     ]
+    }
+   ]
+  },
+  "secs": 0.2
+ },
+ "kap": {
+  "ok": true,
+  "info": {
+   "home": {
+    "status": 200,
+    "len": 149787,
+    "head": "<!DOCTYPE html><html lang=\"en\" class=\"overflow-x-hidden scroll-smooth show:overflow-y-hidden show:pr-1.5\"><head><meta charSet=\"utf-8\"/><meta name=\"vie"
+   },
+   "bist": {
+    "status": 200,
+    "len": 1510984,
+    "head": "<!DOCTYPE html><html lang=\"tr\" class=\"overflow-x-hidden scroll-smooth show:overflow-y-hidden show:pr-1.5\"><head><meta charSet=\"utf-8\"/><meta name=\"vie"
+   },
+   "api": {
+    "error": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='www.kap.org.tr', port=443): Read timed out. (read timeout=30)\"))"
+   }
+  },
+  "secs": 34.0
+ },
+ "borsa_istanbul": {
+  "ok": true,
+  "info": {
+   "home": {
+    "status": 200,
+    "len": 94347
+   },
+   "vbts": {
+    "error": "ConnectionError(ProtocolError('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')))"
+   }
+  },
+  "secs": 31.8
+ },
+ "stooq": {
+  "ok": true,
+  "info": {
+   "status": 200,
+   "len": 796,
+   "head": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"robots\" content=\"noindex,nofollow\"></head><body><noscript>T"
+  },
+  "secs": 0.6
+ },
+ "_when_utc": "2026-11-10T20:58:31Z"
+}
