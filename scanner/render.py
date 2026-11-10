@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+import re
 from datetime import date, datetime
 
 from jinja2 import Environment
@@ -32,6 +33,16 @@ def money(x) -> str:
     if x >= 1e6:
         return f"${x / 1e6:.0f}m"
     return f"${x:,.0f}"
+
+
+_SHARE_CLASS = re.compile(
+    r"\s+(?:Class [A-Z]\s+)?(?:Common Stock|Common Shares?|Ordinary Shares?|"
+    r"American Depositary Shares?|Depositary Shares?|ADS|ADR)\b.*$", re.I)
+
+
+def company(name: str) -> str:
+    """'Grid Dynamics Holdings Inc. Class A Common Stock' -> 'Grid Dynamics Holdings Inc.'"""
+    return _SHARE_CLASS.sub("", name or "").strip() or (name or "")
 
 
 def nice_date(iso: str) -> str:
@@ -394,7 +405,7 @@ CARD = r"""
   <header>
     <div>
       <h3 class="ticker"><a href="{{ tv(s.ticker) }}">{{ s.ticker }}</a>{% if s.new %}<span class="new">New</span>{% endif %}</h3>
-      <p class="co">{{ s.name }}{% if s.industry %}{{ ', ' if s.name }}{{ s.industry }}{% endif %}</p>
+      <p class="co">{{ company(s.name) }}{% if s.industry %}{{ ', ' if s.name }}{{ s.industry }}{% endif %}</p>
     </div>
     <div class="rating"><span class="score">{{ s.score }}</span><span class="grade">grade {{ s.grade }}</span></div>
   </header>
@@ -441,7 +452,7 @@ def _earnings_note(s: dict, asof: str) -> str | None:
 
 def page(p: dict) -> str:
     env = Environment(autoescape=True, trim_blocks=True, lstrip_blocks=True)
-    helpers = dict(price=price, pct=pct, money=money, short_date=short_date, join_names=join_names,
+    helpers = dict(price=price, pct=pct, money=money, company=company, short_date=short_date, join_names=join_names,
                    tv=lambda t: f"https://www.tradingview.com/chart/?symbol={t.replace('-', '.')}")
     env.globals.update(helpers)
     card_t = env.from_string(CARD)
