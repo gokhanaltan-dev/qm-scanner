@@ -202,6 +202,10 @@ def detect_ep(o, h, l, c, v, end: int, cfg: dict) -> dict | None:
         post_high = float(np.nanmax(h[g:end + 1]))
         if age and c[end] < l[g] + 0.5 * (post_high - l[g]):
             continue
+        # ... and within 1.5 average daily ranges of that high, or it is not close to going
+        adr_now = float(np.nanmean((h / l - 1)[end - 19:end + 1]))
+        if age and post_high / c[end] - 1 > 1.5 * adr_now:
+            continue
         rng = h / l - 1
         adr_before = float(np.nanmean(rng[g - 20:g]))
         prior_3m = float(c[g - 1] / c[g - 64] - 1)

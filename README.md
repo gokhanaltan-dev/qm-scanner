@@ -11,7 +11,7 @@ The result is one phone-friendly page, rebuilt every weekday at 22:30 UTC.
 | Setup | Rule of thumb |
 | --- | --- |
 | Breakout | Top 7% of gainers over 1, 3 or 6 months, a run of 30% or more, then a 4 to 40 day base that gives back less than half the run, tightens, dries up in volume and rides its rising 10/20-day averages |
-| Episodic pivot | A gap of 8% or more on at least 2.5x normal volume that closes strong and has not been undercut since |
+| Episodic pivot | A gap of 8% or more on at least 2.5x normal volume that closes strong, has not been undercut since, and is still within 1.5 daily ranges of its high |
 
 Stocks must be above $5, trade $10m a day and have an average daily range of 4% or more.
 The parabolic short is left out on purpose: this sheet is long only.
