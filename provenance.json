@@ -1,0 +1,83 @@
+{
+ "retrieved_utc_start": "2026-11-10T21:18:58+00:00",
+ "retrieved_istanbul_start": "2026-11-11T00:18:58+03:00",
+ "start": "2014-01-01",
+ "sources": {
+  "universe": {
+   "source": "TradingView screener (scanner.tradingview.com/turkey/scan)",
+   "listed_rows": 649,
+   "stocks": 625
+  },
+  "isy_prices": {
+   "source": "Is Yatirim HisseTekil (raw HG_* and adjusted HGDG_* series)",
+   "requested": 625,
+   "received": 619,
+   "failed": {
+    "ALTIN": "empty",
+    "CITAS": "empty",
+    "LYDHO": "empty",
+    "LRSHO": "empty",
+    "DMLKT": "empty",
+    "INTEK": "empty"
+   },
+   "first_date": "2014-01-02",
+   "last_date": "2026-11-10",
+   "rows": 1388028
+  },
+  "isy_actions": {
+   "source": "Is Yatirim GetSermayeArttirimlari",
+   "rows": 6844,
+   "failed": {}
+  },
+  "yahoo_prices": {
+   "source": "Yahoo Finance via yfinance, auto_adjust=False",
+   "requested": 625,
+   "received": 623,
+   "missing": [
+    "ALTIN.IS",
+    "DMLKT.IS"
+   ],
+   "last_date": "2026-11-09"
+  },
+  "yahoo_indices": {
+   "received": [
+    "GBPTRY=X",
+    "USDTRY=X",
+    "XBANK.IS",
+    "XBLSM.IS",
+    "XELKT.IS",
+    "XFINK.IS",
+    "XGIDA.IS",
+    "XGMYO.IS",
+    "XHOLD.IS",
+    "XILTM.IS",
+    "XINSA.IS",
+    "XKAGT.IS",
+    "XKMYA.IS",
+    "XMADN.IS",
+    "XMANA.IS",
+    "XMESY.IS",
+    "XSGRT.IS",
+    "XSPOR.IS",
+    "XTAST.IS",
+    "XTCRT.IS",
+    "XTEKS.IS",
+    "XTRZM.IS",
+    "XU030.IS",
+    "XU050.IS",
+    "XU100.IS",
+    "XUHIZ.IS",
+    "XULAS.IS",
+    "XUMAL.IS",
+    "XUSIN.IS",
+    "XUTEK.IS",
+    "XUTUM.IS",
+    "XYORT.IS"
+   ],
+   "missing": []
+  }
+ },
+ "retrieved_utc_end": "2026-11-10T21:24:35+00:00",
+ "retrieved_istanbul_end": "2026-11-11T00:24:35+03:00",
+ "delay_note": "End-of-day data. Is Yatirim and Yahoo publish BIST prices with at least a 15-minute delay; a bar dated today is only complete after the 18:10 Istanbul close."
+}
