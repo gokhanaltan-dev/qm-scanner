@@ -67,16 +67,15 @@ def assess(index_close: dict[str, pd.Series], br: dict) -> dict:
 
     verdict = {
         "green": ("Green light. Trade breakouts at full size.", 1.0),
-        "amber": ("Amber. Half size, best setups only.", 0.5),
+        "amber": ("Amber. Half size.", 0.5),
         "red": ("Red light. No new breakouts.", 0.0),
     }[state]
     action = {
         "green": "Take ready setups as they trigger. Sell a third to a half into strength "
                  "after three to five days and trail the rest on the 10-day average.",
-        "amber": "Only take A-rated setups, at half risk. Take partial profits sooner.",
-        "red": "Breakouts tend to fail when the Nasdaq's 10-day is under its 20-day. Keep the "
-               "list as a watchlist of leaders for when the light changes. A strong episodic "
-               "pivot is the only long worth a small position.",
+        "amber": "Take fewer trades, at half risk, and take partial profits sooner.",
+        "red": "Keep the list as a watchlist of leaders for when the light changes. "
+               "Episodic pivots are sized at half.",
     }[state]
     return {"state": state, "verdict": verdict[0], "size_factor": verdict[1],
             "action": action, "reasons": reasons, "indexes": ix}

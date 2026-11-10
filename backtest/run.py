@@ -295,6 +295,11 @@ FACTORS = ("pull_rs", "rsline", "ext50", "ext200", "streak50", "ud_vol", "off_hi
 # ---------------------------------------------------------------------------
 def replay(bars: dict[str, pd.DataFrame], meta: pd.DataFrame, cfg: dict,
            start: int = WARMUP) -> tuple[pd.DataFrame, pd.DataFrame]:
+    # Record every gap, including the ones the live sheet now filters out, so the
+    # filters themselves can be measured.
+    cfg = {**cfg, "episodic_pivot": {**cfg["episodic_pivot"], "max_adr_from_high": 1.5,
+                                     "min_pre_price": 0, "max_prior_adr_pct": 1e9,
+                                     "max_gap_pct": 1e9, "min_pre_dollar_volume": 0}}
     P = panels(bars, meta, cfg)
     O, H, L, Cl, V, S10, S20 = P["O"], P["H"], P["L"], P["C"], P["V"], P["S10"], P["S20"]
     T, N = Cl.shape

@@ -3,8 +3,8 @@
 Two setups, both long:
   * Breakout  - a big run-up, then an orderly, tightening base on drying volume,
                 riding its rising 10/20-day averages, close to the top of its range.
-  * Episodic pivot - a large gap up on a surge of volume, ideally out of a quiet
-                stock, that closes strong.
+  * Episodic pivot - a large gap up on a surge of volume, out of a liquid and
+                previously quiet stock, that closes strong and stays near its high.
 
 Every function takes plain numpy arrays (open, high, low, close, volume) and an
 `end` index, so the same code answers "what did this look like yesterday?" which
@@ -168,11 +168,14 @@ def detect_breakout_today(o, h, l, c, v, end: int, cfg: dict) -> dict | None:
 # ---------------------------------------------------------------------------
 # Episodic pivot
 # ---------------------------------------------------------------------------
+# Weights follow the backtest: distance from the high was the one thing that separated
+# gaps that worked from gaps that did not. Gap size and volume surge did not.
 EP_PARTS = [
-    ("gap", "Gap size", 25),
-    ("volume", "Volume surge", 30),
+    ("near", "Near its high", 40),
     ("close", "Strong close", 20),
     ("fresh", "Fresh move", 15),
+    ("gap", "Gap size", 10),
+    ("volume", "Volume surge", 5),
     ("tradeable", "Range & liquidity", 10),
 ]
 
@@ -202,12 +205,19 @@ def detect_ep(o, h, l, c, v, end: int, cfg: dict) -> dict | None:
         post_high = float(np.nanmax(h[g:end + 1]))
         if age and c[end] < l[g] + 0.5 * (post_high - l[g]):
             continue
-        # ... and within 1.5 average daily ranges of that high, or it is not close to going
-        adr_now = float(np.nanmean((h / l - 1)[end - 19:end + 1]))
-        if age and post_high / c[end] - 1 > 1.5 * adr_now:
-            continue
+        # ... and close to that high. In the backtest only gaps within half a daily range
+        # of their high broke even or better; the further away, the worse they did.
         rng = h / l - 1
+        adr_now = float(np.nanmean(rng[end - 19:end + 1]))
+        if post_high / c[end] - 1 > e["max_adr_from_high"] * adr_now:
+            continue
+        # Thin, wild stocks are left out: their gaps fell about 15% against the market
+        # over the next 10 sessions in the backtest.
         adr_before = float(np.nanmean(rng[g - 20:g]))
+        pre_dollar_vol = float(np.nanmean(c[g - 50:g] * v[g - 50:g]))
+        if (c[g - 1] < e["min_pre_price"] or adr_before * 100 >= e["max_prior_adr_pct"]
+                or gap * 100 >= e["max_gap_pct"] or pre_dollar_vol < e["min_pre_dollar_volume"]):
+            continue
         prior_3m = float(c[g - 1] / c[g - 64] - 1)
         high_6m = float(np.nanmax(h[max(0, g - 126):g]))
         pivot = float(np.nanmax(h[g:end + 1]))
@@ -219,8 +229,8 @@ def detect_ep(o, h, l, c, v, end: int, cfg: dict) -> dict | None:
             "pivot": pivot, "close": float(c[end]), "green_day": bool(c[g] > o[g]),
             # the stock before the gap: used to screen out thin, wild names
             "pre_close": float(c[g - 1]),
-            "pre_dollar_vol": float(np.nanmean(c[g - 50:g] * v[g - 50:g])),
-            "dist": (pivot / float(c[end]) - 1) / float(np.nanmean(rng[end - 19:end + 1])),
+            "pre_dollar_vol": pre_dollar_vol,
+            "dist": (pivot / float(c[end]) - 1) / adr_now,
             "recent_low": float(np.nanmin(l[max(g, end - 1):end + 1])),
         }
     return None
@@ -228,8 +238,9 @@ def detect_ep(o, h, l, c, v, end: int, cfg: dict) -> dict | None:
 
 def score_ep(ep: dict, dollar_vol: float) -> dict:
     p = {}
-    p["gap"] = 25 * _clip01((ep["gap"] - 0.05) / 0.20)
-    p["volume"] = 30 * _clip01((ep["vol_mult"] - 1.5) / 8.5)
+    p["near"] = 40 * _clip01((0.5 - ep["dist"]) / 0.5)
+    p["gap"] = 10 * _clip01((ep["gap"] - 0.05) / 0.20)
+    p["volume"] = 5 * _clip01((ep["vol_mult"] - 1.5) / 8.5)
     p["close"] = 15 * _clip01(ep["close_pos"]) + (5 if ep["green_day"] else 0)
     p["fresh"] = 10 * _clip01((0.6 - ep["prior_3m"]) / 0.4) + (5 if ep["clears_6m_high"] else 0)
     p["tradeable"] = (5 * _clip01((ep["adr_before"] - 0.02) / 0.03)

@@ -33,6 +33,9 @@ jobs:
       - name: Replay the scanner over history
         run: python -m backtest.run --days 1300 --out bt_out
 
+      - name: Summarise
+        run: python -m backtest.analyse bt_out --json bt_out/summary.json
+
       # Results go to their own branch, replaced each run, so the main branch stays small
       - name: Publish results to the backtest-results branch
         env:

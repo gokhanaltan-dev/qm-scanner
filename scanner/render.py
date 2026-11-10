@@ -50,6 +50,10 @@ def nice_date(iso: str) -> str:
     return f"{d:%A} {d.day} {d:%B %Y}"
 
 
+def _month(iso: str) -> str:
+    return datetime.strptime(iso, "%Y-%m-%d").strftime("%B %Y")
+
+
 def short_date(iso: str) -> str:
     d = datetime.strptime(iso, "%Y-%m-%d")
     return f"{d.day} {d:%b}"
@@ -256,7 +260,7 @@ footer{margin:32px 0 40px;color:var(--muted);font-size:.86rem}
   <p class="when">Breakout sheet for the US close on {{ asof_long }}</p>
   <h1 class="verdict">{{ regime.verdict }}</h1>
   <p class="do">{{ regime.action }}</p>
-  <ul>{% for r in regime.reasons %}<li>{{ r }}</li>{% endfor %}</ul>
+  <ul>{% for r in regime.reasons %}<li>{{ r }}</li>{% endfor %}{% if light_fact %}<li>{{ light_fact }}</li>{% endif %}</ul>
 </div></div>
 
 <div class="wrap">
@@ -336,7 +340,7 @@ footer{margin:32px 0 40px;color:var(--muted);font-size:.86rem}
 
 <section>
   <h2>Episodic pivots</h2>
-  <p class="lede">Big gaps on a surge of volume that closed strong and are still near their high. Where the gap came on earnings, the result is shown.</p>
+  <p class="lede">Big gaps on a surge of volume, in liquid stocks, that closed within half a daily range of their high. Where the gap came on earnings, the result is shown.</p>
   {% if episodic %}{% for s in episodic %}{{ card(s, 'ep') }}{% endfor %}
   {% else %}<div class="panel"><p class="empty">No qualifying gaps in the last few sessions.</p></div>{% endif %}
 </section>
@@ -393,11 +397,61 @@ footer{margin:32px 0 40px;color:var(--muted);font-size:.86rem}
   </div>
 </section>
 
+{% if bt %}
+<section>
+  <h2>What the backtest found</h2>
+  <p class="lede">The scanner was replayed over {{ bt.sessions }} sessions, {{ bt_from }} to {{ bt_to }}, seeing only what was known each evening, and every trigger was traded by the rules below. Results are in R: 1R is the amount risked on a trade.</p>
+  <div class="panel">
+    <table>
+      <thead><tr><th>Ready list, by light</th><th>Trades</th><th>Winners</th><th>Average</th></tr></thead>
+      <tbody>
+      {% for k in ['green', 'amber', 'red'] %}{% set x = bt.ready_by_light[k] %}
+        <tr><th><span class="dot {{ k }}"></span>{{ k|capitalize }}</th><td>{{ x.n }}</td><td>{{ "%.0f"|format(x.win) }}%</td><td class="{{ 'pos' if x.avg_r > 0 else 'neg' }}">{{ rr(x.avg_r) }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <p class="more">The light is the part that held up: red lost money in both halves of the period. Even on green the edge is thin, so which setups you take, and what trading costs you, decide the result.</p>
+  </div>
+  <div class="panel">
+    <table>
+      <thead><tr><th>Ready list, by rating</th><th>Trades</th><th>Winners</th><th>Average</th></tr></thead>
+      <tbody>
+      {% for x in bt.ready_by_rating %}
+        <tr><th>{{ x.band }}</th><td>{{ x.n }}</td><td>{{ "%.0f"|format(x.win) }}%</td><td class="{{ 'pos' if x.avg_r > 0 else 'neg' }}">{{ rr(x.avg_r) }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <p class="more">The rating did not rank the winners. Nor did group strength, strength during pullbacks, base count or distance above the 50-day: a model fitted on the first half of the period could not rank setups in the second. Read the rating as how closely a chart matches the pattern, not as its odds.</p>
+  </div>
+  <div class="panel">
+    <table>
+      <thead><tr><th>Gaps, 10 days later</th><th>Count</th><th>Against the Nasdaq</th></tr></thead>
+      <tbody>
+        <tr><th>Thin or wild stocks</th><td>{{ "{:,}".format(bt.ep.gap_day_thin.n) }}</td><td class="neg">{{ pc(bt.ep.gap_day_thin.vs_market_10d) }}</td></tr>
+        <tr><th>The rest</th><td>{{ "{:,}".format(bt.ep.gap_day_clean.n) }}</td><td class="{{ 'pos' if bt.ep.gap_day_clean.vs_market_10d > 0 else 'neg' }}">{{ pc(bt.ep.gap_day_clean.vs_market_10d) }}</td></tr>
+      </tbody>
+    </table>
+    <p class="more">Thin or wild means under $5 before the gap, a daily range of 8% or more, a gap of 50% or more, or under $5m traded a day. Those are now left out. Among the rest, gaps that closed within half a daily range of their high averaged {{ rr(bt.ep.trades_clean_near_high.avg_r) }} on {{ bt.ep.trades_clean_near_high.n }} trades and the others {{ rr(bt.ep.trades_clean_far.avg_r) }}, so that is now required.</p>
+  </div>
+  <div class="panel">
+    <details><summary>Rules used, and the limits of the test</summary>
+      <ul>
+        <li>Entry the next session if price trades through the trigger, at the trigger or at the open if it gaps above. {{ "%.0f"|format(bt.trigger_next_day) }}% of ready setups triggered the next day and {{ "%.0f"|format(bt.trigger_in_5) }}% within five.</li>
+        <li>Stop between 0.4 and 1.0 daily ranges below the entry. Half sold on the first profitable close from day three, the rest on the first close under the 10-day average.</li>
+        <li>Seven other exit rules were tried, from fixed targets to a 20-day trail. None changed the picture: on green they ranged from {{ rr(exit_lo) }} to {{ rr(exit_hi) }}.</li>
+        <li>Daily bars cannot show whether the low or the breakout came first on the entry day ({{ "%.0f"|format(bt.ambiguous_pct) }}% of trades). Counting all of those as losses takes green to {{ rr(bt.ready_by_light.green.avg_r_pess) }}.</li>
+        <li>Only stocks listed today are included, which flatters the results, and no trading costs are counted.</li>
+      </ul>
+    </details>
+  </div>
+</section>
+{% endif %}
+
 <section>
   <h2>How to trade this sheet</h2>
   <div class="panel">
     <ol class="steps">
-      <li>Read the light first. Red means no new breakouts, whatever the ratings say.</li>
+      <li>Read the light first. Red means no new breakouts, whatever the ratings say: it is the one filter the backtest supports.</li>
       <li>Before the US open, set a TradingView alert at each trigger on the ready list.</li>
       <li>When an alert fires, buy the break of the opening range high (1, 5 or 60-minute chart). Stop at the low of the day.</li>
       <li>If the low of the day is more than one average daily range below your entry, skip it. The sizes here assume that limit.</li>
@@ -408,7 +462,11 @@ footer{margin:32px 0 40px;color:var(--muted);font-size:.86rem}
       <ul class="parts">
         {% for key, label, mx in breakout_parts %}<li><span>{{ label }}</span><span>{{ mx }} points</span></li>{% endfor %}
       </ul>
-      <p class="more">Breakouts score out of 100. A+ is 85 or more, A is 75, B is 62. Leadership is the stock's rank among all liquid stocks over one, three or six months plus the size of its run. Tightness compares the last five days' ranges with the ranges during the run. Episodic pivots are scored separately on gap size, volume surge, strength of the close, how quiet the stock was before, and liquidity.</p>
+      <p class="more">Breakouts score out of 100. A+ is 85 or more, A is 75, B is 62. Leadership is the stock's rank among all liquid stocks over one, three or six months plus the size of its run. Tightness compares the last five days' ranges with the ranges during the run.</p>
+      <ul class="parts">
+        {% for key, label, mx in ep_parts %}<li><span>{{ label }}</span><span>{{ mx }} points</span></li>{% endfor %}
+      </ul>
+      <p class="more">Episodic pivots are scored separately. Most of the weight is on how close the stock is to its high, because that is what separated the gaps that worked in the backtest. Gap size and volume surge did not.</p>
       <p class="more">Sizes use an account of {{ money(account.size_usd) }}, {{ account.risk_per_trade_pct }}% risk per trade (halved on amber) and a {{ account.max_position_pct }}% cap per position. Change them in config.yaml.</p>
     </details>
   </div>
@@ -476,6 +534,17 @@ def _earnings_note(s: dict, asof: str) -> str | None:
             "through that: trade it small or wait for the report.")
 
 
+def rr(x) -> str:
+    """A result in R: +0.08R, −0.19R."""
+    if x is None:
+        return "n/a"
+    return f"{x:+.2f}R".replace("-", "\u2212")
+
+
+def pc(x) -> str:
+    return f"{x:+.0f}%".replace("-", "\u2212")
+
+
 def open_lines(chk: dict | None, account: dict) -> dict | None:
     """Plain sentences for the after-open check."""
     if not chk or not chk.get("rows"):
@@ -519,7 +588,7 @@ def open_lines(chk: dict | None, account: dict) -> dict | None:
 
 def page(p: dict) -> str:
     env = Environment(autoescape=True, trim_blocks=True, lstrip_blocks=True)
-    helpers = dict(price=price, pct=pct, money=money, company=company, short_date=short_date, join_names=join_names,
+    helpers = dict(price=price, pct=pct, money=money, company=company, rr=rr, pc=pc, short_date=short_date, join_names=join_names,
                    tv=lambda t: f"https://www.tradingview.com/chart/?symbol={t.replace('-', '.')}")
     env.globals.update(helpers)
     card_t = env.from_string(CARD)
@@ -536,7 +605,17 @@ def page(p: dict) -> str:
     for g in groups:
         g["w"] = round(abs(g["m1"]) / scale * 100)
     from .config import INDEXES
+    bt = p.get("backtest")
+    extra = {"bt": bt, "light_fact": None}
+    if bt:
+        x = bt["ready_by_light"][p["regime"]["state"]]
+        extra["light_fact"] = (f"In the backtest, ready-list breakouts taken on {p['regime']['state']} "
+                               f"averaged {rr(x['avg_r'])} over {x['n']} trades.")
+        greens = [e["ready_green"] for e in bt["exit_rules"]]
+        extra.update(exit_lo=min(greens), exit_hi=max(greens),
+                     bt_from=_month(bt["first"]), bt_to=_month(bt["last"]))
     return env.from_string(TEMPLATE).render(
+        **extra, ep_parts=EP_PARTS,
         **{k: v for k, v in p.items() if not k.startswith("_")},
         card=card, asof_long=nice_date(p["asof"]), asof_short=short_date(p["asof"]),
         open_lines=open_lines(p.get("open_check"), p["account"]),

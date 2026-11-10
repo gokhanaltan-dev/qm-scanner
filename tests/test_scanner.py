@@ -222,7 +222,9 @@ def test_page_can_be_rebuilt_from_the_saved_scan(tmp_path, monkeypatch):
     bars["Close"].iloc[:280, bars["Close"].columns.get_loc("EPIC1")] = np.nan   # a recent listing
     p = build.analyse(bars, meta, CFG)
     p["demo"], p["health"], p["followup"] = True, {"stock_list": "test"}, None
+    build.attach_backtest(p)
     first = render.page(p)
+    assert ("What the backtest found" in first) == (p["backtest"] is not None)
     build.save(p)
     import json
     json.loads((tmp_path / "data" / "latest.json").read_text(), parse_constant=lambda c: 1 / 0)  # strict JSON
@@ -362,3 +364,34 @@ def test_after_open_check_end_to_end(tmp_path, monkeypatch):
     assert "open_check" not in p2 and "After the open" not in render.page(p2)
     # outside the window nothing is written
     assert intraday.run(datetime(2026, 11, 10, 12, 0, tzinfo=ZoneInfo("America/New_York"))) is None
+
+
+def test_thin_or_faded_gaps_are_left_out():
+    """The quality rules that came out of the backtest."""
+    o, h, l, c, v = demo.episodic(RS, age=0, gap=0.2)
+    assert setups.detect_ep(o, h, l, c, v, END, CFG) is not None
+    # the same gap in a stock that traded under $5m a day before it
+    assert setups.detect_ep(o, h, l, c, v / 10, END, CFG) is None
+    # ... or that was under $5 before it
+    k = 4.0 / c[END - 1]
+    assert setups.detect_ep(o * k, h * k, l * k, c * k, v / k * 2, END, CFG) is None
+    # ... or that was already swinging 8% a day
+    wild_h, wild_l = h.copy(), l.copy()
+    wild_h[END - 25:END] = c[END - 25:END] * 1.05
+    wild_l[END - 25:END] = c[END - 25:END] * 0.95
+    assert setups.detect_ep(o, wild_h, wild_l, c, v, END, CFG) is None
+    # ... or a gap of more than 50%
+    assert setups.detect_ep(*demo.episodic(RS, age=0, gap=0.6), END, CFG) is None
+    # ... or one that closed well off its high
+    far = h.copy()
+    far[END] = c[END] * 1.06
+    assert setups.detect_ep(o, far, l, c, v, END, CFG) is None
+    # with the rules switched off (as the backtest does) the thin one is seen again
+    loose = C._merge(CFG, {"episodic_pivot": {"min_pre_dollar_volume": 0}})
+    assert setups.detect_ep(o, h, l, c, v / 10, END, loose) is not None
+    # near the high earns most of the rating
+    ep = setups.detect_ep(o, h, l, c, v, END, CFG)
+    at_high = setups.score_ep({**ep, "dist": 0.0}, 5e7)
+    off_high = setups.score_ep({**ep, "dist": 0.5}, 5e7)
+    assert at_high["parts"]["near"] == 40 and off_high["parts"]["near"] == 0
+    assert sum(mx for _, _, mx in setups.EP_PARTS) == 100 == sum(mx for _, _, mx in setups.BREAKOUT_PARTS)

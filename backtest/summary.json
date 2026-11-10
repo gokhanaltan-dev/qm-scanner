@@ -1,0 +1,533 @@
+{
+ "generated": "2026-11-10 11:46 UTC",
+ "first": "2023-10-25",
+ "last": "2026-11-09",
+ "sessions": 763,
+ "stocks": 5614,
+ "flags": 37146,
+ "ready_flags": 5577,
+ "ready_per_day": 7.3,
+ "trigger_next_day": 30.6,
+ "trigger_in_5": 62.4,
+ "light_days": {
+  "green": 301,
+  "amber": 283,
+  "red": 179
+ },
+ "all_triggers": {
+  "n": 3878,
+  "win": 42.8,
+  "avg_r": -0.031,
+  "se": 0.024,
+  "hit2r": 31.3,
+  "avg_r_pess": -0.16
+ },
+ "ready": {
+  "n": 1232,
+  "win": 45.0,
+  "avg_r": -0.02,
+  "se": 0.04,
+  "hit2r": 30.7,
+  "avg_r_pess": -0.06
+ },
+ "ready_by_light": {
+  "green": {
+   "n": 565,
+   "win": 48.8,
+   "avg_r": 0.079,
+   "se": 0.061,
+   "hit2r": 34.9,
+   "avg_r_pess": 0.039
+  },
+  "amber": {
+   "n": 413,
+   "win": 42.9,
+   "avg_r": -0.052,
+   "se": 0.071,
+   "hit2r": 27.8,
+   "avg_r_pess": -0.076
+  },
+  "red": {
+   "n": 254,
+   "win": 39.8,
+   "avg_r": -0.191,
+   "se": 0.079,
+   "hit2r": 26.0,
+   "avg_r_pess": -0.255
+  }
+ },
+ "ready_by_light_halves": {
+  "green": [
+   {
+    "n": 230,
+    "win": 51.3,
+    "avg_r": 0.163,
+    "se": 0.095,
+    "hit2r": 36.5,
+    "avg_r_pess": 0.146
+   },
+   {
+    "n": 335,
+    "win": 47.2,
+    "avg_r": 0.022,
+    "se": 0.079,
+    "hit2r": 33.7,
+    "avg_r_pess": -0.034
+   }
+  ],
+  "amber": [
+   {
+    "n": 138,
+    "win": 39.9,
+    "avg_r": 0.004,
+    "se": 0.14,
+    "hit2r": 27.5,
+    "avg_r_pess": -0.03
+   },
+   {
+    "n": 275,
+    "win": 44.4,
+    "avg_r": -0.08,
+    "se": 0.08,
+    "hit2r": 28.0,
+    "avg_r_pess": -0.1
+   }
+  ],
+  "red": [
+   {
+    "n": 58,
+    "win": 39.7,
+    "avg_r": -0.174,
+    "se": 0.196,
+    "hit2r": 27.6,
+    "avg_r_pess": -0.215
+   },
+   {
+    "n": 196,
+    "win": 39.8,
+    "avg_r": -0.196,
+    "se": 0.084,
+    "hit2r": 25.5,
+    "avg_r_pess": -0.267
+   }
+  ]
+ },
+ "ready_by_year": {
+  "2023": {
+   "n": 46,
+   "win": 60.9,
+   "avg_r": 0.474,
+   "se": 0.263,
+   "hit2r": 39.1,
+   "avg_r_pess": 0.474
+  },
+  "2024": {
+   "n": 301,
+   "win": 45.8,
+   "avg_r": 0.045,
+   "se": 0.086,
+   "hit2r": 32.6,
+   "avg_r_pess": 0.016
+  },
+  "2025": {
+   "n": 456,
+   "win": 47.8,
+   "avg_r": 0.048,
+   "se": 0.067,
+   "hit2r": 34.4,
+   "avg_r_pess": -0.004
+  },
+  "2026": {
+   "n": 429,
+   "win": 39.6,
+   "avg_r": -0.191,
+   "se": 0.061,
+   "hit2r": 24.5,
+   "avg_r_pess": -0.231
+  }
+ },
+ "ready_by_rating": [
+  {
+   "band": "Under 62 (C)",
+   "n": 36,
+   "win": 50.0,
+   "avg_r": 0.127,
+   "se": 0.29,
+   "hit2r": 25.0,
+   "avg_r_pess": 0.127
+  },
+  {
+   "band": "62 to 74 (B)",
+   "n": 457,
+   "win": 45.5,
+   "avg_r": 0.014,
+   "se": 0.069,
+   "hit2r": 32.2,
+   "avg_r_pess": -0.051
+  },
+  {
+   "band": "75 to 84 (A)",
+   "n": 543,
+   "win": 43.1,
+   "avg_r": -0.098,
+   "se": 0.055,
+   "hit2r": 29.8,
+   "avg_r_pess": -0.124
+  },
+  {
+   "band": "85 and over (A+)",
+   "n": 196,
+   "win": 48.0,
+   "avg_r": 0.086,
+   "se": 0.109,
+   "hit2r": 30.6,
+   "avg_r_pess": 0.061
+  }
+ ],
+ "risk_pct_median": 5.7,
+ "ambiguous_pct": 8.8,
+ "half_split": "2025-05-05",
+ "exit_rules": [
+  {
+   "rule": "Sell half from day 3, rest on a close under the 10-day (the sheet's rules)",
+   "ready": -0.02,
+   "ready_green": 0.079,
+   "win_green": 48.8
+  },
+  {
+   "rule": "No partial, sell on a close under the 10-day",
+   "ready": -0.012,
+   "ready_green": 0.065,
+   "win_green": 31.0
+  },
+  {
+   "rule": "No partial, sell on a close under the 20-day",
+   "ready": 0.021,
+   "ready_green": 0.073,
+   "win_green": 28.5
+  },
+  {
+   "rule": "Sell half from day 3, rest on a close under the 20-day",
+   "ready": -0.005,
+   "ready_green": 0.086,
+   "win_green": 50.4
+  },
+  {
+   "rule": "Sell half at +2R, rest on a close under the 10-day",
+   "ready": -0.024,
+   "ready_green": 0.051,
+   "win_green": 33.3
+  },
+  {
+   "rule": "Sell everything at +2R",
+   "ready": -0.029,
+   "ready_green": 0.098,
+   "win_green": 37.9
+  },
+  {
+   "rule": "Sell everything at +3R",
+   "ready": -0.012,
+   "ready_green": 0.109,
+   "win_green": 29.4
+  },
+  {
+   "rule": "The sheet's rules with the stop half as far",
+   "ready": -0.077,
+   "ready_green": 0.017,
+   "win_green": 28.8
+  }
+ ],
+ "factors": {
+  "score": [
+   0.04,
+   0.033
+  ],
+  "s_leader": [
+   -0.018,
+   -0.001
+  ],
+  "s_tight": [
+   0.019,
+   -0.003
+  ],
+  "s_volume": [
+   -0.019,
+   0.0
+  ],
+  "s_ma": [
+   0.061,
+   0.06
+  ],
+  "s_base": [
+   0.014,
+   0.006
+  ],
+  "s_trigger": [
+   0.025,
+   0.059
+  ],
+  "s_tradeable": [
+   0.043,
+   0.018
+  ],
+  "rs": [
+   0.012,
+   -0.011
+  ],
+  "rs1": [
+   0.115,
+   0.035
+  ],
+  "rs3": [
+   -0.042,
+   0.029
+  ],
+  "rs6": [
+   -0.011,
+   -0.022
+  ],
+  "b_leg_gain": [
+   -0.046,
+   0.011
+  ],
+  "b_leg_days": [
+   -0.051,
+   0.017
+  ],
+  "b_base_days": [
+   -0.06,
+   -0.012
+  ],
+  "b_depth": [
+   -0.034,
+   0.001
+  ],
+  "b_retrace": [
+   -0.013,
+   -0.006
+  ],
+  "b_tight": [
+   -0.015,
+   -0.009
+  ],
+  "b_close_span": [
+   -0.001,
+   0.002
+  ],
+  "b_higher_lows": [
+   0.008,
+   -0.025
+  ],
+  "b_vol_ratio": [
+   0.019,
+   -0.002
+  ],
+  "b_ma_stack": [
+   0.073,
+   0.055
+  ],
+  "b_ma_dist": [
+   0.03,
+   -0.011
+  ],
+  "b_dist": [
+   -0.022,
+   -0.063
+  ],
+  "adr": [
+   0.032,
+   0.038
+  ],
+  "dollar_vol": [
+   0.038,
+   0.003
+  ],
+  "price": [
+   -0.016,
+   -0.015
+  ],
+  "gap_open": [
+   0.011,
+   0.026
+  ],
+  "risk_pct": [
+   0.033,
+   0.036
+  ],
+  "pull_rs": [
+   0.046,
+   0.032
+  ],
+  "rsline": [
+   0.063,
+   0.048
+  ],
+  "ext50": [
+   0.065,
+   0.001
+  ],
+  "ext200": [
+   -0.033,
+   -0.026
+  ],
+  "streak50": [
+   -0.08,
+   -0.028
+  ],
+  "ud_vol": [
+   0.075,
+   -0.005
+  ],
+  "off_high": [
+   0.008,
+   -0.007
+  ],
+  "p6m": [
+   -0.024,
+   -0.025
+  ],
+  "base_count": [
+   -0.019,
+   0.017
+  ],
+  "ind_leaders": [
+   -0.054,
+   -0.081
+  ],
+  "sec_leaders": [
+   -0.065,
+   -0.015
+  ],
+  "ind_share": [
+   -0.044,
+   -0.049
+  ],
+  "ind_rank": [
+   -0.035,
+   -0.057
+  ],
+  "above20": [
+   0.015,
+   0.027
+  ],
+  "above50": [
+   0.011,
+   -0.023
+  ],
+  "ft": [
+   0.028,
+   -0.021
+  ],
+  "qqq_vs10": [
+   -0.019,
+   -0.053
+  ],
+  "qqq_vs20": [
+   0.013,
+   -0.033
+  ],
+  "qqq_vs50": [
+   0.019,
+   -0.024
+  ],
+  "n_leaders": [
+   0.02,
+   -0.03
+  ]
+ },
+ "ep": {
+  "gate": {
+   "min_pre_price": 5.0,
+   "max_prior_adr": 0.08,
+   "max_gap": 0.5,
+   "min_pre_dollar_volume": 5000000.0,
+   "max_adr_from_high": 0.5
+  },
+  "thin_share": 31,
+  "gap_day_all": {
+   "n": 2698,
+   "vs_market_10d": -6.7,
+   "median": -4.5
+  },
+  "gap_day_thin": {
+   "n": 1074,
+   "vs_market_10d": -15.2,
+   "median": -19.5
+  },
+  "gap_day_clean": {
+   "n": 1624,
+   "vs_market_10d": -1.0,
+   "median": -1.6
+  },
+  "trades_thin": {
+   "n": 537,
+   "win": 32.6,
+   "avg_r": -0.216,
+   "se": 0.072,
+   "hit2r": 30.7,
+   "avg_r_pess": -0.395
+  },
+  "trades_clean": {
+   "n": 1176,
+   "win": 41.6,
+   "avg_r": -0.069,
+   "se": 0.042,
+   "hit2r": 32.5,
+   "avg_r_pess": -0.168
+  },
+  "trades_clean_near_high": {
+   "n": 723,
+   "win": 45.0,
+   "avg_r": 0.016,
+   "se": 0.053,
+   "hit2r": 34.9,
+   "avg_r_pess": -0.058
+  },
+  "trades_clean_far": {
+   "n": 453,
+   "win": 36.2,
+   "avg_r": -0.203,
+   "se": 0.068,
+   "hit2r": 28.7,
+   "avg_r_pess": -0.344
+  },
+  "by_distance": [
+   {
+    "band": "Within 0.25",
+    "n": 390,
+    "win": 47.2,
+    "avg_r": 0.096,
+    "se": 0.076,
+    "hit2r": 35.1,
+    "avg_r_pess": 0.049
+   },
+   {
+    "band": "0.25 to 0.5",
+    "n": 333,
+    "win": 42.3,
+    "avg_r": -0.078,
+    "se": 0.071,
+    "hit2r": 34.5,
+    "avg_r_pess": -0.184
+   },
+   {
+    "band": "0.5 to 1",
+    "n": 361,
+    "win": 38.2,
+    "avg_r": -0.178,
+    "se": 0.075,
+    "hit2r": 28.8,
+    "avg_r_pess": -0.262
+   },
+   {
+    "band": "1 to 1.5",
+    "n": 92,
+    "win": 28.3,
+    "avg_r": -0.3,
+    "se": 0.156,
+    "hit2r": 28.3,
+    "avg_r_pess": -0.664
+   }
+  ]
+ }
+}

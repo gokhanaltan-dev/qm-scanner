@@ -130,10 +130,9 @@ def analyse(bars: dict[str, pd.DataFrame], meta: pd.DataFrame, cfg: dict) -> dic
             "Cleared its six-month high." if ep["clears_6m_high"] else "Still below its six-month high.",
         ]
         below = ep["pivot"] / ep["close"] - 1
-        row["call"] = ("Gap day. The entry was the opening range high; from here it needs a "
-                       "tight hold near the high." if ep["age"] == 0 else
-                       f"Holding {_pct(below, 1)} below its high since the gap. "
-                       "Buyable on a break of that high.")
+        row["call"] = ((f"Gap day, closed {_pct(below, 1)} under its high. " if ep["age"] == 0 else
+                        f"Holding {_pct(below, 1)} under its high since the gap. ")
+                       + "Buyable on a break of that high.")
         eps.append(row)
     ep_names = {r["ticker"] for r in eps}
 
@@ -255,7 +254,7 @@ def save(payload: dict) -> None:
         return x
 
     # Chart bars are kept in the file, so the page can be rebuilt from it without a download
-    keep = {k: v for k, v in payload.items() if k != "open_check"}
+    keep = {k: v for k, v in payload.items() if k not in ("open_check", "backtest")}
     (C.DATA / "latest.json").write_text(json.dumps(plain(keep), separators=(",", ":")))
     if payload.get("demo"):
         return
@@ -272,6 +271,12 @@ def save(payload: dict) -> None:
         old = pd.read_csv(log)
         new = pd.concat([old[old["date"] != payload["asof"]], new], ignore_index=True)
     new.to_csv(log, index=False)
+
+
+def attach_backtest(payload: dict) -> None:
+    """The saved backtest summary, shown on the page next to the live lists."""
+    path = C.ROOT / "backtest" / "summary.json"
+    payload["backtest"] = json.loads(path.read_text()) if path.exists() else None
 
 
 def attach_earnings(payload: dict) -> None:
@@ -347,11 +352,13 @@ def run(demo: bool = False) -> dict:
 
     compare_with_previous(payload, bars)
     attach_open_check(payload)
+    attach_backtest(payload)
 
     from . import render
     C.SITE.mkdir(exist_ok=True)
     (C.SITE / "index.html").write_text(render.page(payload), encoding="utf-8")
-    save(payload)
+    if not demo:                 # a preview on invented data never replaces the saved scan
+        save(payload)
     _log(f"{payload['asof']}: regime {payload['regime']['state']}, {len(payload['ready'])} ready, "
          f"{len(payload['fired'])} fired, {len(payload['episodic'])} episodic pivots, "
          f"{len(payload['building'])} building")
@@ -363,6 +370,7 @@ def rerender() -> None:
     from . import render
     payload = json.loads((C.DATA / "latest.json").read_text())
     attach_open_check(payload)
+    attach_backtest(payload)
     C.SITE.mkdir(exist_ok=True)
     (C.SITE / "index.html").write_text(render.page(payload), encoding="utf-8")
     _log(f"page rebuilt from the {payload['asof']} scan")

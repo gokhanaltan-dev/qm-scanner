@@ -25,7 +25,9 @@ DEFAULTS = {
         "max_base_days": 40,
         "max_retrace": 0.5,
     },
-    "episodic_pivot": {"min_gap_pct": 8, "min_volume_multiple": 2.5, "lookback_days": 4},
+    "episodic_pivot": {"min_gap_pct": 8, "min_volume_multiple": 2.5, "lookback_days": 4,
+                       "max_adr_from_high": 0.5, "min_pre_price": 5.0, "max_prior_adr_pct": 8.0,
+                       "max_gap_pct": 50.0, "min_pre_dollar_volume": 5e6},
     "report": {"max_ready": 15, "max_building": 15, "max_episodic": 10, "min_score": 55},
 }
 

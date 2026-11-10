@@ -69,9 +69,10 @@ def episodic(rs, age=0, gap=0.19, start=30.0):
     g = N - 1 - age
     a = _walk(rs, g, start, 0.0001, 0.011)
     day0 = a[-1] * (1 + gap) * 1.04
-    after = day0 * (1 + np.cumsum(rs.normal(0.004, 0.006, age))) if age else np.array([])
+    # after the gap it holds tight and edges up, closing near its high
+    after = day0 * (1 + 0.006 * np.arange(1, age + 1)) if age else np.array([])
     close = np.concatenate([a, [day0], after])
-    r = np.concatenate([np.full(g, 0.03), [0.08], np.full(age, 0.04)])
+    r = np.concatenate([np.full(g, 0.03), [0.08], np.full(age, 0.012)])
     v = np.concatenate([rs.uniform(0.8, 1.2, g) * 9e5, [9.5e6], np.full(age, 3.0e6)])
     return _ohlcv(close, r, v, rs, gaps={g: gap})
 

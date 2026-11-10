@@ -119,12 +119,107 @@ EP_FACTORS = ["score", "s_gap", "s_volume", "s_close", "s_fresh", "s_tradeable",
               "adr", "dollar_vol", "price", "rs", "ind_rank", "ind_leaders", "pull_rs", "above20", "ft"]
 
 
+EXIT_RULES = [("r", "Sell half from day 3, rest on a close under the 10-day (the sheet's rules)"),
+              ("r_ma10", "No partial, sell on a close under the 10-day"),
+              ("r_ma20", "No partial, sell on a close under the 20-day"),
+              ("r_h20", "Sell half from day 3, rest on a close under the 20-day"),
+              ("r_p2", "Sell half at +2R, rest on a close under the 10-day"),
+              ("r_t2", "Sell everything at +2R"),
+              ("r_t3", "Sell everything at +3R"),
+              ("r_tight", "The sheet's rules with the stop half as far")]
+
+# Thin, wild stocks: the gaps that collapse. Same thresholds as config.yaml.
+EP_GATE = {"min_pre_price": 5.0, "max_prior_adr": 0.08, "max_gap": 0.5, "min_pre_dollar_volume": 5e6,
+           "max_adr_from_high": 0.5}
+
+
+def ep_junk(ep: pd.DataFrame) -> pd.Series:
+    g = EP_GATE
+    return ((ep["e_pre_close"] < g["min_pre_price"]) | (ep["e_adr_before"] >= g["max_prior_adr"])
+            | (ep["e_gap"] >= g["max_gap"]) | (ep["e_pre_dollar_vol"] < g["min_pre_dollar_volume"]))
+
+
+def brief(t: pd.DataFrame) -> dict:
+    s = stats(t)
+    return {k: (None if isinstance(v, float) and v != v else v)
+            for k, v in s.items() if k in ("n", "win", "avg_r", "se", "hit2r", "avg_r_pess")}
+
+
+def summary(rows: pd.DataFrame, daily: pd.DataFrame, meta: dict) -> dict:
+    """The numbers shown on the sheet and in the README."""
+    q = (1 + daily["qqq_chg"]).cumprod()
+    x10 = rows["fwd10"] - rows["date"].map(dict(zip(daily["date"], q.shift(-10) / q - 1)))
+    rows = rows.assign(x10=x10)
+    cut = daily["date"].iloc[len(daily) // 2]
+    base, ep = rows[rows["kind"] == "base"], rows[rows["kind"] == "ep"].copy()
+    ready = base[base["status"] == "ready"]
+    lights = ["green", "amber", "red"]
+    out = {
+        "generated": meta.get("generated"), "first": meta.get("first"), "last": meta.get("last"),
+        "sessions": meta.get("sessions"), "stocks": meta.get("stocks"),
+        "flags": int(len(base)), "ready_flags": int(len(ready)),
+        "ready_per_day": round(len(ready) / len(daily), 1),
+        "trigger_next_day": round(float(ready["trig_next"].mean() * 100), 1),
+        "trigger_in_5": round(float(ready["trig_days"].notna().mean() * 100), 1),
+        "light_days": {k: int(v) for k, v in light(daily).value_counts().items()},
+        "all_triggers": brief(base), "ready": brief(ready),
+        "ready_by_light": {k: brief(ready[ready["light"] == k]) for k in lights},
+        "ready_by_light_halves": {k: [brief(ready[(ready["light"] == k) & (ready["date"] <= cut)]),
+                                      brief(ready[(ready["light"] == k) & (ready["date"] > cut)])]
+                                  for k in lights},
+        "ready_by_year": {y: brief(g) for y, g in ready.groupby(ready["date"].str[:4])},
+        "ready_by_rating": [{"band": name, **brief(ready[(ready["score"] >= lo) & (ready["score"] < hi)])}
+                            for name, lo, hi in (("Under 62 (C)", 0, 62), ("62 to 74 (B)", 62, 75),
+                                                 ("75 to 84 (A)", 75, 85), ("85 and over (A+)", 85, 101))],
+        "risk_pct_median": round(float(base[base["traded"]]["risk_pct"].median() * 100), 1),
+        "ambiguous_pct": round(float(base[base["traded"]]["ambiguous"].mean() * 100), 1),
+        "half_split": cut,
+    }
+    done = ready[ready["traded"] & ready["complete"]]
+    green = done[done["light"] == "green"]
+    out["exit_rules"] = [{"rule": label, "ready": round(float(done[col].clip(upper=R_CAP).mean()), 3),
+                          "ready_green": round(float(green[col].clip(upper=R_CAP).mean()), 3),
+                          "win_green": round(float((green[col] > 0).mean() * 100), 1)}
+                         for col, label in EXIT_RULES if col in done]
+    # factors: rank correlation with the result in each half of the period
+    fr = factor_report(base, [f for f in BASE_FACTORS if f in base])
+    out["factors"] = {k: [None if v != v else round(float(v), 3) for v in (r["first_half"], r["second_half"])]
+                      for k, r in fr.iterrows()}
+    # episodic pivots
+    ep["junk"] = ep_junk(ep)
+    today = ep[ep["status"] == "today"]
+    near = ~ep["junk"] & (ep["e_dist"] <= EP_GATE["max_adr_from_high"])
+
+    def gap_day(g):
+        g = g[g["x10"].notna()]
+        return {"n": int(len(g)), "vs_market_10d": round(float(g["x10"].mean() * 100), 1),
+                "median": round(float(g["x10"].median() * 100), 1)}
+    out["ep"] = {
+        "gate": EP_GATE,
+        "thin_share": round(float(ep["junk"].mean() * 100)),
+        "gap_day_all": gap_day(today), "gap_day_thin": gap_day(today[today["junk"]]),
+        "gap_day_clean": gap_day(today[~today["junk"]]),
+        "trades_thin": brief(ep[ep["junk"]]), "trades_clean": brief(ep[~ep["junk"]]),
+        "trades_clean_near_high": brief(ep[near]),
+        "trades_clean_far": brief(ep[~ep["junk"] & ~near]),
+        "by_distance": [{"band": name, **brief(ep[~ep["junk"] & (ep["e_dist"] > lo) & (ep["e_dist"] <= hi)])}
+                        for name, lo, hi in (("Within 0.25", -9, 0.25), ("0.25 to 0.5", 0.25, 0.5),
+                                             ("0.5 to 1", 0.5, 1.0), ("1 to 1.5", 1.0, 9))],
+    }
+    return out
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("folder")
+    ap.add_argument("--json", help="write the summary used by the sheet to this file")
     args = ap.parse_args()
     pd.set_option("display.width", 220, "display.max_columns", 30, "display.max_rows", 200)
     rows, daily, meta = load(args.folder)
+    if args.json:
+        Path(args.json).write_text(json.dumps(summary(rows, daily, meta), indent=1))
+        print(f"summary written to {args.json}")
+        return
     print(meta)
     print(rows.groupby(["kind", "status"]).size())
     base = rows[rows["kind"] == "base"]

@@ -24,6 +24,13 @@ episodic_pivot:
   min_gap_pct: 8
   min_volume_multiple: 2.5 # gap-day volume vs 50-day average
   lookback_days: 4         # also show gaps from the last few sessions that are still holding
+  max_adr_from_high: 0.5   # must close within half a daily range of its high since the gap
+  # Thin, wild stocks are left out. In the backtest their gaps fell about 15% against
+  # the market over the next 10 sessions.
+  min_pre_price: 5         # price before the gap, dollars
+  max_prior_adr_pct: 8     # average daily range before the gap, %
+  max_gap_pct: 50
+  min_pre_dollar_volume: 5000000   # average daily dollar volume before the gap
 
 report:
   max_ready: 15
