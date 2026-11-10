@@ -1,0 +1,351 @@
+{
+ "version": "bist-tightbase-v1.0",
+ "status": {
+  "data_sources": {
+   "universe": "TradingView screener (scanner.tradingview.com/turkey/scan)",
+   "isy_prices": "Is Yatirim HisseTekil (raw HG_* and adjusted HGDG_* series)",
+   "isy_actions": "Is Yatirim GetSermayeArttirimlari",
+   "yahoo_prices": "Yahoo Finance via yfinance, auto_adjust=False"
+  },
+  "retrieved_istanbul": "2026-11-11T00:24:35+03:00",
+  "latest_completed_session": "2026-11-10",
+  "incomplete_bar_dropped": false,
+  "prices_delayed": "End-of-day data. Is Yatirim and Yahoo publish BIST prices with at least a 15-minute delay; a bar dated today is only complete after the 18:10 Istanbul close.",
+  "coverage": {
+   "listed_ordinary_shares": 625,
+   "price_histories": 619,
+   "failed_downloads": {
+    "ALTIN": "empty",
+    "CITAS": "empty",
+    "LYDHO": "empty",
+    "LRSHO": "empty",
+    "DMLKT": "empty",
+    "INTEK": "empty"
+   },
+   "universe_members_today": 200,
+   "universe_members_without_verified_open_today": 200,
+   "open_price_verified_share_all_bars": 0.9728
+  },
+  "limitations": [
+   "VBTS, gross-settlement and single-price status are not in the price data; checked by hand for shortlisted names only.",
+   "Prices are adjusted for capital actions and dividends by the vendor (Is Yatirim); levels shown are in today's TRY."
+  ]
+ },
+ "market_context": {
+  "xu100_close": 11661.86,
+  "xu100_sma50": 12517.5,
+  "xu100_sma200": 13555.27,
+  "xu100_above_sma50": false,
+  "xu100_sma50_above_sma200": false,
+  "xu100_return_21": -0.0493,
+  "xu100_return_63": -0.1735,
+  "xu100_return_126": -0.2258,
+  "xu100_vs_252_high": -0.2294,
+  "breadth_pct_universe_above_sma50": 12.0,
+  "sector_median_63_session_return_universe": [
+   {
+    "sector": "Transportation",
+    "median_return": 0.053,
+    "shares": 6
+   },
+   {
+    "sector": "Energy Minerals",
+    "median_return": -0.04,
+    "shares": 3
+   },
+   {
+    "sector": "Communications",
+    "median_return": -0.0829,
+    "shares": 2
+   },
+   {
+    "sector": "Health Services",
+    "median_return": -0.0878,
+    "shares": 2
+   },
+   {
+    "sector": "Retail Trade",
+    "median_return": -0.1416,
+    "shares": 7
+   },
+   {
+    "sector": "Industrial Services",
+    "median_return": -0.1512,
+    "shares": 6
+   },
+   {
+    "sector": "Non-Energy Minerals",
+    "median_return": -0.1751,
+    "shares": 21
+   },
+   {
+    "sector": "Finance",
+    "median_return": -0.1825,
+    "shares": 41
+   },
+   {
+    "sector": "Consumer Durables",
+    "median_return": -0.2009,
+    "shares": 8
+   },
+   {
+    "sector": "Consumer Services",
+    "median_return": -0.2497,
+    "shares": 10
+   },
+   {
+    "sector": "Utilities",
+    "median_return": -0.2538,
+    "shares": 18
+   },
+   {
+    "sector": "Consumer Non-Durables",
+    "median_return": -0.2622,
+    "shares": 17
+   },
+   {
+    "sector": "Miscellaneous",
+    "median_return": -0.2734,
+    "shares": 1
+   },
+   {
+    "sector": "Technology Services",
+    "median_return": -0.2923,
+    "shares": 11
+   },
+   {
+    "sector": "Process Industries",
+    "median_return": -0.3397,
+    "shares": 12
+   },
+   {
+    "sector": "Electronic Technology",
+    "median_return": -0.4781,
+    "shares": 7
+   },
+   {
+    "sector": "Producer Manufacturing",
+    "median_return": -0.4998,
+    "shares": 19
+   },
+   {
+    "sector": "Distribution Services",
+    "median_return": -0.5257,
+    "shares": 4
+   },
+   {
+    "sector": "Health Technology",
+    "median_return": -0.6128,
+    "shares": 3
+   },
+   {
+    "sector": "Commercial Services",
+    "median_return": -0.8596,
+    "shares": 2
+   }
+  ],
+  "xu100_63_session_return_for_comparison": -0.1735
+ },
+ "funnel": {
+  "universe": 200,
+  "trend_ok": 6,
+  "rs_ge_80": 41,
+  "trend_and_rs": 6,
+  "depth_ok": 18,
+  "touch_ok": 17,
+  "contraction_ok": 107,
+  "volume_dryup_ok": 31,
+  "structure_all": 0,
+  "all_rules": 0,
+  "all_rules_within_2atr_5pct": 0
+ },
+ "shortlist": [],
+ "armed_or_confirmed_count": 0,
+ "forming_count": 0,
+ "events_today_or_recent": [],
+ "exploratory_young_listings": [
+  {
+   "ticker": "AAGYO",
+   "sessions": 146,
+   "median_turnover_60_try": 66867032.0,
+   "structure_rules_pass": false,
+   "dist_atr": 11.17
+  },
+  {
+   "ticker": "AKHAN",
+   "sessions": 189,
+   "median_turnover_60_try": 56275446.0,
+   "structure_rules_pass": false,
+   "dist_atr": 2.62
+  },
+  {
+   "ticker": "ALBTN",
+   "sessions": 74,
+   "median_turnover_60_try": 148480381.0,
+   "structure_rules_pass": false,
+   "dist_atr": 5.68
+  },
+  {
+   "ticker": "ATATR",
+   "sessions": 180,
+   "median_turnover_60_try": 190303257.0,
+   "structure_rules_pass": false,
+   "dist_atr": 24.32
+  },
+  {
+   "ticker": "BESTE",
+   "sessions": 186,
+   "median_turnover_60_try": 129500080.0,
+   "structure_rules_pass": false,
+   "dist_atr": 10.28
+  },
+  {
+   "ticker": "BETAE",
+   "sessions": 93,
+   "median_turnover_60_try": 508504322.0,
+   "structure_rules_pass": false,
+   "dist_atr": 10.22
+  },
+  {
+   "ticker": "EKDMR",
+   "sessions": 118,
+   "median_turnover_60_try": 147145352.0,
+   "structure_rules_pass": false,
+   "dist_atr": 14.58
+  },
+  {
+   "ticker": "EKIM",
+   "sessions": 87,
+   "median_turnover_60_try": 162863198.0,
+   "structure_rules_pass": false,
+   "dist_atr": 4.46
+  },
+  {
+   "ticker": "EMPAE",
+   "sessions": 175,
+   "median_turnover_60_try": 218778328.0,
+   "structure_rules_pass": false,
+   "dist_atr": 7.29
+  },
+  {
+   "ticker": "GENKM",
+   "sessions": 169,
+   "median_turnover_60_try": 55556622.0,
+   "structure_rules_pass": false,
+   "dist_atr": 11.29
+  },
+  {
+   "ticker": "GOLDA",
+   "sessions": 88,
+   "median_turnover_60_try": 106760610.0,
+   "structure_rules_pass": false,
+   "dist_atr": 13.57
+  },
+  {
+   "ticker": "ISVEA",
+   "sessions": 85,
+   "median_turnover_60_try": 199912304.0,
+   "structure_rules_pass": false,
+   "dist_atr": 30.21
+  },
+  {
+   "ticker": "KARCL",
+   "sessions": 72,
+   "median_turnover_60_try": 463492570.0,
+   "structure_rules_pass": false,
+   "dist_atr": 36.17
+  },
+  {
+   "ticker": "MASFN",
+   "sessions": 73,
+   "median_turnover_60_try": 140523176.0,
+   "structure_rules_pass": false,
+   "dist_atr": 1.41
+  },
+  {
+   "ticker": "MCARD",
+   "sessions": 166,
+   "median_turnover_60_try": 263386229.0,
+   "structure_rules_pass": false,
+   "dist_atr": 3.74
+  },
+  {
+   "ticker": "METEN",
+   "sessions": 75,
+   "median_turnover_60_try": 231842391.0,
+   "structure_rules_pass": false,
+   "dist_atr": 0.96
+  },
+  {
+   "ticker": "MEYSU",
+   "sessions": 207,
+   "median_turnover_60_try": 79871115.0,
+   "structure_rules_pass": false,
+   "dist_atr": 6.6
+  },
+  {
+   "ticker": "NETCD",
+   "sessions": 190,
+   "median_turnover_60_try": 304597194.0,
+   "structure_rules_pass": false,
+   "dist_atr": 4.5
+  },
+  {
+   "ticker": "ORZAX",
+   "sessions": 89,
+   "median_turnover_60_try": 187685838.0,
+   "structure_rules_pass": false,
+   "dist_atr": 3.85
+  },
+  {
+   "ticker": "PAHOL",
+   "sessions": 242,
+   "median_turnover_60_try": 204626651.0,
+   "structure_rules_pass": false,
+   "dist_atr": 9.04
+  },
+  {
+   "ticker": "QUICK",
+   "sessions": 68,
+   "median_turnover_60_try": 133536250.0,
+   "structure_rules_pass": false,
+   "dist_atr": 5.84
+  },
+  {
+   "ticker": "SARAE",
+   "sessions": 82,
+   "median_turnover_60_try": 605453538.0,
+   "structure_rules_pass": false,
+   "dist_atr": 20.47
+  },
+  {
+   "ticker": "SVGYO",
+   "sessions": 169,
+   "median_turnover_60_try": 99938196.0,
+   "structure_rules_pass": false,
+   "dist_atr": 42.78
+  },
+  {
+   "ticker": "VAKFA",
+   "sessions": 244,
+   "median_turnover_60_try": 58268464.0,
+   "structure_rules_pass": false,
+   "dist_atr": 3.92
+  },
+  {
+   "ticker": "ZERGY",
+   "sessions": 223,
+   "median_turnover_60_try": 74447172.0,
+   "structure_rules_pass": false,
+   "dist_atr": 10.63
+  },
+  {
+   "ticker": "ZGYO",
+   "sessions": 204,
+   "median_turnover_60_try": 122265928.0,
+   "structure_rules_pass": false,
+   "dist_atr": 6.26
+  }
+ ],
+ "changes_since_previous": "first run: no previous scan to compare with"
+}

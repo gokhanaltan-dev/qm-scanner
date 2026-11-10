@@ -1,0 +1,105 @@
+# BIST tight-base breakout: V1 specification (frozen 2026-11-10, before any backtest result was seen).
+# Every threshold is an unvalidated starting hypothesis taken from the brief. Change => new version.
+version: "bist-tightbase-v1.0"
+timezone: Europe/Istanbul
+session_close_local: "18:10"       # a bar dated today counts as complete only after this plus a 20-minute buffer
+
+universe:
+  size: 200                        # most liquid eligible ordinary shares
+  liquidity_window: 60             # sessions, median daily TRY turnover (a non-trading day counts as zero)
+  min_sessions: 252                # completed sessions of history; younger listings go to an exploratory group
+
+relative_strength:
+  lookbacks: [63, 126]             # sessions; RS = mean of (stock factor / XU100 factor - 1)
+  min_percentile: 80               # percentile rank inside the eligible universe on that date
+
+base:
+  window: 40                       # completed sessions ending on the evaluation day
+  max_depth: 0.20                  # (pivot - lowest low) / pivot
+  touch_tolerance: 0.01            # a high within 1% of the pivot is a touch
+  touch_min_separation: 5          # sessions between the first and last touch
+  contraction_last: 10
+  contraction_first: 20
+  max_contraction_ratio: 0.60      # last-10 high-low range / first-20 high-low range
+  volume_last: 5
+  volume_prior: 20
+  max_volume_ratio: 0.75           # mean share volume of last 5 / mean of the 20 before them
+  sma_fast: 50
+  sma_slow: 200
+  sma_fast_rising_over: 20
+  atr_period: 14                   # Wilder; first value is the simple mean of the first 14 true ranges
+  armed_max_atr: 1.0               # close within 1 ATR below the pivot
+  forming_max_atr: 2.0
+  max_pct_below_pivot: 0.05
+  expiry_sessions: 10
+
+confirmation:
+  close_buffer_atr: 0.10           # close >= pivot + 0.10 x ATR(through the previous session)
+  volume_multiple: 1.5             # share volume vs mean of the previous 20 sessions
+  volume_window: 20
+  min_close_location: 0.70         # (close - low) / (high - low); a bar with no range fails
+
+execution:
+  max_entry_pct: 0.03              # max entry = min(P x 1.03, P + 0.75 x ATR)
+  max_entry_atr: 0.75
+  stop_lookback: 10                # lowest low of the 10 sessions before the signal
+  stop_buffer_atr: 0.25
+  exit_ema: 20                     # completed close below EMA20 => sell at next eligible open
+  max_holding_sessions: 60
+  false_breakout_sessions: 5       # close below the frozen pivot within 5 sessions of confirmation
+  # Exit precedence inside one session: (1) an exit scheduled at the prior close fills at the open;
+  # (2) open at or below the stop fills at the open; (3) low at or below the stop fills at the stop;
+  # (4) at the close, EMA20 breach or session 60 schedules a sale for the next eligible open.
+  # No fill is assumed on a bar with high == low (locked limit or single print) or on a day with no bar.
+  # If the open cannot be verified, entries are skipped and exits use that day's low.
+
+costs_bps_per_side: [10, 25, 50]   # illustrative all-in scenarios; headline figures use 25
+headline_cost_bps: 25
+
+portfolio:                         # research defaults, not the trader's account
+  start_equity_try: 1000000
+  risk_per_trade: 0.005
+  max_open_risk: 0.02
+  max_positions: 4
+  max_per_sector: 2
+  max_pct_of_median_turnover: 0.001   # of trailing 20-session median TRY turnover
+  cash_return: 0.0                 # idle cash earns nothing (understates a TRY account, where deposit rates are high)
+
+periods:                           # chronological; no parameter is fitted in any of them
+  development: ["2016-01-04", "2021-12-31"]
+  validation: ["2022-01-01", "2023-12-31"]
+  final_test: ["2024-01-01", "2026-12-31"]
+
+baseline:
+  breakout_lookback: 55            # close above the highest high of the prior 55 sessions, same execution and exits
+
+ticks:                             # Borsa Istanbul share price ticks in force since 6 Nov 2023
+  - [0.01, 0.01]
+  - [20.0, 0.02]
+  - [50.0, 0.05]
+  - [100.0, 0.10]
+  - [250.0, 0.25]
+  - [500.0, 0.50]
+  - [1000.0, 1.00]
+  - [2500.0, 2.50]
+
+# Heuristic score out of 100. A description of pattern quality, not a probability.
+# Each line maps a measurement linearly between two anchors and clips outside them.
+score:
+  trend:                                   # 20
+    sma50_slope_20d: {lo: 0.0, hi: 0.10, points: 8}
+    return_126d: {lo: 0.0, hi: 1.0, points: 8}
+    close_vs_252d_high: {lo: 0.75, hi: 1.0, points: 4}
+  base:                                    # 25
+    depth: {lo: 0.20, hi: 0.08, points: 10}          # shallower is better
+    contraction_ratio: {lo: 0.60, hi: 0.25, points: 10}
+    touches: {2: 2, 3: 4, 4: 5}                      # touches at least 5 sessions apart
+  relative_strength:                       # 25
+    percentile: {lo: 80, hi: 100, points_lo: 10, points_hi: 25}
+  volume:                                  # 15
+    dryup_ratio: {lo: 0.75, hi: 0.40, points: 10}
+    up_down_volume_ratio: {lo: 0.8, hi: 1.5, points: 5}
+  practicality:                            # 15
+    atr_to_pivot: {lo: 2.0, hi: 0.0, points: 6}
+    stop_distance: {lo: 0.12, hi: 0.04, points: 6}   # (confirmation price - stop) / confirmation price
+    liquidity_rank: {50: 3, 100: 2, 150: 1}

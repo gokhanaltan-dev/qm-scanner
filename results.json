@@ -1,0 +1,907 @@
+{
+ "version": "bist-tightbase-v1.0",
+ "data": {
+  "duplicate_rows_dropped": 1458,
+  "incomplete_bar_dropped": false,
+  "rows_total": 1386570,
+  "rows_no_trade_or_bad": 3620,
+  "open_verified_share": 0.9727582342094797,
+  "tickers_with_prices": 619,
+  "first_date": "2014-01-02",
+  "last_date": "2026-11-10"
+ },
+ "provenance": {
+  "retrieved_utc_start": "2026-11-10T21:18:58+00:00",
+  "retrieved_istanbul_start": "2026-11-11T00:18:58+03:00",
+  "start": "2014-01-01",
+  "sources": {
+   "universe": {
+    "source": "TradingView screener (scanner.tradingview.com/turkey/scan)",
+    "listed_rows": 649,
+    "stocks": 625
+   },
+   "isy_prices": {
+    "source": "Is Yatirim HisseTekil (raw HG_* and adjusted HGDG_* series)",
+    "requested": 625,
+    "received": 619,
+    "failed": {
+     "ALTIN": "empty",
+     "CITAS": "empty",
+     "LYDHO": "empty",
+     "LRSHO": "empty",
+     "DMLKT": "empty",
+     "INTEK": "empty"
+    },
+    "first_date": "2014-01-02",
+    "last_date": "2026-11-10",
+    "rows": 1388028
+   },
+   "isy_actions": {
+    "source": "Is Yatirim GetSermayeArttirimlari",
+    "rows": 6844,
+    "failed": {}
+   },
+   "yahoo_prices": {
+    "source": "Yahoo Finance via yfinance, auto_adjust=False",
+    "requested": 625,
+    "received": 623,
+    "missing": [
+     "ALTIN.IS",
+     "DMLKT.IS"
+    ],
+    "last_date": "2026-11-09"
+   },
+   "yahoo_indices": {
+    "received": [
+     "GBPTRY=X",
+     "USDTRY=X",
+     "XBANK.IS",
+     "XBLSM.IS",
+     "XELKT.IS",
+     "XFINK.IS",
+     "XGIDA.IS",
+     "XGMYO.IS",
+     "XHOLD.IS",
+     "XILTM.IS",
+     "XINSA.IS",
+     "XKAGT.IS",
+     "XKMYA.IS",
+     "XMADN.IS",
+     "XMANA.IS",
+     "XMESY.IS",
+     "XSGRT.IS",
+     "XSPOR.IS",
+     "XTAST.IS",
+     "XTCRT.IS",
+     "XTEKS.IS",
+     "XTRZM.IS",
+     "XU030.IS",
+     "XU050.IS",
+     "XU100.IS",
+     "XUHIZ.IS",
+     "XULAS.IS",
+     "XUMAL.IS",
+     "XUSIN.IS",
+     "XUTEK.IS",
+     "XUTUM.IS",
+     "XYORT.IS"
+    ],
+    "missing": []
+   }
+  },
+  "retrieved_utc_end": "2026-11-10T21:24:35+00:00",
+  "retrieved_istanbul_end": "2026-11-11T00:24:35+03:00",
+  "delay_note": "End-of-day data. Is Yatirim and Yahoo publish BIST prices with at least a 15-minute delay; a bar dated today is only complete after the 18:10 Istanbul close."
+ },
+ "periods": {
+  "development": [
+   "2016-01-04",
+   "2021-12-31"
+  ],
+  "validation": [
+   "2022-01-01",
+   "2023-12-31"
+  ],
+  "final_test": [
+   "2024-01-01",
+   "2026-12-31"
+  ]
+ },
+ "universe_note": "Universe is rebuilt each session from trailing liquidity, but only shares still listed on the retrieval date are in the data: delisted and merged shares are missing (survivorship bias, which flatters results).",
+ "setups": {
+  "INVALIDATED": 36,
+  "EXPIRED": 25,
+  "CONFIRMED": 18
+ },
+ "signals": 18,
+ "skipped_entries": {
+  "open above maximum entry": 14,
+  "open at or below pivot": 2
+ },
+ "tight_base": {
+  "label": "tight-base breakout V1",
+  "open_trades_excluded": 0,
+  "trades_crossing_period_boundary_purged": 0,
+  "by_period": {
+   "development": {
+    "net_25bps": {
+     "trades": 1,
+     "win_rate": 1.0,
+     "avg_win_R": 0.99,
+     "avg_loss_R": null,
+     "expectancy_R": 0.988,
+     "median_R": 0.988,
+     "profit_factor": null,
+     "avg_hold_sessions": 28.0,
+     "false_breakout_rate": 0.0
+    },
+    "gross": {
+     "trades": 1,
+     "win_rate": 1.0,
+     "avg_win_R": 1.05,
+     "avg_loss_R": null,
+     "expectancy_R": 1.049,
+     "median_R": 1.049,
+     "profit_factor": null,
+     "avg_hold_sessions": 28.0,
+     "false_breakout_rate": 0.0
+    },
+    "cost_sensitivity_expectancy_R": {
+     "10": 1.025,
+     "25": 0.988,
+     "50": 0.927
+    },
+    "mean_trade_return_net": 0.084,
+    "uncertain_fills": 0
+   },
+   "validation": {
+    "net_25bps": {
+     "trades": 0
+    },
+    "gross": {
+     "trades": 0
+    },
+    "cost_sensitivity_expectancy_R": {
+     "10": null,
+     "25": null,
+     "50": null
+    },
+    "mean_trade_return_net": null,
+    "uncertain_fills": 0
+   },
+   "final_test": {
+    "net_25bps": {
+     "trades": 1,
+     "win_rate": 1.0,
+     "avg_win_R": 2.39,
+     "avg_loss_R": null,
+     "expectancy_R": 2.389,
+     "median_R": 2.389,
+     "profit_factor": null,
+     "avg_hold_sessions": 39.0,
+     "false_breakout_rate": 0.0
+    },
+    "gross": {
+     "trades": 1,
+     "win_rate": 1.0,
+     "avg_win_R": 2.46,
+     "avg_loss_R": null,
+     "expectancy_R": 2.457,
+     "median_R": 2.457,
+     "profit_factor": null,
+     "avg_hold_sessions": 39.0,
+     "false_breakout_rate": 0.0
+    },
+    "cost_sensitivity_expectancy_R": {
+     "10": 2.43,
+     "25": 2.389,
+     "50": 2.322
+    },
+    "mean_trade_return_net": 0.1948,
+    "uncertain_fills": 1
+   }
+  },
+  "all_periods_net_25bps": {
+   "trades": 2,
+   "win_rate": 1.0,
+   "avg_win_R": 1.69,
+   "avg_loss_R": null,
+   "expectancy_R": 1.689,
+   "median_R": 1.689,
+   "profit_factor": null,
+   "avg_hold_sessions": 33.5,
+   "false_breakout_rate": 0.0
+  },
+  "by_year_net_25bps": {
+   "2016": {
+    "trades": 1,
+    "win_rate": 1.0,
+    "avg_win_R": 0.99,
+    "avg_loss_R": null,
+    "expectancy_R": 0.988,
+    "median_R": 0.988,
+    "profit_factor": null,
+    "avg_hold_sessions": 28.0,
+    "false_breakout_rate": 0.0
+   },
+   "2026": {
+    "trades": 1,
+    "win_rate": 1.0,
+    "avg_win_R": 2.39,
+    "avg_loss_R": null,
+    "expectancy_R": 2.389,
+    "median_R": 2.389,
+    "profit_factor": null,
+    "avg_hold_sessions": 39.0,
+    "false_breakout_rate": 0.0
+   }
+  },
+  "by_regime_net_25bps": {
+   "xu100_uptrend": {
+    "trades": 1,
+    "win_rate": 1.0,
+    "avg_win_R": 2.39,
+    "avg_loss_R": null,
+    "expectancy_R": 2.389,
+    "median_R": 2.389,
+    "profit_factor": null,
+    "avg_hold_sessions": 39.0,
+    "false_breakout_rate": 0.0
+   },
+   "xu100_not_uptrend": {
+    "trades": 1,
+    "win_rate": 1.0,
+    "avg_win_R": 0.99,
+    "avg_loss_R": null,
+    "expectancy_R": 0.988,
+    "median_R": 0.988,
+    "profit_factor": null,
+    "avg_hold_sessions": 28.0,
+    "false_breakout_rate": 0.0
+   },
+   "breadth_above_50pct": {
+    "trades": 2,
+    "win_rate": 1.0,
+    "avg_win_R": 1.69,
+    "avg_loss_R": null,
+    "expectancy_R": 1.689,
+    "median_R": 1.689,
+    "profit_factor": null,
+    "avg_hold_sessions": 33.5,
+    "false_breakout_rate": 0.0
+   },
+   "breadth_below_50pct": {
+    "trades": 0
+   }
+  },
+  "by_liquidity_net_25bps": {
+   "101-200": {
+    "trades": 1,
+    "win_rate": 1.0,
+    "avg_win_R": 0.99,
+    "avg_loss_R": null,
+    "expectancy_R": 0.988,
+    "median_R": 0.988,
+    "profit_factor": null,
+    "avg_hold_sessions": 28.0,
+    "false_breakout_rate": 0.0
+   },
+   "51-100": {
+    "trades": 1,
+    "win_rate": 1.0,
+    "avg_win_R": 2.39,
+    "avg_loss_R": null,
+    "expectancy_R": 2.389,
+    "median_R": 2.389,
+    "profit_factor": null,
+    "avg_hold_sessions": 39.0,
+    "false_breakout_rate": 0.0
+   }
+  },
+  "exit_reasons": {
+   "close below EMA20": 2
+  }
+ },
+ "baseline_55": {
+  "label": "55-session-high breakout",
+  "open_trades_excluded": 3,
+  "trades_crossing_period_boundary_purged": 23,
+  "by_period": {
+   "development": {
+    "net_25bps": {
+     "trades": 2306,
+     "win_rate": 0.42,
+     "avg_win_R": 1.24,
+     "avg_loss_R": -0.47,
+     "expectancy_R": 0.251,
+     "median_R": -0.156,
+     "profit_factor": 1.93,
+     "avg_hold_sessions": 19.8,
+     "false_breakout_rate": 0.607,
+     "expectancy_R_ci90": [
+      0.139,
+      0.361
+     ],
+     "signal_months": 72
+    },
+    "gross": {
+     "trades": 2306,
+     "win_rate": 0.438,
+     "avg_win_R": 1.23,
+     "avg_loss_R": -0.44,
+     "expectancy_R": 0.291,
+     "median_R": -0.123,
+     "profit_factor": 2.17,
+     "avg_hold_sessions": 19.8,
+     "false_breakout_rate": 0.607
+    },
+    "cost_sensitivity_expectancy_R": {
+     "10": 0.275,
+     "25": 0.251,
+     "50": 0.211
+    },
+    "mean_trade_return_net": 0.0349,
+    "uncertain_fills": 58
+   },
+   "validation": {
+    "net_25bps": {
+     "trades": 1065,
+     "win_rate": 0.501,
+     "avg_win_R": 2.05,
+     "avg_loss_R": -0.43,
+     "expectancy_R": 0.815,
+     "median_R": 0.001,
+     "profit_factor": 4.83,
+     "avg_hold_sessions": 24.0,
+     "false_breakout_rate": 0.603,
+     "expectancy_R_ci90": [
+      0.512,
+      1.063
+     ],
+     "signal_months": 24
+    },
+    "gross": {
+     "trades": 1065,
+     "win_rate": 0.514,
+     "avg_win_R": 2.03,
+     "avg_loss_R": -0.41,
+     "expectancy_R": 0.846,
+     "median_R": 0.034,
+     "profit_factor": 5.26,
+     "avg_hold_sessions": 24.0,
+     "false_breakout_rate": 0.603
+    },
+    "cost_sensitivity_expectancy_R": {
+     "10": 0.834,
+     "25": 0.815,
+     "50": 0.783
+    },
+    "mean_trade_return_net": 0.1421,
+    "uncertain_fills": 12
+   },
+   "final_test": {
+    "net_25bps": {
+     "trades": 1186,
+     "win_rate": 0.352,
+     "avg_win_R": 1.33,
+     "avg_loss_R": -0.49,
+     "expectancy_R": 0.146,
+     "median_R": -0.266,
+     "profit_factor": 1.45,
+     "avg_hold_sessions": 18.3,
+     "false_breakout_rate": 0.618,
+     "expectancy_R_ci90": [
+      0.037,
+      0.251
+     ],
+     "signal_months": 34
+    },
+    "gross": {
+     "trades": 1186,
+     "win_rate": 0.365,
+     "avg_win_R": 1.31,
+     "avg_loss_R": -0.47,
+     "expectancy_R": 0.179,
+     "median_R": -0.234,
+     "profit_factor": 1.6,
+     "avg_hold_sessions": 18.3,
+     "false_breakout_rate": 0.618
+    },
+    "cost_sensitivity_expectancy_R": {
+     "10": 0.166,
+     "25": 0.146,
+     "50": 0.112
+    },
+    "mean_trade_return_net": 0.0314,
+    "uncertain_fills": 4
+   }
+  },
+  "all_periods_net_25bps": {
+   "trades": 4781,
+   "win_rate": 0.414,
+   "avg_win_R": 1.47,
+   "avg_loss_R": -0.47,
+   "expectancy_R": 0.333,
+   "median_R": -0.174,
+   "profit_factor": 2.22,
+   "avg_hold_sessions": 20.2,
+   "false_breakout_rate": 0.614,
+   "expectancy_R_ci90": [
+    0.228,
+    0.438
+   ],
+   "signal_months": 142
+  },
+  "by_year_net_25bps": {
+   "2015": {
+    "trades": 224,
+    "win_rate": 0.259,
+    "avg_win_R": 0.9,
+    "avg_loss_R": -0.46,
+    "expectancy_R": -0.11,
+    "median_R": -0.336,
+    "profit_factor": 0.68,
+    "avg_hold_sessions": 16.0,
+    "false_breakout_rate": 0.719
+   },
+   "2016": {
+    "trades": 333,
+    "win_rate": 0.372,
+    "avg_win_R": 1.04,
+    "avg_loss_R": -0.44,
+    "expectancy_R": 0.11,
+    "median_R": -0.22,
+    "profit_factor": 1.4,
+    "avg_hold_sessions": 19.3,
+    "false_breakout_rate": 0.652
+   },
+   "2017": {
+    "trades": 443,
+    "win_rate": 0.433,
+    "avg_win_R": 1.36,
+    "avg_loss_R": -0.45,
+    "expectancy_R": 0.334,
+    "median_R": -0.143,
+    "profit_factor": 2.3,
+    "avg_hold_sessions": 21.2,
+    "false_breakout_rate": 0.623
+   },
+   "2018": {
+    "trades": 222,
+    "win_rate": 0.257,
+    "avg_win_R": 0.87,
+    "avg_loss_R": -0.49,
+    "expectancy_R": -0.142,
+    "median_R": -0.358,
+    "profit_factor": 0.61,
+    "avg_hold_sessions": 15.0,
+    "false_breakout_rate": 0.68
+   },
+   "2019": {
+    "trades": 492,
+    "win_rate": 0.49,
+    "avg_win_R": 1.26,
+    "avg_loss_R": -0.45,
+    "expectancy_R": 0.385,
+    "median_R": -0.028,
+    "profit_factor": 2.67,
+    "avg_hold_sessions": 21.8,
+    "false_breakout_rate": 0.528
+   },
+   "2020": {
+    "trades": 445,
+    "win_rate": 0.512,
+    "avg_win_R": 1.22,
+    "avg_loss_R": -0.47,
+    "expectancy_R": 0.397,
+    "median_R": 0.042,
+    "profit_factor": 2.74,
+    "avg_hold_sessions": 21.3,
+    "false_breakout_rate": 0.618
+   },
+   "2021": {
+    "trades": 371,
+    "win_rate": 0.34,
+    "avg_win_R": 1.45,
+    "avg_loss_R": -0.5,
+    "expectancy_R": 0.159,
+    "median_R": -0.292,
+    "profit_factor": 1.48,
+    "avg_hold_sessions": 17.0,
+    "false_breakout_rate": 0.596
+   },
+   "2022": {
+    "trades": 647,
+    "win_rate": 0.536,
+    "avg_win_R": 2.08,
+    "avg_loss_R": -0.43,
+    "expectancy_R": 0.916,
+    "median_R": 0.085,
+    "profit_factor": 5.62,
+    "avg_hold_sessions": 24.9,
+    "false_breakout_rate": 0.561
+   },
+   "2023": {
+    "trades": 418,
+    "win_rate": 0.447,
+    "avg_win_R": 1.99,
+    "avg_loss_R": -0.43,
+    "expectancy_R": 0.657,
+    "median_R": -0.139,
+    "profit_factor": 3.79,
+    "avg_hold_sessions": 22.5,
+    "false_breakout_rate": 0.667
+   },
+   "2024": {
+    "trades": 425,
+    "win_rate": 0.369,
+    "avg_win_R": 1.1,
+    "avg_loss_R": -0.46,
+    "expectancy_R": 0.116,
+    "median_R": -0.237,
+    "profit_factor": 1.4,
+    "avg_hold_sessions": 19.1,
+    "false_breakout_rate": 0.64
+   },
+   "2025": {
+    "trades": 450,
+    "win_rate": 0.367,
+    "avg_win_R": 1.53,
+    "avg_loss_R": -0.46,
+    "expectancy_R": 0.272,
+    "median_R": -0.249,
+    "profit_factor": 1.94,
+    "avg_hold_sessions": 18.4,
+    "false_breakout_rate": 0.596
+   },
+   "2026": {
+    "trades": 311,
+    "win_rate": 0.305,
+    "avg_win_R": 1.36,
+    "avg_loss_R": -0.59,
+    "expectancy_R": 0.004,
+    "median_R": -0.312,
+    "profit_factor": 1.01,
+    "avg_hold_sessions": 17.2,
+    "false_breakout_rate": 0.621
+   }
+  },
+  "by_regime_net_25bps": {
+   "xu100_uptrend": {
+    "trades": 3157,
+    "win_rate": 0.41,
+    "avg_win_R": 1.57,
+    "avg_loss_R": -0.47,
+    "expectancy_R": 0.365,
+    "median_R": -0.182,
+    "profit_factor": 2.31,
+    "avg_hold_sessions": 20.2,
+    "false_breakout_rate": 0.618
+   },
+   "xu100_not_uptrend": {
+    "trades": 1624,
+    "win_rate": 0.42,
+    "avg_win_R": 1.28,
+    "avg_loss_R": -0.46,
+    "expectancy_R": 0.272,
+    "median_R": -0.169,
+    "profit_factor": 2.02,
+    "avg_hold_sessions": 20.2,
+    "false_breakout_rate": 0.607
+   },
+   "breadth_above_50pct": {
+    "trades": 3627,
+    "win_rate": 0.424,
+    "avg_win_R": 1.51,
+    "avg_loss_R": -0.46,
+    "expectancy_R": 0.374,
+    "median_R": -0.157,
+    "profit_factor": 2.4,
+    "avg_hold_sessions": 20.5,
+    "false_breakout_rate": 0.618
+   },
+   "breadth_below_50pct": {
+    "trades": 1154,
+    "win_rate": 0.38,
+    "avg_win_R": 1.33,
+    "avg_loss_R": -0.48,
+    "expectancy_R": 0.208,
+    "median_R": -0.224,
+    "profit_factor": 1.7,
+    "avg_hold_sessions": 19.2,
+    "false_breakout_rate": 0.602
+   }
+  },
+  "by_liquidity_net_25bps": {
+   "1-50": {
+    "trades": 1338,
+    "win_rate": 0.408,
+    "avg_win_R": 1.32,
+    "avg_loss_R": -0.47,
+    "expectancy_R": 0.264,
+    "median_R": -0.175,
+    "profit_factor": 1.96,
+    "avg_hold_sessions": 20.2,
+    "false_breakout_rate": 0.618
+   },
+   "101-200": {
+    "trades": 2325,
+    "win_rate": 0.42,
+    "avg_win_R": 1.54,
+    "avg_loss_R": -0.47,
+    "expectancy_R": 0.372,
+    "median_R": -0.17,
+    "profit_factor": 2.36,
+    "avg_hold_sessions": 20.2,
+    "false_breakout_rate": 0.613
+   },
+   "51-100": {
+    "trades": 1118,
+    "win_rate": 0.406,
+    "avg_win_R": 1.49,
+    "avg_loss_R": -0.45,
+    "expectancy_R": 0.336,
+    "median_R": -0.191,
+    "profit_factor": 2.25,
+    "avg_hold_sessions": 20.2,
+    "false_breakout_rate": 0.612
+   }
+  },
+  "exit_reasons": {
+   "close below EMA20": 4570,
+   "60 sessions": 125,
+   "stop": 72,
+   "stop (gap through, filled at open)": 7,
+   "stop (open unverified, filled at low)": 6,
+   "stop (locked, next tradable open)": 1
+  },
+  "skipped_entries": {
+   "open above maximum entry": 5411,
+   "open at or below pivot": 593,
+   "open not verified": 276,
+   "no range on entry day (locked limit or single print)": 24
+  }
+ },
+ "portfolio": {
+  "tight_base": {
+   "cost_bps_per_side": 25,
+   "trades_taken": 1,
+   "skipped_for_portfolio_limits": {
+    "liquidity cap or cash too small for a meaningful position": 1
+   },
+   "avg_exposure": 0.001,
+   "turnover_per_year": 0.01,
+   "periods": {
+    "development": {
+     "from": "2016-01-04",
+     "to": "2021-12-31",
+     "total_return": 0.0,
+     "cagr": 0.0,
+     "max_drawdown": 0.0
+    },
+    "validation": {
+     "from": "2022-01-03",
+     "to": "2023-12-29",
+     "total_return": 0.0,
+     "cagr": 0.0,
+     "max_drawdown": 0.0
+    },
+    "final_test": {
+     "from": "2024-01-02",
+     "to": "2026-11-10",
+     "total_return": 0.0119,
+     "cagr": 0.0042,
+     "max_drawdown": -0.0077
+    }
+   },
+   "whole": {
+    "from": "2016-01-04",
+    "to": "2026-11-10",
+    "total_return": 0.0119,
+    "cagr": 0.0011,
+    "max_drawdown": -0.0077
+   },
+   "whole_usd": {
+    "from": "2016-01-04",
+    "to": "2026-11-10",
+    "total_return": -0.9406,
+    "cagr": -0.2291,
+    "max_drawdown": -0.9436
+   }
+  },
+  "baseline_55": {
+   "cost_bps_per_side": 25,
+   "trades_taken": 531,
+   "skipped_for_portfolio_limits": {
+    "four positions already open": 3844,
+    "liquidity cap or cash too small for a meaningful position": 407,
+    "two positions already in this sector": 22
+   },
+   "avg_exposure": 0.093,
+   "turnover_per_year": 1.27,
+   "periods": {
+    "development": {
+     "from": "2016-01-04",
+     "to": "2021-12-31",
+     "total_return": 0.1205,
+     "cagr": 0.0192,
+     "max_drawdown": -0.0651
+    },
+    "validation": {
+     "from": "2022-01-03",
+     "to": "2023-12-29",
+     "total_return": 0.214,
+     "cagr": 0.1026,
+     "max_drawdown": -0.0388
+    },
+    "final_test": {
+     "from": "2024-01-02",
+     "to": "2026-11-10",
+     "total_return": 0.0953,
+     "cagr": 0.0324,
+     "max_drawdown": -0.0792
+    }
+   },
+   "whole": {
+    "from": "2016-01-04",
+    "to": "2026-11-10",
+    "total_return": 0.4998,
+    "cagr": 0.0381,
+    "max_drawdown": -0.0792
+   },
+   "whole_usd": {
+    "from": "2016-01-04",
+    "to": "2026-11-10",
+    "total_return": -0.9119,
+    "cagr": -0.2006,
+    "max_drawdown": -0.9169
+   }
+  }
+ },
+ "benchmark_xu100": {
+  "note": "XU100 price index, buy and hold, no costs, dividends excluded; share prices in the strategy are dividend-adjusted, so the strategy has a small built-in advantage.",
+  "periods": {
+   "development": {
+    "from": "2016-01-04",
+    "to": "2021-12-31",
+    "total_return": 1.6343,
+    "cagr": 0.1755,
+    "max_drawdown": -0.3182
+   },
+   "validation": {
+    "from": "2022-01-03",
+    "to": "2023-12-29",
+    "total_return": 2.8773,
+    "cagr": 0.9792,
+    "max_drawdown": -0.2226
+   },
+   "final_test": {
+    "from": "2024-01-02",
+    "to": "2026-11-10",
+    "total_return": 0.5296,
+    "cagr": 0.1605,
+    "max_drawdown": -0.289
+   }
+  },
+  "whole": {
+   "from": "2016-01-04",
+   "to": "2026-11-10",
+   "total_return": 15.5373,
+   "cagr": 0.2951,
+   "max_drawdown": -0.3182
+  },
+  "whole_usd": {
+   "from": "2016-01-04",
+   "to": "2026-11-10",
+   "total_return": -0.029,
+   "cagr": -0.0027,
+   "max_drawdown": -0.6356
+  }
+ },
+ "sensitivity_development_only": [
+  {
+   "parameter": "relative_strength.min_percentile",
+   "value": 70,
+   "development": {
+    "trades": 2,
+    "win_rate": 0.5,
+    "avg_win_R": 0.99,
+    "avg_loss_R": -0.78,
+    "expectancy_R": 0.104,
+    "median_R": 0.104,
+    "profit_factor": 1.27,
+    "avg_hold_sessions": 16.0,
+    "false_breakout_rate": 0.5
+   }
+  },
+  {
+   "parameter": "relative_strength.min_percentile",
+   "value": 90,
+   "development": {
+    "trades": 0
+   }
+  },
+  {
+   "parameter": "confirmation.volume_multiple",
+   "value": 1.2,
+   "development": {
+    "trades": 4,
+    "win_rate": 0.25,
+    "avg_win_R": 0.99,
+    "avg_loss_R": -0.57,
+    "expectancy_R": -0.181,
+    "median_R": -0.493,
+    "profit_factor": 0.58,
+    "avg_hold_sessions": 13.2,
+    "false_breakout_rate": 0.5
+   }
+  },
+  {
+   "parameter": "confirmation.volume_multiple",
+   "value": 2.0,
+   "development": {
+    "trades": 1,
+    "win_rate": 1.0,
+    "avg_win_R": 0.99,
+    "avg_loss_R": null,
+    "expectancy_R": 0.988,
+    "median_R": 0.988,
+    "profit_factor": null,
+    "avg_hold_sessions": 28.0,
+    "false_breakout_rate": 0.0
+   }
+  },
+  {
+   "parameter": "base.max_depth",
+   "value": 0.15,
+   "development": {
+    "trades": 0
+   }
+  },
+  {
+   "parameter": "base.max_depth",
+   "value": 0.25,
+   "development": {
+    "trades": 4,
+    "win_rate": 0.75,
+    "avg_win_R": 1.27,
+    "avg_loss_R": -0.01,
+    "expectancy_R": 0.951,
+    "median_R": 0.555,
+    "profit_factor": 299.46,
+    "avg_hold_sessions": 27.2,
+    "false_breakout_rate": 0.25
+   }
+  },
+  {
+   "parameter": "base.max_volume_ratio",
+   "value": 1.0,
+   "development": {
+    "trades": 2,
+    "win_rate": 1.0,
+    "avg_win_R": 0.49,
+    "avg_loss_R": null,
+    "expectancy_R": 0.494,
+    "median_R": 0.494,
+    "profit_factor": null,
+    "avg_hold_sessions": 22.0,
+    "false_breakout_rate": 0.5
+   }
+  },
+  {
+   "parameter": "base.max_contraction_ratio",
+   "value": 0.8,
+   "development": {
+    "trades": 1,
+    "win_rate": 1.0,
+    "avg_win_R": 0.99,
+    "avg_loss_R": null,
+    "expectancy_R": 0.988,
+    "median_R": 0.988,
+    "profit_factor": null,
+    "avg_hold_sessions": 28.0,
+    "false_breakout_rate": 0.0
+   }
+  }
+ ]
+}
