@@ -1,0 +1,54 @@
+name: BIST run
+
+# Fetch, scan and backtest. Runs when bist/run_request.txt changes on this branch.
+# A daily schedule needs this file on the repository's default branch (GitHub only
+# starts scheduled workflows from there), so nothing here runs on a timer yet.
+on:
+  push:
+    branches: [bist-research]
+    paths: ["bist/run_request.txt"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bist-run
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.13", cache: pip}
+      - run: pip install -q -r requirements.txt
+      - name: Unit tests
+        run: python -m pytest -q tests
+      - name: Download data
+        run: python -m bist.fetch --out data_out --start 2014-01-01
+      - name: Previous scan and alert history
+        run: |
+          mkdir -p out
+          if git fetch -q --depth 1 origin bist-results 2>/dev/null; then
+            git show FETCH_HEAD:scan.json > prev_scan.json 2>/dev/null || rm -f prev_scan.json
+            git show FETCH_HEAD:alert_history.jsonl > out/alert_history.jsonl 2>/dev/null || rm -f out/alert_history.jsonl
+          fi
+      - name: Scan
+        run: python -m bist.scan --data data_out --out out --prev prev_scan.json --history out/alert_history.jsonl
+      - name: Backtest
+        run: python -m bist.backtest --data data_out --out out
+      - name: Publish data and results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp bist/config.yaml out/config_used.yaml
+          cp data_out/provenance.json out/provenance.json
+          for pair in "data_out:bist-data" "out:bist-results"; do
+            dir="${pair%%:*}"; branch="${pair##*:}"
+            ( cd "$dir" && git init -q -b "$branch" && git config user.name "bist-bot" \
+              && git config user.email "bist-bot@users.noreply.github.com" && git add . \
+              && git commit -q -m "$branch $(date -u +%FT%TZ) from ${GITHUB_SHA::7}" \
+              && git push -q --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$branch" )
+          done

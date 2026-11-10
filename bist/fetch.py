@@ -96,10 +96,14 @@ def isy_actions(code, session):
 
 def yahoo_batch(symbols, start):
     import yfinance as yf
+    from datetime import timedelta
     out = []
+    # An explicit end date two days ahead: without it a run just after midnight Istanbul time
+    # came back without the session that had closed six hours earlier.
+    end = (datetime.now(IST) + timedelta(days=2)).strftime("%Y-%m-%d")
     for attempt in range(3):
         try:
-            df = yf.download(symbols, start=start, interval="1d", auto_adjust=False, progress=False,
+            df = yf.download(symbols, start=start, end=end, interval="1d", auto_adjust=False, progress=False,
                              threads=True, group_by="ticker", timeout=40)
             if df is None or df.empty:
                 raise RuntimeError("empty")
