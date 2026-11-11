@@ -367,6 +367,11 @@ def test_after_open_check_end_to_end(tmp_path, monkeypatch):
     p2["demo"], p2["health"], p2["followup"] = True, {"stock_list": "test"}, None
     build.attach_open_check(p2)
     assert "open_check" not in p2 and "After the open" not in render.page(p2)
+    # triggers, breaks the low it was stopped against, then recovers: still a failed trade
+    f = by["FLAG1"]["pivot"]
+    whip = _five_minute([(f * .99, f * 1.01, f * .985, f * 1.005), (f * 1.005, f * 1.006, f * .97, f * .98),
+                         (f * .98, f * 1.012, f * .98, f * 1.01)])
+    assert intraday.assess(by["FLAG1"], whip, CFG, 1.0)["state"] == "failed"
     # outside the window nothing is written
     assert intraday.run(datetime(2026, 11, 10, 12, 30, tzinfo=ZoneInfo("America/New_York"))) is None
 

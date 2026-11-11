@@ -99,7 +99,10 @@ def assess(row: dict, bars: pd.DataFrame, cfg: dict, size_factor: float) -> dict
                risk_pct=plan["risk_pct"], stop_adr=plan["stop_adr"], shares=plan["shares"],
                position_pct=plan["position_pct"], risk_usd=plan["risk_usd"],
                too_wide=plan["stop_too_wide"], extended=(now / entry - 1) / adr if adr else 0.0)
-    if now <= stop:
+    # Stopped out if any bar after the trigger traded under that low, even if price
+    # has since recovered.
+    later = bars.loc[first:].iloc[1:]
+    if now <= stop or (len(later) and float(later["Low"].min()) < stop):
         out["state"] = "failed"
     elif now < row["pivot"]:
         out["state"] = "back_under"

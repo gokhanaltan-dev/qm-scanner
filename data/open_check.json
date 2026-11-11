@@ -95,7 +95,7 @@
    "risk_usd": 31,
    "too_wide": false,
    "extended": -0.07261855586856247,
-   "state": "back_under"
+   "state": "failed"
   },
   {
    "ticker": "LASR",
