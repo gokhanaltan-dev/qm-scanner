@@ -223,7 +223,15 @@ def compare_with_previous(payload: dict, bars: dict[str, pd.DataFrame]) -> None:
         prev = json.loads(path.read_text())
     except Exception:
         return
-    if prev.get("demo") != payload.get("demo") or prev.get("asof", "") >= payload["asof"]:
+    if prev.get("demo") != payload.get("demo") or prev.get("asof", "") > payload["asof"]:
+        return
+    if prev.get("asof") == payload["asof"]:
+        # A second scan of the same session (after a settings change, say): keep what the
+        # first one worked out against the session before.
+        payload["followup"] = prev.get("followup")
+        was_new = {r["ticker"]: r.get("new") for r in prev.get("ready", [])}
+        for r in payload["ready"]:
+            r["new"] = was_new.get(r["ticker"], False)
         return
     seen = {r["ticker"] for k in ("ready", "building") for r in prev.get(k, [])}
     for r in payload["ready"]:

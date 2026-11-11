@@ -150,6 +150,13 @@ def test_followup_reports_yesterdays_triggers(tmp_path, monkeypatch):
     today["demo"] = True
     build.compare_with_previous(today, bars)
     assert "TRIG1" in today["followup"]["triggered"]
+    # a second scan of the same session keeps that follow-up instead of dropping it
+    build.save(today)
+    again = build.analyse(bars, meta, CFG)
+    again["demo"] = True
+    build.compare_with_previous(again, bars)
+    assert again["followup"] == today["followup"]
+    assert [r.get("new") for r in again["ready"]] == [r.get("new") for r in today["ready"]]
     assert not (tmp_path / "history.csv").exists()            # demo runs never touch the log
 
 
