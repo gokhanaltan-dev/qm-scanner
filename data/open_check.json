@@ -11,11 +11,11 @@
    "score": 66,
    "grade": "B",
    "trigger": 35.96,
-   "now": 36.42,
+   "now": 36.48,
    "low": 35.52,
    "high": 36.69,
    "vol_pct": 7,
-   "vs_trigger": 0.012932730196359099,
+   "vs_trigger": 0.014573723649360604,
    "time": "09:35",
    "entry": 35.99,
    "stop": 35.52,
@@ -25,7 +25,7 @@
    "position_pct": 19.1,
    "risk_usd": 50,
    "too_wide": false,
-   "extended": 0.2709788583741055,
+   "extended": 0.30824397081496163,
    "state": "triggered"
   },
   {
@@ -34,11 +34,11 @@
    "score": 65,
    "grade": "B",
    "trigger": 20.99,
-   "now": 21.29,
+   "now": 21.26,
    "low": 20.72,
    "high": 21.78,
    "vol_pct": 14,
-   "vs_trigger": 0.014292574925225843,
+   "vs_trigger": 0.013101458862742277,
    "time": "09:30",
    "entry": 21.01,
    "stop": 20.72,
@@ -48,7 +48,7 @@
    "position_pct": 17.6,
    "risk_usd": 50,
    "too_wide": false,
-   "extended": 0.2295359670720351,
+   "extended": 0.20896779432633444,
    "state": "triggered"
   },
   {
@@ -57,11 +57,11 @@
    "score": 55,
    "grade": "C",
    "trigger": 16.11,
-   "now": 16.12,
+   "now": 16.11,
    "low": 15.93,
    "high": 16.42,
-   "vol_pct": 21,
-   "vs_trigger": 0.0007264319886783888,
+   "vol_pct": 22,
+   "vs_trigger": 0.0004159666790914951,
    "time": "09:30",
    "entry": 16.12,
    "stop": 15.93,
@@ -71,7 +71,7 @@
    "position_pct": 20.0,
    "risk_usd": 48,
    "too_wide": false,
-   "extended": -0.004857229065125135,
+   "extended": -0.010369573575557891,
    "state": "triggered"
   },
   {
@@ -80,11 +80,11 @@
    "score": 78,
    "grade": "A",
    "trigger": 36.45,
-   "now": 36.38,
+   "now": 36.39,
    "low": 35.93,
    "high": 36.5,
    "vol_pct": 6,
-   "vs_trigger": -0.001920430544829821,
+   "vs_trigger": -0.001646128176546524,
    "time": "09:30",
    "entry": 36.49,
    "stop": 36.2,
@@ -94,7 +94,7 @@
    "position_pct": 19.9,
    "risk_usd": 31,
    "too_wide": false,
-   "extended": -0.08014632494362688,
+   "extended": -0.07261855586856247,
    "state": "back_under"
   },
   {
@@ -103,11 +103,11 @@
    "score": 62,
    "grade": "B",
    "trigger": 44.92,
-   "now": 44.27,
+   "now": 44.38,
    "low": 44.27,
    "high": 45.76,
    "vol_pct": 12,
-   "vs_trigger": -0.014470118826296119,
+   "vs_trigger": -0.012021307276085191,
    "time": "09:30",
    "entry": 45.51,
    "stop": 45.0,
@@ -117,7 +117,7 @@
    "position_pct": 19.8,
    "risk_usd": 44,
    "too_wide": false,
-   "extended": -0.41775883934629066,
+   "extended": -0.38054936193982075,
    "state": "failed"
   },
   {
@@ -126,11 +126,11 @@
    "score": 83,
    "grade": "A",
    "trigger": 22.35,
-   "now": 21.82,
+   "now": 21.83,
    "low": 21.6,
    "high": 22.29,
    "vol_pct": 17,
-   "vs_trigger": -0.02371367685008763,
+   "vs_trigger": -0.02304256323073961,
    "state": "waiting"
   },
   {
@@ -143,7 +143,7 @@
    "low": 30.32,
    "high": 31.0,
    "vol_pct": 10,
-   "vs_trigger": -0.009677394743888623,
+   "vs_trigger": -0.009516131493353064,
    "state": "waiting"
   },
   {
@@ -152,11 +152,11 @@
    "score": 60,
    "grade": "C",
    "trigger": 59.72,
-   "now": 58.55,
+   "now": 58.5,
    "low": 58.42,
    "high": 59.75,
    "vol_pct": 9,
-   "vs_trigger": -0.019591459472994344,
+   "vs_trigger": -0.020428687136064383,
    "state": "waiting"
   },
   {
@@ -182,7 +182,7 @@
    "low": 6.9,
    "high": 7.09,
    "vol_pct": 15,
-   "vs_trigger": -0.03254975681902328,
+   "vs_trigger": -0.03324527974998848,
    "state": "waiting"
   }
  ],
