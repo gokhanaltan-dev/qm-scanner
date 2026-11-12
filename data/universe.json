@@ -5552,8 +5552,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Pharmaceutical Preparations"
+"sector": "Consumer Discretionary",
+"industry": "RETAIL: Building Materials"
 },
 {
 "symbol": "CAQ",
@@ -6212,12 +6212,6 @@
 {
 "symbol": "CFG",
 "name": "Citizens Financial Group Inc. Common Stock",
-"sector": "Finance",
-"industry": "Major Banks"
-},
-{
-"symbol": "CFR",
-"name": "Cullen/Frost Bankers Inc. Common Stock",
 "sector": "Finance",
 "industry": "Major Banks"
 },
@@ -16596,12 +16590,6 @@
 "industry": "Computer Software: Prepackaged Software"
 },
 {
-"symbol": "KAZR",
-"name": "Skyline Builders Group Holding Limited Class A Ordinary Shares",
-"sector": "Consumer Discretionary",
-"industry": "Engineering & Construction"
-},
-{
 "symbol": "KB",
 "name": "KB Financial Group Inc",
 "sector": "Finance",
@@ -16936,12 +16924,6 @@
 "name": "Knife Riv Holding Co. Common Stock",
 "sector": "Industrials",
 "industry": "Mining & Quarrying of Nonmetallic Minerals (No Fuels)"
-},
-{
-"symbol": "KNRX",
-"name": "KNOREX LTD. Class A Ordinary Shares",
-"sector": "Technology",
-"industry": "Computer Software: Programming Data Processing"
 },
 {
 "symbol": "KNSA",
@@ -21838,12 +21820,6 @@
 "name": "Next Technology Holding Inc. Ordinary Shares",
 "sector": "Technology",
 "industry": "EDP Services"
-},
-{
-"symbol": "NXXT",
-"name": "NextNRG Inc. Common Stock",
-"sector": "Consumer Discretionary",
-"industry": "Retail-Auto Dealers and Gas Stations"
 },
 {
 "symbol": "NYAX",
