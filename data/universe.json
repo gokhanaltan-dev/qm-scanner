@@ -5552,8 +5552,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Consumer Discretionary",
-"industry": "RETAIL: Building Materials"
+"sector": "Health Care",
+"industry": "Biotechnology: Pharmaceutical Preparations"
 },
 {
 "symbol": "CAQ",
@@ -6678,12 +6678,6 @@
 "industry": "Telecommunications Equipment"
 },
 {
-"symbol": "CLGN",
-"name": "CollPlant Biotechnologies Ltd Ordinary Shares",
-"sector": "Health Care",
-"industry": "Industrial Specialties"
-},
-{
 "symbol": "CLH",
 "name": "Clean Harbors Inc. Common Stock",
 "sector": "Industrials",
@@ -7666,6 +7660,12 @@
 "name": "Critical Metals Corp. Ordinary Shares",
 "sector": "Basic Materials",
 "industry": "Metal Mining"
+},
+{
+"symbol": "CRMN",
+"name": "Skyline Builders Group Holding Limited Class A Ordinary Shares",
+"sector": "Consumer Discretionary",
+"industry": "Engineering & Construction"
 },
 {
 "symbol": "CRMT",
@@ -14617,9 +14617,9 @@
 },
 {
 "symbol": "HUBC",
-"name": "Hub Cyber Security Ltd. Ordinary Shares",
-"sector": "Telecommunications",
-"industry": "Computer Communications Equipment"
+"name": "Hub Cyber Security Ltd.",
+"sector": "",
+"industry": ""
 },
 {
 "symbol": "HUBG",
@@ -22195,7 +22195,7 @@
 },
 {
 "symbol": "OLMA",
-"name": "Olema Pharmaceuticals Inc. Common Stock",
+"name": "Olema Oncology Inc. Common Stock",
 "sector": "Health Care",
 "industry": "Biotechnology: Pharmaceutical Preparations"
 },
@@ -24484,12 +24484,6 @@
 "name": "Pineapple Financial Inc. Common Stock",
 "sector": "Finance",
 "industry": "Finance: Consumer Services"
-},
-{
-"symbol": "PTLE",
-"name": "PTL LTD Class A Ordinary Shares",
-"sector": "Energy",
-"industry": "Oil Refining/Marketing"
 },
 {
 "symbol": "PTLO",
@@ -32263,7 +32257,7 @@
 },
 {
 "symbol": "WFRD",
-"name": "Weatherford International plc Ordinary Shares",
+"name": "Weatherford International Corp Common Stock",
 "sector": "Consumer Discretionary",
 "industry": "Oil and Gas Field Machinery"
 },
@@ -33634,5 +33628,11 @@
 "name": "Zymeworks Inc. Common Stock",
 "sector": "Health Care",
 "industry": "Biotechnology: Pharmaceutical Preparations"
+},
+{
+"symbol": "ZYN",
+"name": "PTL LTD Class A Ordinary Shares",
+"sector": "",
+"industry": ""
 }
 ]
