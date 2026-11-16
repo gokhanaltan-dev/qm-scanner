@@ -1,8 +1,8 @@
 {
  "for_asof": "2026-11-13",
  "date": "2026-11-16",
- "time_ny": "11:05",
- "minutes_in": 95,
+ "time_ny": "11:30",
+ "minutes_in": 120,
  "regime": "red",
  "rows": [
   {
@@ -11,11 +11,11 @@
    "score": 80,
    "grade": "A",
    "trigger": 18.23,
-   "now": 18.33,
+   "now": 18.42,
    "low": 17.47,
    "high": 18.78,
-   "vol_pct": 45,
-   "vs_trigger": 0.005485484584793365,
+   "vol_pct": 112,
+   "vs_trigger": 0.010422410248415614,
    "time": "09:30",
    "entry": 18.25,
    "stop": 17.47,
@@ -25,7 +25,7 @@
    "position_pct": 5.8,
    "risk_usd": 50,
    "too_wide": false,
-   "extended": 0.059275983793052385,
+   "extended": 0.1245177921400226,
    "state": "triggered"
   },
   {
@@ -34,11 +34,11 @@
    "score": 77,
    "grade": "A",
    "trigger": 8.56,
-   "now": 8.55,
+   "now": 8.54,
    "low": 8.34,
    "high": 8.57,
-   "vol_pct": 31,
-   "vs_trigger": -0.001168250980329244,
+   "vol_pct": 81,
+   "vs_trigger": -0.002336501960658488,
    "time": "10:55",
    "entry": 8.57,
    "stop": 8.34,
@@ -48,7 +48,7 @@
    "position_pct": 0.0,
    "risk_usd": 0,
    "too_wide": false,
-   "extended": -0.04323976905265471,
+   "extended": -0.06653730381373996,
    "state": "back_under"
   },
   {
@@ -57,11 +57,11 @@
    "score": 79,
    "grade": "A",
    "trigger": 24.7,
-   "now": 25.55,
+   "now": 25.4,
    "low": 24.18,
    "high": 25.96,
-   "vol_pct": 125,
-   "vs_trigger": 0.034214730181273856,
+   "vol_pct": 161,
+   "vs_trigger": 0.028141846464606823,
    "time": "09:30",
    "entry": 24.93,
    "stop": 24.81,
@@ -71,7 +71,7 @@
    "position_pct": 19.9,
    "risk_usd": 19,
    "too_wide": false,
-   "extended": 0.36064469052545434,
+   "extended": 0.27268276184793433,
    "state": "failed"
   },
   {
@@ -80,11 +80,11 @@
    "score": 85,
    "grade": "A+",
    "trigger": 255.18,
-   "now": 249.49,
+   "now": 247.22,
    "low": 245.0,
    "high": 250.61,
-   "vol_pct": 11,
-   "vs_trigger": -0.02233672434812084,
+   "vol_pct": 15,
+   "vs_trigger": -0.03121263559415066,
    "state": "waiting"
   },
   {
@@ -93,11 +93,11 @@
    "score": 80,
    "grade": "A",
    "trigger": 99.31,
-   "now": 95.48,
+   "now": 95.33,
    "low": 94.88,
    "high": 97.96,
-   "vol_pct": 11,
-   "vs_trigger": -0.03856604869414504,
+   "vol_pct": 12,
+   "vs_trigger": -0.04003523150154109,
    "state": "waiting"
   },
   {
@@ -106,11 +106,11 @@
    "score": 73,
    "grade": "B",
    "trigger": 168.56,
-   "now": 165.55,
+   "now": 165.91,
    "low": 163.44,
    "high": 166.49,
-   "vol_pct": 10,
-   "vs_trigger": -0.017857110527007558,
+   "vol_pct": 12,
+   "vs_trigger": -0.015721368858961915,
    "state": "waiting"
   },
   {
@@ -119,11 +119,11 @@
    "score": 72,
    "grade": "B",
    "trigger": 18.53,
-   "now": 18.34,
+   "now": 18.52,
    "low": 17.87,
-   "high": 18.35,
-   "vol_pct": 13,
-   "vs_trigger": -0.010253671182783641,
+   "high": 18.52,
+   "vol_pct": 19,
+   "vs_trigger": -0.0005396777394101049,
    "state": "waiting"
   },
   {
@@ -135,7 +135,7 @@
    "now": 18.1,
    "low": 17.8,
    "high": 18.3,
-   "vol_pct": 52,
+   "vol_pct": 59,
    "vs_trigger": -0.025040396350544558,
    "state": "waiting"
   },
@@ -145,11 +145,11 @@
    "score": 61,
    "grade": "C",
    "trigger": 39.7,
-   "now": 38.39,
+   "now": 38.38,
    "low": 37.62,
    "high": 38.83,
-   "vol_pct": 17,
-   "vs_trigger": -0.03299751506589188,
+   "vol_pct": 21,
+   "vs_trigger": -0.03312348655251973,
    "state": "waiting"
   }
  ],
