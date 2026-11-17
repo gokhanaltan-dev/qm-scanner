@@ -4200,12 +4200,6 @@
 "industry": "Clothing/Shoe/Accessory Stores"
 },
 {
-"symbol": "BKH",
-"name": "Black Hills Corporation Common Stock",
-"sector": "Utilities",
-"industry": "Electric Utilities: Central"
-},
-{
 "symbol": "BKHA",
 "name": "Black Hawk Acquisition Corporation Class A Ordinary Shares",
 "sector": "Health Care",
@@ -5552,8 +5546,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Pharmaceutical Preparations"
+"sector": "Consumer Discretionary",
+"industry": "RETAIL: Building Materials"
 },
 {
 "symbol": "CAQ",
@@ -11689,7 +11683,7 @@
 },
 {
 "symbol": "FOFO",
-"name": "Hang Feng Technology Innovation Co. Ltd. Ordinary Shares",
+"name": "Hang Feng Technology Innovation Co. Ltd. Class A Ordinary Shares",
 "sector": "Consumer Discretionary",
 "industry": "Professional Services"
 },
@@ -16008,12 +16002,6 @@
 "industry": "Water Sewer Pipeline Comm & Power Line Construction"
 },
 {
-"symbol": "ITGR",
-"name": "Integer Holdings Corporation Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Electromedical & Electrotherapeutic Apparatus"
-},
-{
 "symbol": "ITHA",
 "name": "ITHAX Acquisition Corp III Class A Ordinary Shares",
 "sector": "",
@@ -17160,12 +17148,6 @@
 "industry": "Electrical Products"
 },
 {
-"symbol": "KTF",
-"name": "DWS Municipal Income Trust",
-"sector": "Finance",
-"industry": "Finance Companies"
-},
-{
 "symbol": "KTOS",
 "name": "Kratos Defense & Security Solutions Inc. Common Stock",
 "sector": "Industrials",
@@ -18084,6 +18066,12 @@
 "industry": "Other Specialty Stores"
 },
 {
+"symbol": "LOVI",
+"name": "Live Oak Acquisition Corp. VI Class A Ordinary Shares",
+"sector": "Finance",
+"industry": "Blank Checks"
+},
+{
 "symbol": "LOW",
 "name": "Lowe's Companies Inc. Common Stock",
 "sector": "Consumer Discretionary",
@@ -18940,6 +18928,12 @@
 "name": "Mondelez International Inc. Class A Common Stock",
 "sector": "Consumer Staples",
 "industry": "Packaged Foods"
+},
+{
+"symbol": "MDRN",
+"name": "Modern Mining Technology Corp. Common Shares",
+"sector": "Utilities",
+"industry": "Environmental Services"
 },
 {
 "symbol": "MDRR",
@@ -21654,12 +21648,6 @@
 "industry": "Metal Fabrications"
 },
 {
-"symbol": "NWE",
-"name": "NorthWestern Energy Group Inc. Common Stock",
-"sector": "Utilities",
-"industry": "Power Generation"
-},
-{
 "symbol": "NWFL",
 "name": "Norwood Financial Corp. Common Stock",
 "sector": "Finance",
@@ -22426,6 +22414,12 @@
 "name": "OptimumBank Holdings Inc. Common Stock",
 "sector": "Finance",
 "industry": "Major Banks"
+},
+{
+"symbol": "OPHI",
+"name": "CollPlant Biotechnologies Ltd Ordinary Shares",
+"sector": "",
+"industry": ""
 },
 {
 "symbol": "OPI",
@@ -23680,12 +23674,6 @@
 "name": "Playboy Inc. Common Stock",
 "sector": "Consumer Discretionary",
 "industry": "Other Specialty Stores"
-},
-{
-"symbol": "PLCE",
-"name": "Children's Place Inc. (The) Common Stock",
-"sector": "Consumer Discretionary",
-"industry": "Clothing/Shoe/Accessory Stores"
 },
 {
 "symbol": "PLCI",
@@ -31956,6 +31944,12 @@
 "industry": "Major Chemicals"
 },
 {
+"symbol": "VVVV",
+"name": "vVARDIS Holding AG Class A Ordinary Shares",
+"sector": "Health Care",
+"industry": "Medical/Dental Instruments"
+},
+{
 "symbol": "VVX",
 "name": "V2X Inc. Common Stock",
 "sector": "Consumer Discretionary",
@@ -32752,6 +32746,12 @@
 "name": "WW International Inc.  Common Stock",
 "sector": "Consumer Discretionary",
 "industry": "Other Consumer Services"
+},
+{
+"symbol": "WWB",
+"name": "Windward Bio Group AG Common Shares",
+"sector": "Health Care",
+"industry": "Biotechnology: Biological Products (No Diagnostic Substances)"
 },
 {
 "symbol": "WWD",
@@ -33632,7 +33632,7 @@
 {
 "symbol": "ZYN",
 "name": "PTL LTD Class A Ordinary Shares",
-"sector": "",
-"industry": ""
+"sector": "Energy",
+"industry": "Oil Refining/Marketing"
 }
 ]
