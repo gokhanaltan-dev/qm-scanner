@@ -312,12 +312,6 @@
 "industry": "Property-Casualty Insurers"
 },
 {
-"symbol": "ACH",
-"name": "Accendra Health Inc. Common Stock",
-"sector": "Health Care",
-"industry": "Medical Specialities"
-},
-{
 "symbol": "ACHC",
 "name": "Acadia Healthcare Company Inc. Common Stock",
 "sector": "Health Care",
@@ -4872,6 +4866,12 @@
 "industry": "Restaurants"
 },
 {
+"symbol": "BRRK",
+"name": "Bluerock Acquisition Corp. II Class A Ordinary Shares",
+"sector": "",
+"industry": ""
+},
+{
 "symbol": "BRSL",
 "name": "Brightstar Lottery PLC Trading under the Legal Name to begin at the market open on July 21 2025. Ordinary Shares",
 "sector": "Consumer Discretionary",
@@ -5546,8 +5546,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Consumer Discretionary",
-"industry": "RETAIL: Building Materials"
+"sector": "Health Care",
+"industry": "Biotechnology: Pharmaceutical Preparations"
 },
 {
 "symbol": "CAQ",
@@ -9334,12 +9334,6 @@
 "name": "DaVita Inc. Common Stock",
 "sector": "Health Care",
 "industry": "Misc Health and Biotechnology Services"
-},
-{
-"symbol": "DVLT",
-"name": "Datavault AI Inc. Common Stock",
-"sector": "Consumer Discretionary",
-"industry": "Business Services"
 },
 {
 "symbol": "DVN",
@@ -14798,14 +14792,20 @@
 {
 "symbol": "HYPD",
 "name": "Hyperion DeFi Inc. Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Pharmaceutical Preparations"
+"sector": "Finance",
+"industry": "Finance: Consumer Services"
 },
 {
 "symbol": "HYPR",
 "name": "Hyperfine Inc. Class A Common Stock",
 "sector": "Health Care",
 "industry": "Biotechnology: Electromedical & Electrotherapeutic Apparatus"
+},
+{
+"symbol": "HZN",
+"name": "Bright Horizon Energy Corporation Common Stock",
+"sector": "Utilities",
+"industry": "Electric Utilities: Central"
 },
 {
 "symbol": "HZO",
@@ -19627,7 +19627,7 @@
 },
 {
 "symbol": "MOD",
-"name": "Modine Manufacturing Company Common Stock",
+"name": "Modexus Solutions Inc. Common Stock",
 "sector": "Consumer Discretionary",
 "industry": "Auto Parts:O.E.M."
 },
@@ -24022,6 +24022,12 @@
 "name": "Portland General Electric Co Common Stock",
 "sector": "Utilities",
 "industry": "Electric Utilities: Central"
+},
+{
+"symbol": "PORT",
+"name": "Southport Acquisition Corp. II Class A Ordinary Shares",
+"sector": "",
+"industry": ""
 },
 {
 "symbol": "POST",
@@ -31162,12 +31168,6 @@
 "name": "Valion Bio Inc. Common Stock",
 "sector": "Health Care",
 "industry": "Biotechnology: Electromedical & Electrotherapeutic Apparatus"
-},
-{
-"symbol": "VBNK",
-"name": "VersaBank Common Shares",
-"sector": "Finance",
-"industry": "Commercial Banks"
 },
 {
 "symbol": "VC",
