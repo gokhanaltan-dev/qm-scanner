@@ -13590,6 +13590,12 @@
 "industry": "Blank Checks"
 },
 {
+"symbol": "GUER",
+"name": "Guerrilla RF Inc. Common Stock",
+"sector": "",
+"industry": ""
+},
+{
 "symbol": "GUNN",
 "name": "Gunnison Copper Corp. American Depositary Shares (each representing thirty (30) Common Shares)",
 "sector": "",
@@ -14902,12 +14908,6 @@
 "name": "ICICI Bank Limited Common Stock",
 "sector": "Finance",
 "industry": "Commercial Banks"
-},
-{
-"symbol": "IBO",
-"name": "Impact BioMedical Inc. Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Pharmaceutical Preparations"
 },
 {
 "symbol": "IBP",
@@ -23154,12 +23154,6 @@
 "industry": "Computer Software: Prepackaged Software"
 },
 {
-"symbol": "PCRX",
-"name": "Pacira BioSciences Inc. Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Pharmaceutical Preparations"
-},
-{
 "symbol": "PCSA",
 "name": "Processa Pharmaceuticals Inc. Common Stock",
 "sector": "Health Care",
@@ -27006,12 +27000,6 @@
 "industry": "Telecommunications Equipment"
 },
 {
-"symbol": "SHFS",
-"name": "SHF Holdings Inc. Class A Common Stock",
-"sector": "Finance",
-"industry": "Finance: Consumer Services"
-},
-{
 "symbol": "SHG",
 "name": "Shinhan Financial Group Co Ltd American Depositary Shares",
 "sector": "Finance",
@@ -30474,6 +30462,12 @@
 "industry": "Electric Utilities: Central"
 },
 {
+"symbol": "TXR",
+"name": "Torex Resources Inc. Common Shares",
+"sector": "",
+"industry": ""
+},
+{
 "symbol": "TXRH",
 "name": "Texas Roadhouse Inc. Common Stock",
 "sector": "Consumer Discretionary",
@@ -31756,6 +31750,12 @@
 "name": "Verra Mobility Corporation Class A Common Stock",
 "sector": "Consumer Discretionary",
 "industry": "Transportation Services"
+},
+{
+"symbol": "VRSA",
+"name": "Versa Bancorp Common Stock",
+"sector": "Finance",
+"industry": "Commercial Banks"
 },
 {
 "symbol": "VRSK",
