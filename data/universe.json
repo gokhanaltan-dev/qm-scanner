@@ -458,8 +458,8 @@
 {
 "symbol": "ADAC",
 "name": "American Drive Acquisition Company Class A Ordinary Shares",
-"sector": "",
-"industry": ""
+"sector": "Finance",
+"industry": "Blank Checks"
 },
 {
 "symbol": "ADAG",
@@ -5546,8 +5546,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Pharmaceutical Preparations"
+"sector": "Consumer Discretionary",
+"industry": "RETAIL: Building Materials"
 },
 {
 "symbol": "CAQ",
@@ -11556,6 +11556,12 @@
 "industry": "Major Banks"
 },
 {
+"symbol": "FMBM",
+"name": "F&M Bank Corp.",
+"sector": "",
+"industry": ""
+},
+{
 "symbol": "FMC",
 "name": "FMC Corporation Common Stock",
 "sector": "Industrials",
@@ -13592,8 +13598,8 @@
 {
 "symbol": "GUER",
 "name": "Guerrilla RF Inc. Common Stock",
-"sector": "",
-"industry": ""
+"sector": "Technology",
+"industry": "Semiconductors"
 },
 {
 "symbol": "GUNN",
@@ -16980,12 +16986,6 @@
 "industry": "Consumer Electronics/Appliances"
 },
 {
-"symbol": "KOYN",
-"name": "CSLM Digital Asset Acquisition Corp III Class A Ordinary Shares",
-"sector": "",
-"industry": ""
-},
-{
 "symbol": "KPET",
 "name": "KPET Ultra Paceline Corporation Class A Ordinary Shares",
 "sector": "",
@@ -18400,12 +18400,6 @@
 "name": "Lexeo Therapeutics Inc. Common Stock",
 "sector": "Health Care",
 "industry": "Biotechnology: Biological Products (No Diagnostic Substances)"
-},
-{
-"symbol": "LXFR",
-"name": "Luxfer Holdings PLC Ordinary Shares",
-"sector": "Basic Materials",
-"industry": "Major Chemicals"
 },
 {
 "symbol": "LXRX",
@@ -22418,8 +22412,8 @@
 {
 "symbol": "OPHI",
 "name": "CollPlant Biotechnologies Ltd Ordinary Shares",
-"sector": "",
-"industry": ""
+"sector": "Health Care",
+"industry": "Industrial Specialties"
 },
 {
 "symbol": "OPI",
@@ -26544,12 +26538,6 @@
 "industry": ""
 },
 {
-"symbol": "SCKT",
-"name": "Socket Mobile Inc. Common Stock",
-"sector": "Technology",
-"industry": "Computer Manufacturing"
-},
-{
 "symbol": "SCL",
 "name": "Stepan Company Common Stock",
 "sector": "Consumer Discretionary",
@@ -28264,12 +28252,6 @@
 "name": "System1 Inc. Class A Common Stock",
 "sector": "Technology",
 "industry": "Computer Software: Programming Data Processing"
-},
-{
-"symbol": "SSTI",
-"name": "SoundThinking Inc. Common Stock",
-"sector": "Technology",
-"industry": "Computer Software: Prepackaged Software"
 },
 {
 "symbol": "SSTK",
@@ -33538,6 +33520,12 @@
 "name": "Zentalis Pharmaceuticals Inc. Common Stock",
 "sector": "Health Care",
 "industry": "Biotechnology: Pharmaceutical Preparations"
+},
+{
+"symbol": "ZOAR",
+"name": "Zoar Limited Ordinary Shares",
+"sector": "",
+"industry": ""
 },
 {
 "symbol": "ZONE",
