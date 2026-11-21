@@ -1926,6 +1926,12 @@
 "industry": "Biotechnology: Pharmaceutical Preparations"
 },
 {
+"symbol": "ANT",
+"name": "Anthropic PBC Class A Common Stock",
+"sector": "Technology",
+"industry": "Computer Software: Prepackaged Software"
+},
+{
 "symbol": "ANTA",
 "name": "Antalpha Platform Holding Company Class A Ordinary Shares",
 "sector": "Finance",
@@ -5546,8 +5552,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Consumer Discretionary",
-"industry": "RETAIL: Building Materials"
+"sector": "Health Care",
+"industry": "Biotechnology: Pharmaceutical Preparations"
 },
 {
 "symbol": "CAQ",
@@ -11034,6 +11040,12 @@
 "industry": "Major Banks"
 },
 {
+"symbol": "FDGX",
+"name": "First Digital Acquisition Corp Ltd. Class A Ordinary Shares",
+"sector": "",
+"industry": ""
+},
+{
 "symbol": "FDMM",
 "name": "Freedom Metals Acquisition Corp. Class A Ordinary Shares",
 "sector": "Finance",
@@ -11557,9 +11569,9 @@
 },
 {
 "symbol": "FMBM",
-"name": "F&M Bank Corp.",
-"sector": "",
-"industry": ""
+"name": "F&M Bank Corp. Common Stock",
+"sector": "Finance",
+"industry": "Major Banks"
 },
 {
 "symbol": "FMC",
@@ -19018,12 +19030,6 @@
 "name": "Methanex Corporation Common Stock",
 "sector": "Industrials",
 "industry": "Major Chemicals"
-},
-{
-"symbol": "MERC",
-"name": "Mercer International Inc. Common Stock",
-"sector": "Basic Materials",
-"industry": "Paper"
 },
 {
 "symbol": "MESH",
@@ -27822,6 +27828,12 @@
 "industry": "Telecommunications Equipment"
 },
 {
+"symbol": "SONN",
+"name": "Southern Company (The)",
+"sector": "",
+"industry": ""
+},
+{
 "symbol": "SONO",
 "name": "Sonos Inc. Common Stock",
 "sector": "Consumer Staples",
@@ -31026,12 +31038,6 @@
 "industry": "Telecommunications Equipment"
 },
 {
-"symbol": "UTZ",
-"name": "Utz Brands Inc Class A Common Stock",
-"sector": "Consumer Staples",
-"industry": "Packaged Foods"
-},
-{
 "symbol": "UUUU",
 "name": "Energy Fuels Inc Ordinary Shares (Canada)",
 "sector": "Industrials",
@@ -33554,8 +33560,8 @@
 {
 "symbol": "ZSTK",
 "name": "ZeroStack Corp. Common Stock",
-"sector": "Health Care",
-"industry": "Other Pharmaceuticals"
+"sector": "Finance",
+"industry": "Finance: Consumer Services"
 },
 {
 "symbol": "ZTG",
