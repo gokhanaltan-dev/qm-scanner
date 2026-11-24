@@ -4128,8 +4128,8 @@
 "industry": "Agricultural Chemicals"
 },
 {
-"symbol": "BIPC",
-"name": "Brookfield Infrastructure Corporation Brookfield Infrastructure Corporation",
+"symbol": "BIP",
+"name": "Brookfield Infrastructure Partners Inc. Class A Subordinate Voting Shares",
 "sector": "Consumer Discretionary",
 "industry": "Marine Transportation"
 },
@@ -4198,12 +4198,6 @@
 "name": "Buckle Inc. (The) Common Stock",
 "sector": "Consumer Discretionary",
 "industry": "Clothing/Shoe/Accessory Stores"
-},
-{
-"symbol": "BKHA",
-"name": "Black Hawk Acquisition Corporation Class A Ordinary Shares",
-"sector": "Health Care",
-"industry": "Biotechnology: Biological Products (No Diagnostic Substances)"
 },
 {
 "symbol": "BKKT",
@@ -5552,8 +5546,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Pharmaceutical Preparations"
+"sector": "Consumer Discretionary",
+"industry": "RETAIL: Building Materials"
 },
 {
 "symbol": "CAQ",
@@ -8380,6 +8374,12 @@
 "name": "Citizens Community Bancorp Inc. Common Stock",
 "sector": "Finance",
 "industry": "Savings Institutions"
+},
+{
+"symbol": "CZZL",
+"name": "Cizzle Brands Corporation Common Stock",
+"sector": "",
+"industry": ""
 },
 {
 "symbol": "D",
@@ -18528,12 +18528,6 @@
 "industry": "Real Estate Investment Trusts"
 },
 {
-"symbol": "MACI",
-"name": "Melar Acquisition Corp. I Class A Ordinary Shares",
-"sector": "",
-"industry": ""
-},
-{
 "symbol": "MAGN",
 "name": "Magnera Corporation Common Stock",
 "sector": "Basic Materials",
@@ -25632,12 +25626,6 @@
 "industry": "Biotechnology: Pharmaceutical Preparations"
 },
 {
-"symbol": "RLYB",
-"name": "Rallybio Corporation Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Pharmaceutical Preparations"
-},
-{
 "symbol": "RM",
 "name": "Regional Management Corp. Common Stock",
 "sector": "Finance",
@@ -27826,12 +27814,6 @@
 "name": "DNA X Inc. Common Stock",
 "sector": "Utilities",
 "industry": "Telecommunications Equipment"
-},
-{
-"symbol": "SONN",
-"name": "Southern Company (The)",
-"sector": "",
-"industry": ""
 },
 {
 "symbol": "SONO",
