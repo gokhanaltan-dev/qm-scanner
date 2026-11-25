@@ -3078,6 +3078,12 @@
 "industry": "Containers/Packaging"
 },
 {
+"symbol": "AVZO",
+"name": "Avenzo Therapeutics Inc. Common Stock",
+"sector": "Health Care",
+"industry": "Biotechnology: Pharmaceutical Preparations"
+},
+{
 "symbol": "AWI",
 "name": "Armstrong World Industries Inc Common Stock",
 "sector": "Industrials",
@@ -5546,8 +5552,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Consumer Discretionary",
-"industry": "RETAIL: Building Materials"
+"sector": "Health Care",
+"industry": "Biotechnology: Pharmaceutical Preparations"
 },
 {
 "symbol": "CAQ",
@@ -6796,6 +6802,12 @@
 "name": "Clorox Company (The) Common Stock",
 "sector": "Consumer Discretionary",
 "industry": "Specialty Chemicals"
+},
+{
+"symbol": "CLYD",
+"name": "Clywedog Therapeutics Holdings Inc. Common Stock",
+"sector": "",
+"industry": ""
 },
 {
 "symbol": "CLYM",
@@ -9480,12 +9492,6 @@
 "industry": "Office Equipment/Supplies/Services"
 },
 {
-"symbol": "EBMT",
-"name": "Eagle Bancorp Montana Inc. Common Stock",
-"sector": "Finance",
-"industry": "Major Banks"
-},
-{
 "symbol": "EBON",
 "name": "Ebang International Holdings Inc. Class A Ordinary Shares",
 "sector": "Finance",
@@ -10642,6 +10648,12 @@
 "name": "Evergy Inc. Common Stock",
 "sector": "Utilities",
 "industry": "Power Generation"
+},
+{
+"symbol": "EVRL",
+"name": "Everli Global Holdings Inc. Class A Ordinary Shares",
+"sector": "Consumer Discretionary",
+"industry": "Business Services"
 },
 {
 "symbol": "EVTC",
@@ -12613,7 +12625,7 @@
 },
 {
 "symbol": "GFAI",
-"name": "Guardforce AI Co. Limited Ordinary Shares",
+"name": "Guardforce AI Co. Limited Class A Ordinary Shares",
 "sector": "Consumer Discretionary",
 "industry": "Diversified Commercial Services"
 },
@@ -12892,6 +12904,12 @@
 "name": "GoldMining Inc. Common Shares",
 "sector": "Basic Materials",
 "industry": "Precious Metals"
+},
+{
+"symbol": "GLDI",
+"name": "UBS AG ETRACS Gold Shares Covered Call ETNs due February 2 2033",
+"sector": "Finance",
+"industry": "Investment Bankers/Brokers/Service"
 },
 {
 "symbol": "GLE",
@@ -15766,12 +15784,6 @@
 "name": "Professional Diversity Network Inc. Common Stock",
 "sector": "Technology",
 "industry": "Computer Software: Programming Data Processing"
-},
-{
-"symbol": "IPFX",
-"name": "Inflection Point Acquisition Corp. VI Class A Ordinary Shares",
-"sector": "Finance",
-"industry": "Blank Checks"
 },
 {
 "symbol": "IPGP",
@@ -27450,6 +27462,12 @@
 "industry": "Paper"
 },
 {
+"symbol": "SLVO",
+"name": "UBS AG ETRACS Silver Shares Covered Call ETNs due April 21 2033",
+"sector": "Finance",
+"industry": "Investment Bankers/Brokers/Service"
+},
+{
 "symbol": "SLXN",
 "name": "Silexion Therapeutics Corp Ordinary Shares",
 "sector": "Health Care",
@@ -30984,6 +31002,12 @@
 "industry": "Medicinal Chemicals and Botanical Products"
 },
 {
+"symbol": "USOI",
+"name": "UBS AG ETRACS Crude Oil Shares Covered Call ETNs due April 24 2037",
+"sector": "Finance",
+"industry": "Investment Bankers/Brokers/Service"
+},
+{
 "symbol": "USPH",
 "name": "U.S. Physical Therapy Inc. Common Stock",
 "sector": "Health Care",
@@ -31252,6 +31276,12 @@
 "name": "Vertex Inc. Class A Common Stock",
 "sector": "Technology",
 "industry": "Computer Software: Prepackaged Software"
+},
+{
+"symbol": "VESI",
+"name": "Vesicor Therapeutics Holdings Inc. Class A Common Stock",
+"sector": "Health Care",
+"industry": "Biotechnology: Biological Products (No Diagnostic Substances)"
 },
 {
 "symbol": "VET",
