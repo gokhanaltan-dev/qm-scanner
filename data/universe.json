@@ -5552,8 +5552,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Pharmaceutical Preparations"
+"sector": "Consumer Discretionary",
+"industry": "RETAIL: Building Materials"
 },
 {
 "symbol": "CAQ",
@@ -8096,8 +8096,8 @@
 {
 "symbol": "CUVL",
 "name": "Clinuvel Pharmaceuticals Limited American Depositary Shares",
-"sector": "Miscellaneous",
-"industry": "Miscellaneous"
+"sector": "Health Care",
+"industry": "Biotechnology: Biological Products (No Diagnostic Substances)"
 },
 {
 "symbol": "CUZ",
@@ -11644,12 +11644,6 @@
 "name": "Fidelity National Financial Inc. Common Stock",
 "sector": "Finance",
 "industry": "Specialty Insurers"
-},
-{
-"symbol": "FNGR",
-"name": "FingerMotion Inc. Common Stock",
-"sector": "Technology",
-"industry": "Computer Software: Prepackaged Software"
 },
 {
 "symbol": "FNKO",
@@ -21882,6 +21876,12 @@
 "industry": "Medicinal Chemicals and Botanical Products"
 },
 {
+"symbol": "OBMT",
+"name": "Opportunity Bancorp Inc. Common Stock",
+"sector": "",
+"industry": ""
+},
+{
 "symbol": "OBT",
 "name": "Orange County Bancorp Inc. Common Stock",
 "sector": "Finance",
@@ -22954,12 +22954,6 @@
 "name": "Par Pacific Holdings Inc.  Common Stock",
 "sector": "Energy",
 "industry": "Oil & Gas Production"
-},
-{
-"symbol": "PASG",
-"name": "Passage Bio Inc. Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Biological Products (No Diagnostic Substances)"
 },
 {
 "symbol": "PASW",
@@ -24798,6 +24792,12 @@
 "industry": "Industrial Machinery/Components"
 },
 {
+"symbol": "QSPC",
+"name": "Quantum Space Inc. Class A-1 Common Stock",
+"sector": "Industrials",
+"industry": "Military/Government/Technical"
+},
+{
 "symbol": "QSR",
 "name": "Restaurant Brands International Inc. Common Shares",
 "sector": "Consumer Discretionary",
@@ -26272,12 +26272,6 @@
 "name": "Safety Insurance Group Inc. Common Stock",
 "sector": "Finance",
 "industry": "Property-Casualty Insurers"
-},
-{
-"symbol": "SAFX",
-"name": "XCF Global Inc. Class A Common Stock",
-"sector": "Industrials",
-"industry": "Major Chemicals"
 },
 {
 "symbol": "SAGT",
@@ -32906,8 +32900,8 @@
 {
 "symbol": "XGPU",
 "name": "Reliance Global Group Inc. Common Stock",
-"sector": "",
-"industry": ""
+"sector": "Finance",
+"industry": "Specialty Insurers"
 },
 {
 "symbol": "XHG",
@@ -33542,8 +33536,8 @@
 {
 "symbol": "ZOAR",
 "name": "Zoar Limited Ordinary Shares",
-"sector": "",
-"industry": ""
+"sector": "Health Care",
+"industry": "Biotechnology: Pharmaceutical Preparations"
 },
 {
 "symbol": "ZONE",
