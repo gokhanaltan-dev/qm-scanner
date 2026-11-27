@@ -312,10 +312,10 @@ date,ticker,setup,status,score,grade,regime,close,trigger,stop
 2026-11-25,AZTA,breakout,building,71,B,red,46.78,49.64,46.5
 2026-11-25,BILL,breakout,building,70,B,red,61.55,66.58,63.86
 2026-11-25,ENOV,breakout,building,70,B,red,28.69,28.9,27.19
-2026-11-25,TRUP,breakout,building,69,B,red,36.47,37.06,35.12
 2026-11-25,EPAM,breakout,building,68,B,red,164.63,168.06,160.7
 2026-11-25,REF,breakout,building,68,B,red,20.01,20.57,18.93
 2026-11-25,RGR,breakout,building,68,B,red,50.6,53.39,51.15
+2026-11-25,TRUP,breakout,building,68,B,red,36.47,37.06,35.12
 2026-11-25,BHC,breakout,building,67,B,red,8.52,8.85,8.42
 2026-11-25,TREE,breakout,building,66,B,red,37.83,38.0,35.35
 2026-11-25,XNCR,breakout,building,65,B,red,38.37,39.49,37.16

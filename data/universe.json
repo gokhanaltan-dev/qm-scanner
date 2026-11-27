@@ -3876,6 +3876,12 @@
 "industry": "Finance: Consumer Services"
 },
 {
+"symbol": "BFLR",
+"name": "BlueFlare Inc. Common Stock",
+"sector": "Technology",
+"industry": "Computer Software: Prepackaged Software"
+},
+{
 "symbol": "BFLY",
 "name": "Butterfly Network Inc. Class A Common Stock",
 "sector": "Health Care",
@@ -5552,8 +5558,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Consumer Discretionary",
-"industry": "RETAIL: Building Materials"
+"sector": "Health Care",
+"industry": "Biotechnology: Pharmaceutical Preparations"
 },
 {
 "symbol": "CAQ",
@@ -25714,6 +25720,12 @@
 "name": "Rockwell Medical Inc. Common Stock",
 "sector": "Health Care",
 "industry": "Biotechnology: Pharmaceutical Preparations"
+},
+{
+"symbol": "RMTX",
+"name": "Remix Therapeutics Inc. Common Stock",
+"sector": "Health Care",
+"industry": "Biotechnology: Biological Products (No Diagnostic Substances)"
 },
 {
 "symbol": "RNA",
