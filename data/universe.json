@@ -5558,8 +5558,8 @@
 {
 "symbol": "CAPS",
 "name": "Capstone Holding Corp. Common Stock",
-"sector": "Health Care",
-"industry": "Biotechnology: Pharmaceutical Preparations"
+"sector": "Consumer Discretionary",
+"industry": "RETAIL: Building Materials"
 },
 {
 "symbol": "CAQ",
@@ -13351,7 +13351,7 @@
 },
 {
 "symbol": "GRDX",
-"name": "GridAI Technologies Corp. Common Stock",
+"name": "GridAI Power Corp. Common Stock",
 "sector": "Health Care",
 "industry": "Biotechnology: Pharmaceutical Preparations"
 },
@@ -13924,12 +13924,6 @@
 "name": "Healthcare Services Group Inc. Common Stock",
 "sector": "Health Care",
 "industry": "Hospital/Nursing Management"
-},
-{
-"symbol": "HCTI",
-"name": "Healthcare Triangle Inc. Common Stock",
-"sector": "Technology",
-"industry": "EDP Services"
 },
 {
 "symbol": "HCWB",
@@ -21884,8 +21878,8 @@
 {
 "symbol": "OBMT",
 "name": "Opportunity Bancorp Inc. Common Stock",
-"sector": "",
-"industry": ""
+"sector": "Finance",
+"industry": "Major Banks"
 },
 {
 "symbol": "OBT",
@@ -26923,7 +26917,7 @@
 },
 {
 "symbol": "SGLY",
-"name": "Singularity Future Technology Ltd. Common Stock",
+"name": "Compower Ltd. Common Stock",
 "sector": "Industrials",
 "industry": "Integrated Freight & Logistics"
 },
@@ -27938,8 +27932,8 @@
 {
 "symbol": "SPEG",
 "name": "Silver Pegasus Acquisition Corp Class A Ordinary Shares",
-"sector": "",
-"industry": ""
+"sector": "Finance",
+"industry": "Blank Checks"
 },
 {
 "symbol": "SPFI",
@@ -31930,12 +31924,6 @@
 "name": "Vuzix Corporation Common Stock",
 "sector": "Technology",
 "industry": "Radio And Television Broadcasting And Communications Equipment"
-},
-{
-"symbol": "VVOS",
-"name": "Vivos Therapeutics Inc. Common Stock",
-"sector": "Health Care",
-"industry": "Medical/Dental Instruments"
 },
 {
 "symbol": "VVR",
